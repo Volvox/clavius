@@ -6,6 +6,7 @@ class Sequencer
   @tile_height = null
   @columns = null
   @current = null
+  @ticker = null
 
   constructor: (canvas) ->
     @current = 0
@@ -28,6 +29,9 @@ class Sequencer
       success: (data) =>
         @sounds = data.sounds
         @resizeGrid()
+        if @ticker?
+          Meteor.clearTimeout @ticker
+          @ticker = null
         @tick()
 
   resizeGrid: ->
@@ -86,7 +90,7 @@ class Sequencer
   highlightColumn: (col) ->
     ctx = @canvas.getContext '2d'
     ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
-    x = col * @tile_width
+    x = col * @tile_width + @tile_width
     ctx.fillRect x, 0, 5, @canvas.height
 
   playColumn: (col) ->
@@ -102,7 +106,7 @@ class Sequencer
     @highlightColumn(@current)
     @playColumn(@current)
     @current = (@current + 1) % @columns
-    Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm')))
+    @ticker = Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm')))
 
   click: (e) ->
     coords = @getCoords e
