@@ -88,7 +88,8 @@ class Sequencer
   playColumn: (col) ->
     for active, row in @state[col]
       if active
-        new Audio(@sounds[row]['preview-hq-mp3'])
+        audio = new Audio(@sounds[row]['preview-hq-mp3'])
+        audio.play()
 
   tick: =>
     @clear()

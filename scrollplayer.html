@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="scrollplayer.js"></script>
+</head>
+
+<body>
+<div id="container">
+  <div onclick="currentSong.pause()" id="paws">&#10716;</div>
+  <input id="seekbar" value="">
+   <div id="msg"></div>
+    <input id="time" value="" >
+
+</div>
+<br>
+
+ <div id="nonfixed">non fixed element </div>
+
+ </body>
+
+
+<style type="text/css">
+
+body{ font-family: monaco; background: #101010; color:white;}
+#container{ position: fixed; padding:1em; display: inline; }
+#msg{ margin-top:1em; position: relative; position: fixed; }
+#paws{
+  font-size: 50px;
+  float:right;
+  display: inline;
+  position: fixed;
+  margin: -.6em 0 0 3em;
+  cursor: pointer;
+}
+input#time{top:10em; display: block;}
+#paws:hover{ color:yellow; }
+#nonfixed{ position: relative; margin-top: -10em;}
+
+</style>
+</html>
