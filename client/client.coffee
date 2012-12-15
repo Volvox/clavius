@@ -30,7 +30,8 @@ class Sequencer
         @tick()
 
   resizeGrid: ->
-    @columns = 16 * 4
+    @current = 0
+    @columns = Session.get('columns') or 32
     @tile_height = Math.floor(@canvas.height / @sounds.length)
     @tile_width = Math.floor(@canvas.width / @columns)
     @state = []
@@ -140,4 +141,8 @@ Template.stepsequencer.events
   'change .note': (e) ->
     val =  Number($(e.srcElement).val())
     Session.set 'note', val
+  'change .bars': (e) ->
+    val =  Number($(e.srcElement).val())
+    Session.set 'columns', val
+    sequencer.resizeGrid()
 
