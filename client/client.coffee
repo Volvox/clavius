@@ -1,6 +1,7 @@
 class Sequencer
   @canvas = null
   @sounds = null
+  @soundbank = null
   @state = null
   @tile_width = null
   @tile_height = null
@@ -29,6 +30,7 @@ class Sequencer
       success: (data) =>
         @sounds = data.sounds
         @resizeGrid()
+        @preloadSounds()
         if @ticker?
           Meteor.clearTimeout @ticker
           @ticker = null
@@ -44,6 +46,11 @@ class Sequencer
       @state[col] = []
       for row in [0...@sounds.length]
         @state[col][row] = false
+
+  preloadSounds: ->
+    @soundbank = []
+    for sound in @sounds
+      @soundbank.push new Audio(sound['preview-hq-ogg'])
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -96,8 +103,8 @@ class Sequencer
   playColumn: (col) ->
     for active, row in @state[col]
       if active
-        audio = new Audio(@sounds[row]['preview-hq-mp3'])
-        audio.play()
+        @soundbank[row].currentTime = 0
+        @soundbank[row].play()
 
   tick: =>
     @clear()
