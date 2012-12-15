@@ -115,8 +115,8 @@ class Sequencer
 
   click: (e) ->
     coords = @getCoords e
-    row = Math.floor(coords.y / @tile_height)
-    col = Math.floor(coords.x / @tile_width)
+    row = Math.round(coords.y / @tile_height)
+    col = Math.round(coords.x / @tile_width)
     @state[col][row] = not @state[col][row]
     @drawCell(row, col)
 
