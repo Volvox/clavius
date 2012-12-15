@@ -33,8 +33,8 @@ class Sequencer
   resizeGrid: ->
     @current = 0
     @columns = Session.get('columns') or 32
-    @tile_height = Math.floor(@canvas.height / @sounds.length)
-    @tile_width = Math.floor(@canvas.width / @columns)
+    @tile_height = Math.floor(@canvas.height / (@sounds.length + 1))
+    @tile_width = Math.floor(@canvas.width / (@columns + 1))
     @state = []
     for col in [0...@columns]
       @state[col] = []
@@ -46,15 +46,14 @@ class Sequencer
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)'
 
     for row in [0...@sounds.length]
-      offset =  row * @tile_height
+      offset =  (1 + row) * @tile_height
       ctx.beginPath()
       ctx.moveTo 0, offset
       ctx.lineTo @canvas.width, offset
       ctx.stroke()
 
-
     for col in [0...@columns]
-      offset =  col * @tile_width
+      offset =  (1 + col) * @tile_width
       ctx.beginPath()
       ctx.moveTo offset, 0
       ctx.lineTo offset, @canvas.height
@@ -66,18 +65,10 @@ class Sequencer
     ctx.clearRect 0, 0, @canvas.width, @canvas.height
 
   draw: ->
-    ctx = @canvas.getContext '2d'
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
     for col of @state
       for row of @state[col]
         if @state[col][row]
-          x = col * @tile_width
-          y = row * @tile_height
-          radius = 5
-          ctx.beginPath()
-          ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
-          ctx.fill()
-
+          @drawCell row, col
 
   drawCell: (row, col) ->
     ctx = @canvas.getContext '2d'
@@ -85,12 +76,12 @@ class Sequencer
       ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
     else
       ctx.fillStyle = 'rgb(255, 255, 255)'
-    x = col * @tile_width
-    y = row * @tile_height
+    x = col * @tile_width + @tile_width
+    y = row * @tile_height + @tile_height
     radius = 8
+    ctx.beginPath()
     ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
     ctx.fill()
-
 
   highlightColumn: (col) ->
     ctx = @canvas.getContext '2d'
@@ -111,14 +102,15 @@ class Sequencer
     @highlightColumn(@current)
     @playColumn(@current)
     @current = (@current + 1) % @columns
-    Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm'))) # sixteenth note
+    Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm')))
 
   click: (e) ->
     coords = @getCoords e
-    row = Math.round(coords.y / @tile_height)
-    col = Math.round(coords.x / @tile_width)
-    @state[col][row] = not @state[col][row]
-    @drawCell(row, col)
+    row = Math.round(coords.y / @tile_height) - 1
+    col = Math.round(coords.x / @tile_width) - 1
+    if row in [0...@sounds.length] and col in [0...@columns]
+      @state[col][row] = not @state[col][row]
+      @drawCell row, col
 
   getCoords: (e) ->
     x: e.pageX - @canvas.offsetLeft
