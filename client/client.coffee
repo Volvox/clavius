@@ -6,36 +6,29 @@ class Sequencer
   @tile_height = null
   @columns = null
   @current = null
-  @packId = null
-
 
   constructor: (canvas) ->
     @current = 0
     Session.set('bpm', 120)
     Session.set('note', 15)
     @initializeCanvas canvas
-    @bpm = 120
-    @fetchSounds()
+    @fetchSounds(17)
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
     @canvas.height = $(canvas).parent().height()
     @canvas.width = $(canvas).parent().width()
 
-  fetchSounds: ->
-    # @packId = 17
-    @packId = Session.get('packId') or 17
+  fetchSounds: (packId) ->
     $.ajax
-      url: "http://www.freesound.org/api/packs/#{@packId}/sounds?api_key=ec0c281cc7404d14b6f5216f96b8cd7c"
+      url: "http://www.freesound.org/api/packs/#{packId}/sounds?api_key=ec0c281cc7404d14b6f5216f96b8cd7c"
       dataType: "jsonp"
       error: (e) ->
         console.log(e)
       success: (data) =>
-        console.log(data)
         @sounds = data.sounds
         @resizeGrid()
         @tick()
-
 
   resizeGrid: ->
     @current = 0
@@ -154,8 +147,5 @@ Template.stepsequencer.events
     sequencer.resizeGrid()
   'change .packId': (e) ->
     val = Number($(e.srcElement).val())
-    Session.set 'packId', val
-
-
-
+    sequencer.fetchSounds(val)
 
