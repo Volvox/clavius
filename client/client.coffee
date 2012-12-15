@@ -6,17 +6,18 @@ class Sequencer
   @tile_height = null
   @columns = null
   @current = null
-  @bpm = 120
 
   constructor: (canvas) ->
     @current = 0
+    Session.set('bpm', 120)
+    Session.set('note', 15)
     @initializeCanvas canvas
     @fetchSounds()
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
-    @canvas.height = $('body').height()
-    @canvas.width = $('body').width()
+    @canvas.height = $(canvas).parent().height()
+    @canvas.width = $(canvas).parent().width()
 
   fetchSounds: ->
     freesound.apiKey = "ec0c281cc7404d14b6f5216f96b8cd7c"
@@ -87,8 +88,7 @@ class Sequencer
   playColumn: (col) ->
     for active, row in @state[col]
       if active
-        audio = new Audio(@sounds[row]['preview-hq-mp3'])
-        audio.play()
+        new Audio(@sounds[row]['preview-hq-mp3'])
 
   tick: =>
     @clear()
@@ -97,19 +97,34 @@ class Sequencer
     @highlightColumn(@current)
     @playColumn(@current)
     @current = (@current + 1) % @columns
-    setTimeout @tick, (1000 * (15 / @bpm)) # sixteenth note
+    Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm'))) # sixteenth note
 
   click: (e) ->
-    row = Math.floor(e.pageY / @tile_height)
-    col = Math.floor(e.pageX / @tile_width)
+    coords = @getCoords e
+    row = Math.floor(coords.y / @tile_height)
+    col = Math.floor(coords.x / @tile_width)
     @state[col][row] = not @state[col][row]
     @drawCell(row, col)
+
+  getCoords: (e) ->
+    x: e.pageX - @canvas.offsetLeft
+    y: e.pageY - @canvas.offsetTop
 
 Template.stepsequencer.rendered = ->
   canvas = @find('canvas')
   window.sequencer = new Sequencer(canvas)
 
+Template.stepsequencer.bpm = ->
+  Session.get('bpm')
+
 Template.stepsequencer.events
   'click': (e) ->
     sequencer.click e
+  'change .bpm': (e) ->
+    val =  Number($(e.srcElement).val())
+    if val > 0
+      Session.set 'bpm', val
+  'change .note': (e) ->
+    val =  Number($(e.srcElement).val())
+    Session.set 'note', val
 
