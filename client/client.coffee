@@ -6,10 +6,11 @@ class Sequencer
   @tile_height = null
   @columns = null
   @current = null
-  @bpm = 120
+  @bpm = null
 
   constructor: (canvas) ->
     @current = 0
+    @bpm = 120
     @initializeCanvas canvas
     @fetchSounds()
 
@@ -87,7 +88,8 @@ class Sequencer
   playColumn: (col) ->
     for active, row in @state[col]
       if active
-        new Audio(@sounds[row]['preview-hq-mp3'])
+        audio = new Audio(@sounds[row]['preview-hq-mp3'])
+        audio.play()
 
   tick: =>
     @clear()
