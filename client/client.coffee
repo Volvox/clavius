@@ -31,9 +31,10 @@ class Sequencer
     @tile_height = Math.floor(@canvas.height / @sounds.length)
     @tile_width = Math.floor(@canvas.width / @columns)
     @state = []
-    for row in [0...@sounds.length]
-      for col in [0...@columns]
-        @state[row * @sounds.length + col] = false
+    for col in [0...@columns]
+      @state[col] = []
+      for row in [0...@sounds.length]
+        @state[col][row] = false
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -60,15 +61,16 @@ class Sequencer
   draw: ->
     ctx = @canvas.getContext '2d'
     ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
-    for active, i in @state
-      if active
-        x = Math.floor((i % @columns)) * @tile_width
-        y = Math.floor((i / @columns)) * @tile_height
-        ctx.fillRect x, y, @tile_width, @tile_height
+    for col of @state
+      for row of @state[col]
+        if @state[col][row]
+          x = col * @tile_width
+          y = row * @tile_height
+          ctx.fillRect x, y, @tile_width, @tile_height
 
   drawCell: (row, col) ->
     ctx = @canvas.getContext '2d'
-    if @state[row * @columns + col]
+    if @state[col][row]
       ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
     else
       ctx.fillStyle = 'rgb(255, 255, 255)'
@@ -79,23 +81,27 @@ class Sequencer
   highlightColumn: (col) ->
     ctx = @canvas.getContext '2d'
     ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
-    for row in [0...@sounds.length]
-      x = col * @tile_width
-      y = row * @tile_height
-      ctx.fillRect x, y, @tile_width, @tile_height
+    x = col * @tile_width
+    ctx.fillRect x, 0, @tile_width, @canvas.height
+
+  playColumn: (col) ->
+    for active, row in @state[col]
+      if active
+        new Audio(@sounds[row]['preview-hq-mp3'])
 
   tick: =>
     @clear()
     @drawGrid()
     @draw()
     @highlightColumn(@current)
+    @playColumn(@current)
     @current = (@current + 1) % @columns
     setTimeout @tick, (1000 * (15 / @bpm)) # sixteenth note
 
   click: (e) ->
     row = Math.floor(e.pageY / @tile_height)
     col = Math.floor(e.pageX / @tile_width)
-    @state[row * @columns + col] = not @state[row * @columns + col]
+    @state[col][row] = not @state[col][row]
     @drawCell(row, col)
 
 Template.stepsequencer.rendered = ->
@@ -105,3 +111,4 @@ Template.stepsequencer.rendered = ->
 Template.stepsequencer.events
   'click': (e) ->
     sequencer.click e
+
