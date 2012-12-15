@@ -1,21 +1,149 @@
 class Sequencer
-  @canvas = null
-  @sounds = null
-  @state = null
-  @tile_width = null
-  @tile_height = null
-  @columns = null
-  @current = null
 
   constructor: (canvas) ->
     @current = 0
+    @hold = false
     Session.set('bpm', 120)
     Session.set('note', 15)
     @initializeCanvas canvas
     @fetchSounds(17)
 
+
+    #keyboard commands
+    Mousetrap.bind "space", =>
+      sequencer.toggle()
+      false
+    Mousetrap.bind "shift+right", =>
+      if @hold is true
+        @tick
+        @current = @current+1
+        @highlightColumn(@current)
+      else
+        @tick
+        sequencer.toggle()
+        @current = @current+1
+        @highlightColumn(@current)
+
+      false
+    Mousetrap.bind "shift+a", =>
+      col = @current
+      row = 19
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+w", =>
+      col = @current
+      row = 18
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+s", =>
+      col = @current
+      row = 17
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+e", =>
+      col = @current
+      row = 16
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+d", =>
+      col = @current
+      row = 15
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+r", =>
+      col = @current
+      row = 14
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+f", =>
+      col = @current
+      row = 13
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+g", =>
+      col = @current
+      row = 12
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+y", =>
+      col = @current
+      row = 11
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+h", =>
+      col = @current
+      row = 10
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+u", =>
+      col = @current
+      row = 9
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+j", =>
+      col = @current
+      row = 8
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+k", =>
+      col = @current
+      row = 7
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+o", =>
+      col = @current
+      row = 6
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+l", =>
+      col = @current
+      row = 5
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+p", =>
+      col = @current
+      row = 4
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+;", =>
+      col = @current
+      row = 3
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind "shift+[", =>
+      col = @current
+      row = 2
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+    Mousetrap.bind '"', =>
+      col = @current
+      row = 1
+      @state[col][row] = not @state[col][row]
+      @drawCell(row, col)
+      false
+
+
   initializeCanvas: (canvas) ->
     @canvas = canvas
+    @canvas.padding = 10
     @canvas.height = $(canvas).parent().height()
     @canvas.width = $(canvas).parent().width()
 
@@ -104,6 +232,16 @@ class Sequencer
         audio = new Audio(@sounds[row]['preview-hq-mp3'])
         audio.play()
 
+  toggle: ->
+    $(".hold").toggleClass("held")
+    if @hold is false
+      Meteor.clearTimeout @cursor
+      @hold = true
+    else
+      @cursor = Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm'))) # sixteenth note
+      @hold = false
+
+
   tick: =>
     @clear()
     @drawGrid()
@@ -111,7 +249,7 @@ class Sequencer
     @highlightColumn(@current)
     @playColumn(@current)
     @current = (@current + 1) % @columns
-    Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm'))) # sixteenth note
+    @cursor = Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm'))) # sixteenth note
 
   click: (e) ->
     coords = @getCoords e
@@ -124,9 +262,11 @@ class Sequencer
     x: e.pageX - @canvas.offsetLeft
     y: e.pageY - @canvas.offsetTop
 
+
 Template.stepsequencer.rendered = ->
   canvas = @find('canvas')
   window.sequencer = new Sequencer(canvas)
+
 
 Template.stepsequencer.bpm = ->
   Session.get('bpm')
@@ -148,4 +288,5 @@ Template.stepsequencer.events
   'change .packId': (e) ->
     val = Number($(e.srcElement).val())
     sequencer.fetchSounds(val)
-
+  'click .hold': (e) ->
+    sequencer.toggle()
