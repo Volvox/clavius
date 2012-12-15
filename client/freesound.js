@@ -8,13 +8,13 @@ var freesound = {
     _URI_SEARCH : '/sounds/search/',
     _URI_CONTENT_SEARCH : '/sounds/content_search/',
     _URI_GEOTAG : '/sounds/geotag',
-    _URI_USER : '/people/monosym/',
-    _URI_USER_SOUNDS : '/people/monosym/sounds/',
-    _URI_USER_PACKS : '/people/monosym/packs/',
-    _URI_USER_BOOKMARKS : '/people/monosym/bookmark_categories',
-    _URI_BOOKMARK_CATEGORY_SOUNDS : '/people/monosym/bookmark_categories/pattern/sounds',
-    _URI_PACK : '/packs/17/',
-    _URI_PACK_SOUNDS : '/packs/17/sounds/',
+    _URI_USER : '/people/<user_name>/',
+    _URI_USER_SOUNDS : '/people/<user_name>/sounds/',
+    _URI_USER_PACKS : '/people/<user_name>/packs/',
+    _URI_USER_BOOKMARKS : '/people/<username>/bookmark_categories',
+    _URI_BOOKMARK_CATEGORY_SOUNDS : '/people/<username>/bookmark_categories/<category_id>/sounds',
+    _URI_PACK : '/packs/<pack_id>/',
+    _URI_PACK_SOUNDS : '/packs/<pack_id>/sounds/',
 
     _make_uri : function(uri,args){
         for (a in args) {uri = uri.replace(/<[\w_]+>/, args[a])}

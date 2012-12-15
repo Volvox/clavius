@@ -6,6 +6,7 @@ class Sequencer
   @tile_height = null
   @columns = null
   @current = null
+  @packId = null
 
 
   constructor: (canvas) ->
@@ -22,12 +23,19 @@ class Sequencer
     @canvas.width = $(canvas).parent().width()
 
   fetchSounds: ->
-    freesound.apiKey = "ec0c281cc7404d14b6f5216f96b8cd7c"
-    freesound.get_pack 17, (pack) =>
-      pack.get_sounds (data) =>
+    # @packId = 17
+    @packId = Session.get('packId') or 17
+    $.ajax
+      url: "http://www.freesound.org/api/packs/#{@packId}/sounds?api_key=ec0c281cc7404d14b6f5216f96b8cd7c"
+      dataType: "jsonp"
+      error: (e) ->
+        console.log(e)
+      success: (data) =>
+        console.log(data)
         @sounds = data.sounds
         @resizeGrid()
         @tick()
+
 
   resizeGrid: ->
     @current = 0
@@ -59,7 +67,6 @@ class Sequencer
       ctx.lineTo offset, @canvas.height
       ctx.lineWidth = if col % 4 is 0 then 5 else 1
       ctx.stroke()
-
 
   clear: ->
     ctx = @canvas.getContext '2d'
@@ -96,7 +103,7 @@ class Sequencer
     ctx = @canvas.getContext '2d'
     ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
     x = col * @tile_width
-    ctx.fillRect x, 0, @tile_width, @canvas.height
+    ctx.fillRect x, 0, 5, @canvas.height
 
   playColumn: (col) ->
     for active, row in @state[col]
@@ -145,4 +152,10 @@ Template.stepsequencer.events
     val =  Number($(e.srcElement).val())
     Session.set 'columns', val
     sequencer.resizeGrid()
+  'change .packId': (e) ->
+    val = Number($(e.srcElement).val())
+    Session.set 'packId', val
+
+
+
 
