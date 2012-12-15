@@ -6,11 +6,12 @@ class Sequencer
   @tile_height = null
   @columns = null
   @current = null
-  @bpm = 120
+  @bpm = null
 
   constructor: (canvas) ->
     @current = 0
     @initializeCanvas canvas
+    @bpm = 120
     @fetchSounds()
 
   initializeCanvas: (canvas) ->
@@ -47,12 +48,15 @@ class Sequencer
       ctx.lineTo @canvas.width, offset
       ctx.stroke()
 
+
     for col in [0...@columns]
       offset =  col * @tile_width
       ctx.beginPath()
       ctx.moveTo offset, 0
       ctx.lineTo offset, @canvas.height
+      ctx.lineWidth = if col % 4 is 0 then 5 else 1
       ctx.stroke()
+
 
   clear: ->
     ctx = @canvas.getContext '2d'
@@ -66,7 +70,11 @@ class Sequencer
         if @state[col][row]
           x = col * @tile_width
           y = row * @tile_height
-          ctx.fillRect x, y, @tile_width, @tile_height
+          radius = 5
+          ctx.beginPath()
+          ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+          ctx.fill()
+
 
   drawCell: (row, col) ->
     ctx = @canvas.getContext '2d'
@@ -76,8 +84,11 @@ class Sequencer
       ctx.fillStyle = 'rgb(255, 255, 255)'
     x = col * @tile_width
     y = row * @tile_height
-    ctx.fillRect x, y, @tile_width, @tile_height
-  
+    radius = 8
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+    ctx.fill()
+
+
   highlightColumn: (col) ->
     ctx = @canvas.getContext '2d'
     ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
@@ -87,7 +98,8 @@ class Sequencer
   playColumn: (col) ->
     for active, row in @state[col]
       if active
-        new Audio(@sounds[row]['preview-hq-mp3'])
+        audio = new Audio(@sounds[row]['preview-hq-mp3'])
+        audio.play()
 
   tick: =>
     @clear()
