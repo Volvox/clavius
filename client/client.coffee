@@ -108,12 +108,15 @@ class Sequencer
     @current = (@current + 1) % @columns
     @ticker = Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm')))
 
-  click: (e) ->
+  click: (e, force) ->
     coords = @getCoords e
     row = Math.round(coords.y / @tile_height) - 1
     col = Math.round(coords.x / @tile_width) - 1
     if row in [0...@sounds.length] and col in [0...@columns]
-      @state[col][row] = not @state[col][row]
+      if force?
+        @state[col][row] = force
+      else
+        @state[col][row] = not @state[col][row]
       @drawCell row, col
 
   getCoords: (e) ->
@@ -128,8 +131,14 @@ Template.stepsequencer.bpm = ->
   Session.get('bpm')
 
 Template.stepsequencer.events
-  'click': (e) ->
+  'mousedown': (e) ->
+    Session.set('mousedown', true)
     sequencer.click e
+  'mouseup': (e) ->
+    Session.set('mousedown', false)
+  'mousemove': (e) ->
+    if Session.get('mousedown')
+      sequencer.click e, true
   'change .bpm': (e) ->
     val =  Number($(e.srcElement).val())
     if val > 0
