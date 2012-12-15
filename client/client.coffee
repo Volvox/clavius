@@ -1,14 +1,4 @@
 class Sequencer
-  @canvas = null
-  @sounds = null
-  @soundbank = null
-  @state = null
-  @tile_width = null
-  @tile_height = null
-  @columns = null
-  @current = null
-  @ticker = null
-
   constructor: (canvas) ->
     @current = 0
     Session.set('bpm', 120)
