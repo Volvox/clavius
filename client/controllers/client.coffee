@@ -1,4 +1,5 @@
 Meteor.subscribe 'clips'
+Meteor.subscribe 'songs'
 
 Template.canvas.rendered = ->
   unless window.sequencer?
@@ -10,7 +11,6 @@ Template.stepsequencer.bpm = ->
 
 Template.clip_list.clips = ->
   Clips.find()
-  # Session.get('clips')
 
 Template.stepsequencer.hidden = ->
   Session.get('hidden')
@@ -38,12 +38,9 @@ Template.stepsequencer.events
     title = $("#nameSubmit").val()
     console.log(title)
     sequencer.buildLib(sequencer.export(title))
-    # Session.set 'hidden', true
   'click #save': (e) ->
     e.preventDefault()
     Session.set 'hidden', true
-
-
 
 Template.canvas.events
   'mousedown': (e) ->
