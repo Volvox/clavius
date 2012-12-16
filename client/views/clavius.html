@@ -3,8 +3,11 @@
 </head>
 
 <body>
-  {{> page_controller}}
+<div class="outer-wrapper">
+  {{> body}}
+</div>
 </body>
+
 
 <template name="page_controller">
     <ul id="navigation">
@@ -17,6 +20,9 @@
     {{else}}
     {{> mixer}}
     {{/if}}
+
+<template name="body">
+  {{{renderPage}}}
 </template>
 
 <template name="stepsequencer">

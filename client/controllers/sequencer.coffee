@@ -45,6 +45,11 @@ class Sequencer
       @soundbank.push new Audio(sound['preview-hq-ogg'])
 
   bindKeys: ->
+<<<<<<< HEAD
+=======
+    Mousetrap.reset()
+
+>>>>>>> 40047aedf1ee22ed2928fb1f2a23ae97992771bc
     Mousetrap.bind "space", =>
       @toggle()
 
