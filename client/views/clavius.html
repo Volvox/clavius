@@ -5,10 +5,8 @@
 <body>
 <div class="outer-wrapper">
   {{> body}}
-
 </div>
 </body>
-
 
 <template name="page_controller">
     {{#if page "stepsequencer"}}
@@ -19,20 +17,16 @@
     {{/if}}
 </template>
 
-
 <template name="body">
   {{{renderPage}}}
 </template>
 
 <template name="stepsequencer">
   {{> clip_list }}
-
 <div class="container">
   <div class="row">
     <div class="span12">
-
       <form class="form-inline">
-
         {{#if hidden}}
           <input type="text" id="nameSubmit" class="input-small" placeholder="name of sequence">
           <a href="#" class="btn">  save
@@ -40,8 +34,6 @@
         {{else}}
           <div id="save">Add to Library</div>
         {{/if}}
-
-
         <label>bpm</label>
         <input class="bpm" value="120" type="number" />
         <label>note</label>
@@ -62,9 +54,7 @@
           <option value="9561">2</option>
           <option value="2618">3</option>
         </select>
-
         <div class="hold">HOLD</div>
-
       </form>
       <div id="note">space bar</div>
     </div>
@@ -76,17 +66,16 @@
   </div>
 </template>
 <template name="canvas">
-     {{#constant}}
+  {{#constant}}
+  <div class="arrow"> &#10155;</div>
       <canvas></canvas>
-    {{/constant}}
+  {{/constant}}
 </template>
-
 
 <template name="clip_list">
   <ul id="clips">
     {{#each clips}}
-   <li> {{title}}</li>
-  {{/each}}
+   <li id="{{_id}}"> {{title}}</li>
+    {{/each}}
 </ul>
 </template>
-
