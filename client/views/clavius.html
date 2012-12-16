@@ -3,33 +3,17 @@
 </head>
 
 <body>
-  {{> stepsequencer}}
+  {{> page_controller}}
 </body>
 
-<template name="mixer">
-<div id="header">
-</div>
-<div id="tracks">
-	<div class="track">
-		<div class="controls">
-		</div>
-		<div class="clips">
-			<div class="clip"></div>
-			<div class="clip"></div>
-			<div class="clip"></div>
-		</div>
-	</div>
-	<div class="track">
-		<div class="controls"></div>
-		<div class="clips"></div>
-	</div>
-	<div class="track">
-		<div class="controls"></div>
-		<div class="clips"></div>
-	</div>
-</div>
-<div id="footer">
-</div>
+<template name="page_controller">
+{{#if page "stepsequencer"}}
+{{> stepsequencer}}
+{{else}}
+{{> mixer}}
+{{/if}}
+  <a href="/">home</a>
+  <a href="/sequencer">sequencer</a>
 </template>
 
 <template name="stepsequencer">
