@@ -6,163 +6,6 @@ class Sequencer
     Session.set('note', 15)
     @initializeCanvas canvas
     @fetchSounds(17)
-    @musicalKeyboard = ["a","w","s","e","d","r","f","g","y","h","u","j","k","o","l","p",";","[","'"]
-
-
-    #keyboard commands
-    Mousetrap.bind "space", =>
-      sequencer.toggle()
-      false
-
-    # Mousetrap.bind "right", =>
-    #   if @hold is true
-    #     sequencer.clear()
-    #     @current = @current+1
-    #     @highlightColumn(@current)
-    #   else
-    #     @tick
-    #     sequencer.clear()
-    #     sequencer.toggle()
-    #     @current = @current+1
-    #     @highlightColumn(@current)
-    #   false
-
-
-    #   Mousetrap.bind "shift+a", =>
-    #     col = @current
-    #     row = @maxKeys()
-    #     console.log(row)
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-
-
-    # if @sounds.length-1 > 0
-    #   Mousetrap.bind "shift+w", =>
-    #     col = @current
-    #     row = @maxKeys() - 1
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-2 > 0
-    #   Mousetrap.bind "shift+s", =>
-    #     col = @current
-    #     row = @maxKeys()-2
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-3 > 0
-    #   Mousetrap.bind "shift+e", =>
-    #     col = @current
-    #     row = @maxKeys()-3
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-4 > 0
-    #   Mousetrap.bind "shift+d", =>
-    #     col = @current
-    #     row = @maxKeys()-4
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-5 > 0
-    #   Mousetrap.bind "shift+r", =>
-    #     col = @current
-    #     row = @maxKeys()-5
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-6 > 0
-    #   Mousetrap.bind "shift+f", =>
-    #     col = @current
-    #     row = @maxKeys()-6
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-7 > 0
-    #   Mousetrap.bind "shift+g", =>
-    #     col = @current
-    #     row = @maxKeys()-7
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-8 > 0
-    #   Mousetrap.bind "shift+y", =>
-    #     col = @current
-    #     row = @maxKeys()-8
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-9 > 0
-    #   Mousetrap.bind "shift+h", =>
-    #     col = @current
-    #     row = @maxKeys()-9
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-10 > 0
-    #   Mousetrap.bind "shift+u", =>
-    #     col = @current
-    #     row = @maxKeys()-10
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-11 > 0
-    #   Mousetrap.bind "shift+j", =>
-    #     col = @current
-    #     row = @maxKeys()-11
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-12 > 0
-    #   Mousetrap.bind "shift+k", =>
-    #     col = @current
-    #     row = @maxKeys()-12
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-13 > 0
-    #   Mousetrap.bind "shift+o", =>
-    #     col = @current
-    #     row = @maxKeys()-13
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-14 > 0
-    #   Mousetrap.bind "shift+l", =>
-    #     col = @current
-    #     row = @maxKeys()-14
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-15 > 0
-    #   Mousetrap.bind "shift+p", =>
-    #     col = @current
-    #     row = @maxKeys()-15
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-16 > 0
-    #   Mousetrap.bind "shift+;", =>
-    #     col = @current
-    #     row = @maxKeys()-16
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-17 > 0
-    #   Mousetrap.bind "shift+[", =>
-    #     col = @current
-    #     row = @maxKeys()-17
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
-    # if @sounds.length-18 > 0
-    #   Mousetrap.bind '"', =>
-    #     col = @current
-    #     row = @maxKeys()-18
-    #     @state[col][row] = not @state[col][row]
-    #     @drawCell(row, col)
-    #     false
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
@@ -179,11 +22,11 @@ class Sequencer
         @sounds = data.sounds
         @resizeGrid()
         @preloadSounds()
+        @bindKeys()
         if @ticker?
           Meteor.clearTimeout @ticker
           @ticker = null
         @tick()
-        @bindKeys()
 
   resizeGrid: ->
     @current = 0
@@ -200,6 +43,30 @@ class Sequencer
     @soundbank = []
     for sound in @sounds
       @soundbank.push new Audio(sound['preview-hq-ogg'])
+
+  bindKeys: ->
+    Mousetrap.bind "space", =>
+      @toggle()
+
+    Mousetrap.bind "right", =>
+      if @hold
+        @clear()
+        @current += 1
+        @highlightColumn(@current)
+      else
+        @tick
+        @clear()
+        @toggle()
+        @current += 1
+        @highlightColumn(@current)
+
+    letters = "awsedrfgyhujkolp;['".split ''
+    for letter, i in letters
+      Mousetrap.bind "shift+#{letter}", ((row) =>
+        =>
+          @state[@current][row] = not @state[@current][row]
+          @drawCell(row, @current)
+      )(@sounds.length - 1 - i)
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -303,9 +170,13 @@ class Sequencer
     notes: notes
     sounds: @sounds
 
-  maxKeys: ->
-    if @sounds.length >= 19
-      19
-    else
-      @sounds.length
+  buildLib: (exportObject) ->
+    clipPreview = new ClipPreview(exportObject)
+    Meteor.call("createClip", exportObject)
+    clips = Clips.find().fetch()
+    console.log(clips)
+
+
+
+
 

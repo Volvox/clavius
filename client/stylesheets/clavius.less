@@ -26,9 +26,9 @@
 	-webkit-border-radius: @radius;
 	-moz-border-radius: @radius;
 	border-radius: @radius;
-	-moz-background-clip: padding; 
-	-webkit-background-clip: padding-box; 
-	background-clip: padding-box; 
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
 }
 
 body {
@@ -134,4 +134,24 @@ input.bpm{ width:80px;}
     letter-spacing:.15em;
     float:right;
     position: relative;
+}
+
+#navigation{
+  margin: 20px 0 0 30px;
+  position:fixed;
+}
+#navigation li{
+    list-style:none;
+    display:block;
+}
+
+#save{
+    display: inline;
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 11px;
+    font-weight: bold;
+    color:blue;
+    border: 2px solid blue;
 }

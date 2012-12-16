@@ -35,3 +35,5 @@ Template.stepsequencer.events
     sequencer.fetchSounds(val)
   'click .hold': (e) ->
     sequencer.toggle()
+  'click #save': (e) ->
+    sequencer.buildLib(sequencer.export())
