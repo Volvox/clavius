@@ -1,8 +1,5 @@
 Meteor.subscribe 'clips'
 
-Template.page_controller.page = (type) ->
-  Session.get("current_page") == type
-
 Template.stepsequencer.rendered = ->
   canvas = @find('canvas')
   window.sequencer = new Sequencer(canvas)

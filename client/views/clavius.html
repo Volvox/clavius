@@ -3,17 +3,13 @@
 </head>
 
 <body>
-  {{> page_controller}}
+<div class="outer-wrapper">
+  {{> body}}
+</div>
 </body>
 
-<template name="page_controller">
-{{#if page "stepsequencer"}}
-{{> stepsequencer}}
-{{else}}
-{{> mixer}}
-{{/if}}
-  <a href="/">home</a>
-  <a href="/sequencer">sequencer</a>
+<template name="body">
+  {{{renderPage}}}
 </template>
 
 <template name="stepsequencer">
