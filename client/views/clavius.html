@@ -8,19 +8,6 @@
 </div>
 </body>
 
-
-<template name="page_controller">
-    <ul id="navigation">
-      <li><a href="/">home</a></li>
-      <li><a href="/sequencer">sequencer</a></li>
-    </ul>
-
-    {{#if page "stepsequencer"}}
-    {{> stepsequencer}}
-    {{else}}
-    {{> mixer}}
-    {{/if}}
-
 <template name="body">
   {{{renderPage}}}
 </template>
