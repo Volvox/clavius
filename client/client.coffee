@@ -1,6 +1,5 @@
 Meteor.subscribe 'clips'
 
-
 Template.stepsequencer.rendered = ->
   canvas = @find('canvas')
   window.sequencer = new Sequencer(canvas)
