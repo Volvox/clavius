@@ -33,5 +33,6 @@ Template.stepsequencer.events
   'change .packId': (e) ->
     val = Number($(e.srcElement).val())
     sequencer.fetchSounds(val)
+    e.srcElement.blur()
   'click .hold': (e) ->
     sequencer.toggle()
