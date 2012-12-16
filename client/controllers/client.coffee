@@ -36,18 +36,26 @@ Template.stepsequencer.events
   'click a.btn': (e) ->
     e.preventDefault()
     title = $("#nameSubmit").val()
-    console.log(title)
     sequencer.buildLib(sequencer.export(title))
   'click #save': (e) ->
     e.preventDefault()
     Session.set 'hidden', true
 
-Template.canvas.events
-  'mousedown': (e) ->
-    Session.set('mousedown', true)
-    sequencer.click e
-  'mouseup': (e) ->
-    Session.set('mousedown', false)
-  'mousemove': (e) ->
-    if Session.get('mousedown')
-      sequencer.click e, true
+
+  Template.clip_list.events
+    'click ul#clips': (e) ->
+
+      #get object from collection with the corresponding _id
+      clipObject = Clips.findOne( _id: $(e.srcElement).attr('id') )
+      clipPreview = new ClipPreview(clipObject)
+      clipPreview.play()
+
+  Template.canvas.events
+    'mousedown': (e) ->
+      Session.set('mousedown', true)
+      sequencer.click e
+    'mouseup': (e) ->
+      Session.set('mousedown', false)
+    'mousemove': (e) ->
+      if Session.get('mousedown')
+        sequencer.click e, true

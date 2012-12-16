@@ -75,6 +75,12 @@ class Sequencer
           @drawCell(row, @current)
       )(@sounds.length - 1 - i)
 
+    for letter, i in letters
+      Mousetrap.bind letter, ((row) =>
+        =>
+          @playRow(row)
+      )(@sounds.length - 1 - i)
+
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -131,6 +137,13 @@ class Sequencer
            @soundbank[row].currentTime = 0
            @soundbank[row].play()
 
+  playRow: (row) ->
+    if @soundbank[row].readyState is 4
+       @soundbank[row].currentTime = 0
+       @soundbank[row].play()
+       move = @tile_height * row
+       $('.arrow').css("top",move)
+
   tickLength: ->
     1000 * (Session.get('note') / Session.get('bpm'))
 
@@ -181,5 +194,4 @@ class Sequencer
 
   buildLib: (exportObject) ->
     console.log(exportObject)
-    clipPreview = new ClipPreview(exportObject)
     Meteor.call("createClip", exportObject)
