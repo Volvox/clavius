@@ -8,3 +8,5 @@ preserve-inputs
 jquery
 coffeescript
 bootstrap
+less
+backbone

@@ -1,0 +1,137 @@
+@header-height: 160px;
+@footer-height: 20px;
+@track-height: 100px;
+@controls-width: 300px;
+
+.vertical-gradient(@start: #FFF, @stop: #DDD) {
+	background-image: -ms-linear-gradient(top, @start 0%, @stop 100%);
+	background-image: -moz-linear-gradient(top, @start 0%, @stop 100%);
+	background-image: -o-linear-gradient(top, @start 0%, @stop 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @start), color-stop(1, @stop));
+	background-image: -webkit-linear-gradient(top, @start 0%, @stop 100%);
+	background-image: linear-gradient(to bottom, @start 0%, @stop 100%);
+}
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+	box-shadow:         @style @c;
+	-webkit-box-shadow: @style @c;
+	-moz-box-shadow:    @style @c;
+}
+
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+	.box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+
+.rounded(@radius: 2px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+	-moz-background-clip: padding; 
+	-webkit-background-clip: padding-box; 
+	background-clip: padding-box; 
+}
+
+body {
+	background: #eee;
+}
+
+.sequencer {
+	height: 600px;
+}
+
+#header {
+	height: @header-height;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #4e4e4e;
+	border-bottom: 1px solid #111;
+}
+
+#footer {
+	height: @footer-height;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	border-top: 1px solid #DDD;
+	.vertical-gradient(#DEDEDE, #ECECEC);
+}
+
+#tracks {
+	margin-top: @header-height;
+}
+
+.track {
+	height: @track-height;
+	clear: both;
+
+	.controls {
+		float: left;
+		width: @controls-width;
+		padding: 20px;
+		box-sizing: border-box;
+		height: 100%;
+		border-top: 1px solid #EBEBEB;
+		.box-shadow(1px 0px 5px, 0.1);
+		.vertical-gradient(#D3D3D3, #C3C3C3);
+	}
+
+	.clips {
+		height: 100%;
+		margin-left: @controls-width;
+		border-top: 1px solid #BEBEBE;
+		padding: 5px;
+		box-sizing: border-box;
+		.vertical-gradient(#ABABAB, #9D9D9D);
+
+		.clip {
+			float: left;
+			width: 200px;
+			height: 100%;
+			.rounded(6px);
+			box-sizing: border-box;
+			.vertical-gradient(#88b, #77b);
+		}
+	}
+}
+
+form{margin-top: 30px;}
+.hold {
+    padding: 10px;
+    color:red;
+    display: inline;
+    float:right;
+    margin-bottom: 10px;
+    border: 2px solid red;
+    line-height:13px;
+    font-weight: bold;
+    text-align:center;
+    width:40px;
+}
+
+.hold:hover{
+    cursor: pointer;
+}
+.held {
+    line-height:14px;
+    border: 1px solid rgba(255, 0, 18, .4);
+    color:rgba(255, 0, 18, .4);
+    font-weight: normal;
+}
+
+select {
+    width: 80px;
+}
+
+input.bpm{ width:80px;}
+
+#note{
+    font-size: 10px;
+    display: inline;
+    margin: -15px 6px 10px 0;
+    letter-spacing:.15em;
+    float:right;
+    position: relative;
+}

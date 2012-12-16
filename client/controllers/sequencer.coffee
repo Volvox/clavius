@@ -164,7 +164,6 @@ class Sequencer
     #     @drawCell(row, col)
     #     false
 
-
   initializeCanvas: (canvas) ->
     @canvas = canvas
     @canvas.height = $(canvas).parent().height()
