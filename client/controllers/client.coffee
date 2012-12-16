@@ -1,4 +1,5 @@
 Meteor.subscribe 'clips'
+Meteor.subscribe 'songs'
 
 Template.canvas.rendered = ->
   unless window.sequencer?
@@ -10,7 +11,6 @@ Template.stepsequencer.bpm = ->
 
 Template.clip_list.clips = ->
   Clips.find()
-  # Session.get('clips')
 
 Template.stepsequencer.hidden = ->
   Session.get('hidden')
@@ -41,6 +41,7 @@ Template.stepsequencer.events
     e.preventDefault()
     Session.set 'hidden', true
 
+
   Template.clip_list.events
     'click ul#clips': (e) ->
 
@@ -49,12 +50,12 @@ Template.stepsequencer.events
       clipPreview = new ClipPreview(clipObject)
       clipPreview.play()
 
-Template.canvas.events
-  'mousedown': (e) ->
-    Session.set('mousedown', true)
-    sequencer.click e
-  'mouseup': (e) ->
-    Session.set('mousedown', false)
-  'mousemove': (e) ->
-    if Session.get('mousedown')
-      sequencer.click e, true
+  Template.canvas.events
+    'mousedown': (e) ->
+      Session.set('mousedown', true)
+      sequencer.click e
+    'mouseup': (e) ->
+      Session.set('mousedown', false)
+    'mousemove': (e) ->
+      if Session.get('mousedown')
+        sequencer.click e, true

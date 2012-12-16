@@ -1,17 +1,14 @@
 <template name="mixer">
 <div id="header">
 </div>
-{{> tracks}}
-<div id="footer">
-</div>
-</template>
-
-<template name="tracks">
 <div id="tracks">
+  {{#with song}}
+  {{#each tracks}}
   {{> track}}
-  {{> track}}
-  {{> track}}
-  {{> track}}
+  {{/each}}
+  {{/with}}
+</div>
+<div id="footer">
 </div>
 </template>
 
@@ -29,10 +26,14 @@
 
 <template name="clips">
 <div class="clips">
+  {{#each clips}}
   {{> clip}}
+  {{/each}}
 </div>
 </template>
 
 <template name="clip">
-<div class="clip"></div>
+<div style="left: {{left}}px; width: {{width}}px;" class="clip">
+</div>
 </template>
+
