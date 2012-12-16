@@ -23,4 +23,3 @@ class ClipPreview
 
   stop: ->
     Meteor.clearTimeout @ticker
-

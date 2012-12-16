@@ -5,34 +5,40 @@
 <body>
 <div class="outer-wrapper">
   {{> body}}
+
 </div>
 </body>
 
-
 <template name="page_controller">
-    <ul id="navigation">
-      <li><a href="/">home</a></li>
-      <li><a href="/sequencer">sequencer</a></li>
-    </ul>
-
     {{#if page "stepsequencer"}}
     {{> stepsequencer}}
+    {{> library}}
     {{else}}
     {{> mixer}}
     {{/if}}
+</template>
 
 <template name="body">
   {{{renderPage}}}
 </template>
 
 <template name="stepsequencer">
-<div class="container">
+  {{> clip_list }}
 
+<div class="container">
   <div class="row">
     <div class="span12">
 
       <form class="form-inline">
-        <div id="save">Add to Library</div>
+
+        {{#if hidden}}
+          <input type="text" id="nameSubmit" class="input-small" placeholder="name of sequence">
+          <a href="#" class="btn">  save
+          </a>
+        {{else}}
+          <div id="save">Add to Library</div>
+        {{/if}}
+
 
         <label>bpm</label>
         <input class="bpm" value="120" type="number" />
@@ -63,8 +69,20 @@
   </div>
   <div class="row sequencer">
     <div class="span12 sequencer">
-      <canvas></canvas>
+      {{> canvas}}
     </div>
   </div>
+</template>
+<template name="canvas">
+     {{#constant}}
+      <canvas></canvas>
+    {{/constant}}
+</template>
 
+<template name="clip_list">
+  <ul id="clips">
+    {{#each clips}}
+   <li> {{title}}</li>
+  {{/each}}
+</ul>
 </template>

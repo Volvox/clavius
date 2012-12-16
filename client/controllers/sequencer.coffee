@@ -24,7 +24,7 @@ class Sequencer
         @preloadSounds()
         @bindKeys()
         if @ticker?
-          Meteor.clearTimeout @ticker
+          Meteor.clearInterval @ticker
           @ticker = null
         @tick()
 
@@ -41,8 +41,11 @@ class Sequencer
 
   preloadSounds: ->
     @soundbank = []
+
     for sound in @sounds
       @soundbank.push new Audio(sound['preview-hq-ogg'])
+    $(@soundbank[@sounds.length-1]).on 'loadeddata', => @ticker = Meteor.setInterval(@tick, @tickLength())
+
 
   bindKeys: ->
 
@@ -50,6 +53,7 @@ class Sequencer
 
     Mousetrap.bind "space", =>
       @toggle()
+      "false"
 
     Mousetrap.bind "right", =>
       if @hold
@@ -70,6 +74,7 @@ class Sequencer
           @state[@current][row] = not @state[@current][row]
           @drawCell(row, @current)
       )(@sounds.length - 1 - i)
+
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -122,8 +127,9 @@ class Sequencer
   playColumn: (col) ->
     for active, row in @state[col]
       if active
-        @soundbank[row].currentTime = 0
-        @soundbank[row].play()
+        if @soundbank[row].readyState is 4
+           @soundbank[row].currentTime = 0
+           @soundbank[row].play()
 
   tickLength: ->
     1000 * (Session.get('note') / Session.get('bpm'))
@@ -131,10 +137,10 @@ class Sequencer
   toggle: ->
     $(".hold").toggleClass("held")
     if @hold is false
-      Meteor.clearTimeout @ticker
+      Meteor.clearInterval @ticker
       @hold = true
     else
-      @ticker = Meteor.setTimeout @tick, (1000 * (Session.get('note') / Session.get('bpm'))) # sixteenth note
+      @ticker = Meteor.setInterval(@tick, @tickLength())
       @hold = false
 
   tick: =>
@@ -144,7 +150,6 @@ class Sequencer
     @highlightColumn(@current)
     @playColumn(@current)
     @current = (@current + 1) % @columns
-    @ticker = Meteor.setTimeout @tick, @tickLength()
 
   click: (e, force) ->
     coords = @getCoords e
@@ -161,7 +166,7 @@ class Sequencer
     x: e.pageX - @canvas.offsetLeft
     y: e.pageY - @canvas.offsetTop
 
-  export: ->
+  export: (title) ->
     notes = []
     for col of @state
       for active, row in @state[col]
@@ -172,14 +177,9 @@ class Sequencer
             stop: col * @tickLength() + @tickLength()
     notes: notes
     sounds: @sounds
+    title: title
 
   buildLib: (exportObject) ->
+    console.log(exportObject)
     clipPreview = new ClipPreview(exportObject)
     Meteor.call("createClip", exportObject)
-    clips = Clips.find().fetch()
-    console.log(clips)
-
-
-
-
-
