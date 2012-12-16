@@ -4,6 +4,8 @@ Template.clip.rendered = ->
   unless previewers[@data.data._id]?
     previewers[@data.data._id] = new ClipPreview(@data.data)
 
+  previewers[@data.data._id].render(@find('canvas'))
+
   $(@find('.clip')).draggable
     axis: 'x'
 
