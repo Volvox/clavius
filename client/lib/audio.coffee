@@ -1,8 +1,6 @@
 playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
   source = audioContext.createBufferSource()
   source.buffer = buffer
-  console.log("played")
-
   source.playbackRate.value = playbackRate if playbackRate?
 
   if effectsPipeline?

@@ -73,27 +73,26 @@ class Sequencer
       $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
       for letter, i in letters
         do (letter, i) =>
-          row = @sounds.length - 1 - i
-          Mousetrap.bind letter, =>
-            Mousetrap.bind letter, (=>
-              # @play()
-              val = 1/row
-              pitchRate = Math.pow(2.0, 2.0 * (val - 0.5))
-              contextPlayTime = @noteTime + @startTime # convert note time to context time
-              for active, row in @state[@current]
-                if active
-                  playBuffer @soundbank[row], 0, null, null, pitchRate
-              # synchronize drawing with sound
-              if @noteTime isnt @lastDrawTime
-                @lastDrawTime = @noteTime
-                @redraw()
-              @advanceNote()
-              console.log("playing")
-              # @play.loop = true
-              ), "keydown"
-            Mousetrap.bind letter, (=>
-              @stop()
-              ), "keyup"
+          Mousetrap.bind letter, (=>
+            # @play()
+            val = (letters.length)/((@sounds.length - 1 - i))
+
+            # note C (key G) should be 1.0 pitch. 0.90476 yields 1.0000026405641742
+            pitchRate = Math.pow(2.0, 2.0 * (val - 0.90476))
+            console.log(pitchRate)
+            contextPlayTime = @noteTime + @startTime # convert note time to context time
+            for active, row in @state[@current]
+              if active
+                playBuffer @soundbank[row], 0, null, null, pitchRate
+            # synchronize drawing with sound
+            if @noteTime isnt @lastDrawTime
+              @lastDrawTime = @noteTime
+              @redraw()
+            @advanceNote()
+            ), "keydown"
+          Mousetrap.bind letter, (=>
+            @stop()
+            ), "keyup"
 
     else
 
@@ -108,6 +107,7 @@ class Sequencer
 
           #live mode
           Mousetrap.bind letter, =>
+            console.log(row)
             @playRow(row)
 
   redraw: (column, kind) ->
