@@ -159,15 +159,12 @@ class Sequencer
       x = col * @tile_width + @tile_width
       ctx.fillRect x, 0, 5, @canvas.height
 
-<<<<<<< HEAD
   playBuffer: (buffer, time) ->
     source = audioContext.createBufferSource()
     source.buffer = buffer
     source.connect masterGainNode
     source.noteOn time
 
-=======
->>>>>>> dd8e704dd50d21f16c01f3a8c220a44faa33e165
   playColumn: (col) ->
     for active, row in @state[col]
       if active
