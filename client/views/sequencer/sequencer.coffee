@@ -1,6 +1,7 @@
 class Sequencer
   constructor: (canvas) ->
     @current = 0
+    @cursor = 0
     @hold = false
     @initializeCanvas canvas
     @fetchSounds(17)
@@ -41,41 +42,76 @@ class Sequencer
       @play()
     loader.load()
 
-  bindKeys: ->
+  bindKeys: (transpose) ->
+
     Mousetrap.reset()
-
-    Mousetrap.bind "space", =>
-      @toggle()
-
-    Mousetrap.bind "right", =>
-      if @hold
-        @current += 1
-        if @current == @columns
-          @current = 0
-        @redraw()
-
     letters = "awsedrfgyhujkolp;['".split ''
-    for letter, i in letters
-      do (letter, i) =>
-        row = @sounds.length - 1 - i
 
-        Mousetrap.bind "shift+#{letter}", =>
-          @state[@current][row] = not @state[@current][row]
-          @drawCell(row, @current)
+    Mousetrap.bind "?", =>
+        alert 'keyboard shortcuts'
 
-        Mousetrap.bind letter, =>
-          @playRow(row)
+      Mousetrap.bind "space", =>
+        @toggle()
 
-  redraw: (column) ->
-    @clear()
-    @drawGrid()
-    @draw()
-    if column?
-      @highlightColumn column
+      Mousetrap.bind "right", =>
+        @cursor += 1
+        if @cursor == @columns
+          @cursor = 0
+        @redraw(null, "cursor")
+
+      Mousetrap.bind "left", =>
+        @cursor -= 1
+        if @cursor == 0
+          @cursor = @columns-1
+        @redraw(null, "cursor")
+
+    if transpose?
+    #playback sequence at designated pitch, and loop it while the key is held down. when key is off, stop
+
+      @hold = false
+      @toggle()
+      text = $("#toggle-trans").text()
+      $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
+      for letter, i in letters
+        do (letter, i) =>
+          row = @sounds.length - 1 - i
+          Mousetrap.bind letter, =>
+            pitch = row*0.0005
+            voice = audioContext.createBufferSource()
+            voice.playbackRate = pitch
+            Mousetrap.bind letter, (=>
+              @play()
+              # @play.loop = true
+              ), "keydown"
+            Mousetrap.bind letter, (=>
+              @stop()
+              @hold = false
+              @toggle()
+              ), "keyup"
+
     else
-      @highlightColumn @current
 
-  drawGrid: ->
+      for letter, i in letters
+        do (letter, i) =>
+          row = @sounds.length - 1 - i
+
+          #insert mode
+          Mousetrap.bind "shift+#{letter}", =>
+            @state[@cursor][row] = not @state[@cursor][row]
+            @drawDot(row, @cursor)
+
+          #live mode
+          Mousetrap.bind letter, =>
+            @playRow(row)
+
+  redraw: (column, kind) ->
+    @clear()
+    @drawGrid(column, kind)
+    @draw()
+    @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
+    @highlightColumn @current
+
+  drawGrid: () ->
     ctx = @canvas.getContext '2d'
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)'
 
@@ -102,9 +138,9 @@ class Sequencer
     for col of @state
       for row of @state[col]
         if @state[col][row]
-          @drawCell row, col
+          @drawDot row, col
 
-  drawCell: (row, col) ->
+  drawDot: (row, col) ->
     ctx = @canvas.getContext '2d'
     if @state[col][row]
       ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
@@ -117,12 +153,21 @@ class Sequencer
     ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
     ctx.fill()
 
-  highlightColumn: (col) ->
-    ctx = @canvas.getContext '2d'
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
-    x = col * @tile_width + @tile_width
-    ctx.fillRect x, 0, 5, @canvas.height
+  highlightColumn: (col, color) ->
+      ctx = @canvas.getContext '2d'
+      ctx.fillStyle = color or 'rgba(0, 0, 255, 0.4)'
+      x = col * @tile_width + @tile_width
+      ctx.fillRect x, 0, 5, @canvas.height
 
+<<<<<<< HEAD
+  playBuffer: (buffer, time) ->
+    source = audioContext.createBufferSource()
+    source.buffer = buffer
+    source.connect masterGainNode
+    source.noteOn time
+
+=======
+>>>>>>> dd8e704dd50d21f16c01f3a8c220a44faa33e165
   playColumn: (col) ->
     for active, row in @state[col]
       if active
@@ -138,6 +183,7 @@ class Sequencer
   schedule: =>
     currentTime = audioContext.currentTime
     currentTime -= @startTime # normalize to 0
+    # console.log @current, currentTime
 
     while @noteTime < currentTime + 0.200
       contextPlayTime = @noteTime + @startTime # convert note time to context time
@@ -158,6 +204,9 @@ class Sequencer
     @current += 1
     if @current == @columns
       @current = 0
+
+    secondsPerBeat = 60.0 / Session.get('bpm')
+    @noteTime += Session.get('note') * secondsPerBeat
 
     @noteTime += @tickLength()
 
@@ -190,7 +239,7 @@ class Sequencer
         @state[col][row] = force
       else
         @state[col][row] = not @state[col][row]
-      @drawCell row, col
+      @drawDot row, col
 
   getCoords: (e) ->
     x: e.pageX - @canvas.offsetLeft
@@ -251,5 +300,6 @@ Template.sequencer.events
     Session.set 'hidden', true
   'click #clear': (e) ->
     sequencer.reset()
-
-
+  'click #toggle-trans': (e) ->
+    e.preventDefault()
+    sequencer.bindKeys("trans")

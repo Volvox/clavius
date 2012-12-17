@@ -5,7 +5,7 @@
     <div class="span12">
       <form class="form-inline">
         {{#if hidden}}
-          <input type="text" id="nameSubmit" class="input-small" placeholder="name of sequence">
+          <input type="text" id="name-submit" class="input-small" placeholder="name of sequence">
           <a href="#" class="btn">  save
           </a>
         {{else}}
@@ -32,6 +32,9 @@
           <option value="2618">3</option>
         </select>
         <div class="btn" id="clear">clear</div>
+        <label id="key-trans">Key Transposition</label>
+        <button class="btn btn-small" id="toggle-trans" type="button">OFF</button>
+
         <div class="hold">HOLD</div>
       </form>
       <div id="note">space bar</div>
@@ -43,4 +46,3 @@
     </div>
   </div>
 </template>
-
