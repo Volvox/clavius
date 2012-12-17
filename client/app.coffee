@@ -1,3 +1,6 @@
+Meteor.subscribe 'clips'
+Meteor.subscribe 'songs'
+
 Meteor.startup ->
   window.audioContext = new webkitAudioContext()
   if audioContext.createDynamicsCompressor

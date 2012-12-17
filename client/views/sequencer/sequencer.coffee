@@ -155,7 +155,6 @@ class Sequencer
 
   highlightColumn: (col, color) ->
       ctx = @canvas.getContext '2d'
-
       ctx.fillStyle = color or 'rgba(0, 0, 255, 0.4)'
       x = col * @tile_width + @tile_width
       ctx.fillRect x, 0, 5, @canvas.height
@@ -261,3 +260,41 @@ class Sequencer
       @state[col] = []
       for row in [0...@sounds.length]
         @state[col][row] = false
+
+
+Template.sequencer.bpm = ->
+  Session.get('bpm')
+
+Template.sequencer.hidden = ->
+  Session.get('hidden')
+
+Template.sequencer.events
+  'change .bpm': (e) ->
+    val =  Number($(e.srcElement).val())
+    if val > 0
+      Session.set 'bpm', val
+  'change .note': (e) ->
+    val =  Number($(e.srcElement).val())
+    Session.set 'note', val
+  'change .bars': (e) ->
+    val =  Number($(e.srcElement).val())
+    Session.set 'columns', val
+    sequencer.resizeGrid()
+  'change .packId': (e) ->
+    val = Number($(e.srcElement).val())
+    sequencer.fetchSounds(val)
+    e.srcElement.blur()
+  'click .hold': (e) ->
+    sequencer.toggle()
+  'click a.btn': (e) ->
+    e.preventDefault()
+    title = $("#nameSubmit").val()
+    sequencer.buildLib(sequencer.export(title))
+  'click #save': (e) ->
+    e.preventDefault()
+    Session.set 'hidden', true
+  'click #clear': (e) ->
+    sequencer.reset()
+  'click #toggle-trans': (e) ->
+    e.preventDefault()
+    sequencer.bindKeys("trans")

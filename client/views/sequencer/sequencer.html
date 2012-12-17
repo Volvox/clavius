@@ -1,27 +1,4 @@
-<head>
-  <title>clavius</title>
-</head>
-
-<body>
-<div class="outer-wrapper">
-  {{> body}}
-</div>
-</body>
-
-<template name="page_controller">
-    {{#if page "stepsequencer"}}
-    {{> stepsequencer}}
-    {{> library}}
-    {{else}}
-    {{> mixer}}
-    {{/if}}
-</template>
-
-<template name="body">
-  {{{renderPage}}}
-</template>
-
-<template name="stepsequencer">
+<template name="sequencer">
   {{> clip_list }}
 <div class="container">
   <div class="row">
@@ -68,18 +45,4 @@
       {{> canvas}}
     </div>
   </div>
-</template>
-<template name="canvas">
-  {{#constant}}
-  <div class="arrow"> &#10155;</div>
-    <canvas></canvas>
-  {{/constant}}
-</template>
-
-<template name="clip_list">
-  <ul id="clips">
-    {{#each clips}}
-   <li id="{{_id}}"> {{title}}</li>
-    {{/each}}
-  </ul>
 </template>

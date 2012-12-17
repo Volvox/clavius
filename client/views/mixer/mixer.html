@@ -1,0 +1,15 @@
+<template name="mixer">
+<div id="header">
+</div>
+<div id="tracks">
+  {{#with song}}
+  {{#each tracks}}
+  {{> track}}
+  {{/each}}
+  {{/with}}
+</div>
+{{> clip_library}}
+<div id="footer">
+</div>
+</template>
+
