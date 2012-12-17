@@ -79,6 +79,7 @@ class Sequencer
             # note C (key G) should be 1.0 pitch. 0.90476 yields 1.0000026405641742
             pitchRate = Math.pow(2.0, 2.0 * (val - 0.90476))
             console.log(pitchRate)
+
             contextPlayTime = @noteTime + @startTime # convert note time to context time
             for active, row in @state[@current]
               if active
@@ -287,11 +288,12 @@ Template.sequencer.events
     sequencer.toggle()
   'click a.btn': (e) ->
     e.preventDefault()
-    title = $("#nameSubmit").val()
+    title = $("#name-submit").val()
     sequencer.buildLib(sequencer.export(title))
   'click #save': (e) ->
     e.preventDefault()
     Session.set 'hidden', true
+    console.log("save")
   'click #clear': (e) ->
     sequencer.reset()
   'click #toggle-trans': (e) ->
