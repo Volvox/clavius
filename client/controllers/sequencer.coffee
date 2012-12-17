@@ -56,14 +56,16 @@ class Sequencer
 
     letters = "awsedrfgyhujkolp;['".split ''
     for letter, i in letters
-      Mousetrap.bind "shift+#{letter}", do (i) => =>
+      do (letter, i) =>
         row = @sounds.length - 1 - i
-        @state[@current][row] = not @state[@current][row]
-        @drawCell(row, @current)
+        Mousetrap.bind "shift+#{letter}", =>
+          @state[@current][row] = not @state[@current][row]
+          @drawCell(row, @current)
 
     for letter, i in letters
-      Mousetrap.bind letter, do (i) =>
-        => @playRow(@sounds.length - 1 - i)
+      do (letter, i) =>
+        Mousetrap.bind letter, =>
+          @playRow(@sounds.length - 1 - i)
 
   redraw: (column) ->
     @clear()
