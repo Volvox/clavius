@@ -48,3 +48,14 @@ class ClipPreview
     ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
     for note in @clip.notes
       ctx.fillRect note.start * tickWidth, note.sound * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
+
+Meteor.startup ->
+  window.previewers = {}
+
+preloadPreview = (clip) ->
+  unless previewers[clip._id]?
+    previewers[clip._id] = new ClipPreview(clip)
+
+getPreview = (clip) ->
+  previewers[clip._id]
+

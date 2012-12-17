@@ -1,7 +1,4 @@
 Meteor.Router.add
   '/': 'mixer'
-  '/sequencer': 'stepsequencer'
+  '/sequencer': 'sequencer'
 
-Meteor.startup ->
-  Meteor.autorun ->
-    Meteor.Router.page()
