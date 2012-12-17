@@ -250,7 +250,8 @@ class Sequencer
           notes.push
             sound: row
             start: col * @tickLength()
-    notes[notes.length - 1].stop = @columns * @tickLength
+            stop: col * @tickLength() + @soundbank[row].duration
+    notes[notes.length - 1].stop = @columns * @tickLength()
     notes: notes
     sounds: @sounds
     title: title
@@ -290,7 +291,7 @@ Template.sequencer.events
     sequencer.toggle()
   'click a.btn': (e) ->
     e.preventDefault()
-    title = $("#nameSubmit").val()
+    title = $("#name-submit").val()
     sequencer.buildLib(sequencer.export(title))
   'click #save': (e) ->
     e.preventDefault()
