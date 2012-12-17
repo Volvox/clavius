@@ -2,10 +2,10 @@ class Sequencer
   constructor: (canvas) ->
     @current = 0
     @hold = false
-    Session.set('bpm', 120)
-    Session.set('note', 15)
     @initializeCanvas canvas
     @fetchSounds(17)
+    Session.set('bpm', 120)
+    Session.set('note', 0.25)
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
@@ -23,10 +23,6 @@ class Sequencer
         @resizeGrid()
         @preloadSounds()
         @bindKeys()
-        if @ticker?
-          Meteor.clearInterval @ticker
-          @ticker = null
-        @tick()
 
   resizeGrid: ->
     @current = 0
@@ -40,32 +36,23 @@ class Sequencer
         @state[col][row] = false
 
   preloadSounds: ->
-    @soundbank = []
-
-    for sound in @sounds
-      @soundbank.push new Audio(sound['preview-hq-ogg'])
-    $(@soundbank[@sounds.length-1]).on 'loadeddata', => @ticker = Meteor.setInterval(@tick, @tickLength())
-
+    loader = new BufferLoader audioContext, (sound['preview-hq-ogg'] for sound in @sounds), (bufferList) =>
+      @soundbank = bufferList
+      @play()
+    loader.load()
 
   bindKeys: ->
-
     Mousetrap.reset()
 
     Mousetrap.bind "space", =>
       @toggle()
-      "false"
 
     Mousetrap.bind "right", =>
       if @hold
-        @clear()
         @current += 1
-        @highlightColumn(@current)
-      else
-        @tick
-        @clear()
-        @toggle()
-        @current += 1
-        @highlightColumn(@current)
+        if @current == @columns
+          @current = 0
+        @redraw()
 
     letters = "awsedrfgyhujkolp;['".split ''
     for letter, i in letters
@@ -81,6 +68,14 @@ class Sequencer
           @playRow(row)
       )(@sounds.length - 1 - i)
 
+  redraw: (column) ->
+    @clear()
+    @drawGrid()
+    @draw()
+    if column?
+      @highlightColumn column
+    else
+      @highlightColumn @current
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -130,6 +125,12 @@ class Sequencer
     x = col * @tile_width + @tile_width
     ctx.fillRect x, 0, 5, @canvas.height
 
+  playBuffer: (buffer, time) ->
+    source = audioContext.createBufferSource()
+    source.buffer = buffer
+    source.connect masterGainNode
+    source.start time
+
   playColumn: (col) ->
     for active, row in @state[col]
       if active
@@ -138,11 +139,45 @@ class Sequencer
            @soundbank[row].play()
 
   playRow: (row) ->
-    if @soundbank[row].readyState is 4
-       @soundbank[row].currentTime = 0
-       @soundbank[row].play()
-       move = @tile_height * row
-       $('.arrow').css("top",move)
+    @playBuffer @soundbank[row], 0
+    move = @tile_height * row
+    $('.arrow').css("top", move)
+
+  schedule: =>
+    currentTime = audioContext.currentTime
+    currentTime -= @startTime # normalize to 0
+    console.log @current, currentTime
+
+    while @noteTime < currentTime + 0.200
+      contextPlayTime = @noteTime + @startTime # convert note time to context time
+      for active, row in @state[@current]
+        if active
+          @playBuffer @soundbank[row], contextPlayTime
+
+      # synchronize drawing with sound
+      if @noteTime isnt @lastDrawTime
+        @lastDrawTime = @noteTime
+        @redraw()
+
+      @advanceNote()
+
+    @ticker = Meteor.setTimeout @schedule, 0
+
+  advanceNote: ->
+    @current += 1
+    if @current == @columns
+      @current = 0
+
+    secondsPerBeat = 60.0 / Session.get('bpm')
+    @noteTime += Session.get('note') * secondsPerBeat
+
+  play: ->
+    @noteTime = 0.0
+    @startTime = audioContext.currentTime + 0.005
+    @schedule()
+
+  stop: ->
+    Meteor.clearTimeout @ticker
 
   tickLength: ->
     1000 * (Session.get('note') / Session.get('bpm'))
@@ -150,19 +185,11 @@ class Sequencer
   toggle: ->
     $(".hold").toggleClass("held")
     if @hold is false
-      Meteor.clearInterval @ticker
+      @stop()
       @hold = true
     else
-      @ticker = Meteor.setInterval(@tick, @tickLength())
+      @play()
       @hold = false
-
-  tick: =>
-    @clear()
-    @drawGrid()
-    @draw()
-    @highlightColumn(@current)
-    @playColumn(@current)
-    @current = (@current + 1) % @columns
 
   click: (e, force) ->
     coords = @getCoords e
@@ -193,5 +220,4 @@ class Sequencer
     title: title
 
   buildLib: (exportObject) ->
-    console.log(exportObject)
     Meteor.call("createClip", exportObject)
