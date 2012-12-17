@@ -3,10 +3,12 @@ class Sequencer
     @current = 0
     @cursor = 0
     @hold = false
+    @transpose_sequence = false
     @initializeCanvas canvas
     @fetchSounds(17)
     Session.set('bpm', 120)
     Session.set('note', 0.25)
+
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
@@ -42,7 +44,7 @@ class Sequencer
       @play()
     loader.load()
 
-  bindKeys: (transpose) ->
+  bindKeys: () ->
 
     Mousetrap.reset()
     letters = "awsedrfgyhujkolp;['".split ''
@@ -65,12 +67,9 @@ class Sequencer
         @cursor = @columns-1
       @redraw(null, "cursor")
 
-    if transpose?
-    #playback sequence at designated pitch, and loop it while the key is held down. when key is off, stop
+    #playback sequence at corresponding pitch, and loop it while the key is held down.
+    if @transpose_sequence
       @stop()
-
-      text = $("#toggle-trans").text()
-      $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
       for letter, i in letters
         do (letter, i) =>
           Mousetrap.bind letter, (=>
@@ -90,12 +89,10 @@ class Sequencer
               @redraw()
             @advanceNote()
             ), "keydown"
-          Mousetrap.bind letter, (=>
-            @stop()
-            ), "keyup"
 
     else
 
+      @play()
       for letter, i in letters
         do (letter, i) =>
           row = @sounds.length - 1 - i
@@ -300,4 +297,7 @@ Template.sequencer.events
     sequencer.reset()
   'click #toggle-trans': (e) ->
     e.preventDefault()
-    sequencer.bindKeys("trans")
+    text = $("#toggle-trans").text()
+    $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
+    sequencer.transpose_sequence = not sequencer.transpose_sequence
+    sequencer.bindKeys()
