@@ -195,3 +195,9 @@ class Sequencer
   buildLib: (exportObject) ->
     console.log(exportObject)
     Meteor.call("createClip", exportObject)
+
+  reset: ->
+    for col in [0...@columns]
+      @state[col] = []
+      for row in [0...@sounds.length]
+        @state[col][row] = false

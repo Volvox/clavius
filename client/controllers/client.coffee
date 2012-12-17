@@ -40,6 +40,8 @@ Template.stepsequencer.events
   'click #save': (e) ->
     e.preventDefault()
     Session.set 'hidden', true
+  'click #clear': (e) ->
+    sequencer.reset()
 
 
   Template.clip_list.events
