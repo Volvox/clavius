@@ -50,44 +50,49 @@ class Sequencer
     Mousetrap.bind "?", =>
         alert 'keyboard shortcuts'
 
-      Mousetrap.bind "space", =>
-        @toggle()
+    Mousetrap.bind "space", =>
+      @toggle()
 
-      Mousetrap.bind "right", =>
-        @cursor += 1
-        if @cursor == @columns
-          @cursor = 0
-        @redraw(null, "cursor")
+    Mousetrap.bind "right", =>
+      @cursor += 1
+      if @cursor == @columns
+        @cursor = 0
+      @redraw(null, "cursor")
 
-      Mousetrap.bind "left", =>
-        @cursor -= 1
-        if @cursor == 0
-          @cursor = @columns-1
-        @redraw(null, "cursor")
+    Mousetrap.bind "left", =>
+      @cursor -= 1
+      if @cursor == 0
+        @cursor = @columns-1
+      @redraw(null, "cursor")
 
     if transpose?
     #playback sequence at designated pitch, and loop it while the key is held down. when key is off, stop
+      @stop()
 
-      @hold = false
-      @toggle()
       text = $("#toggle-trans").text()
       $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
       for letter, i in letters
         do (letter, i) =>
-          row = @sounds.length - 1 - i
-          Mousetrap.bind letter, =>
-            pitch = row*0.0005
-            voice = audioContext.createBufferSource()
-            voice.playbackRate = pitch
-            Mousetrap.bind letter, (=>
-              @play()
-              # @play.loop = true
-              ), "keydown"
-            Mousetrap.bind letter, (=>
-              @stop()
-              @hold = false
-              @toggle()
-              ), "keyup"
+          Mousetrap.bind letter, (=>
+            # @play()
+            val = (letters.length)/((@sounds.length - 1 - i))
+
+            # note C (key G) should be 1.0 pitch. 0.90476 yields 1.0000026405641742
+            pitchRate = Math.pow(2.0, 2.0 * (val - 0.90476))
+            console.log(pitchRate)
+            contextPlayTime = @noteTime + @startTime # convert note time to context time
+            for active, row in @state[@current]
+              if active
+                playBuffer @soundbank[row], 0, null, null, pitchRate
+            # synchronize drawing with sound
+            if @noteTime isnt @lastDrawTime
+              @lastDrawTime = @noteTime
+              @redraw()
+            @advanceNote()
+            ), "keydown"
+          Mousetrap.bind letter, (=>
+            @stop()
+            ), "keyup"
 
     else
 
@@ -102,6 +107,7 @@ class Sequencer
 
           #live mode
           Mousetrap.bind letter, =>
+            console.log(row)
             @playRow(row)
 
   redraw: (column, kind) ->
