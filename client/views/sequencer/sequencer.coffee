@@ -253,7 +253,7 @@ class Sequencer
           notes.push
             sound: row
             start: col * @tickLength()
-            stop: col * @tickLength() + @tickLength()
+    notes[notes.length - 1].stop = @columns * @tickLength
     notes: notes
     sounds: @sounds
     title: title
@@ -266,7 +266,6 @@ class Sequencer
       @state[col] = []
       for row in [0...@sounds.length]
         @state[col][row] = false
-
 
 Template.sequencer.bpm = ->
   Session.get('bpm')
