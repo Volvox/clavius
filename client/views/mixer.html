@@ -8,6 +8,7 @@
   {{/each}}
   {{/with}}
 </div>
+{{> clip_library}}
 <div id="footer">
 </div>
 </template>
@@ -34,6 +35,20 @@
 
 <template name="clip">
 <div style="left: {{left}}px; width: {{width}}px;" class="clip">
+  <canvas></canvas>
 </div>
 </template>
 
+<template name="clip_library">
+<div id="clip-library">
+{{#each clips}}
+{{> clip_preview}}
+{{/each}}
+</div>
+</template>
+
+<template name="clip_preview">
+<div class="clip-preview">
+  <canvas></canvas>
+</div>
+</template>

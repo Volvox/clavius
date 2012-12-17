@@ -7,7 +7,6 @@ class ClipPreview
     for sound in @clip.sounds
       @soundbank.push new Audio(sound['preview-hq-ogg'])
 
-
   playNote: (i) =>
     note = @clip.notes[i]
     @soundbank[note.sound].currentTime = 0
@@ -21,7 +20,6 @@ class ClipPreview
           @playNote(i+1)
         @ticker = Meteor.setTimeout(playNext, next)
 
-
   play: ->
     @loadListeners()
     if @ready.length is @soundbank.length
@@ -30,8 +28,6 @@ class ClipPreview
     else
       console.log("not ready yet...")
       Meteor.setInterval(@play,5000)
-
-
 
   stop: ->
     Meteor.clearTimeout @ticker
@@ -42,14 +38,13 @@ class ClipPreview
       $(@soundbank[sound]).on 'loadeddata', =>
         @ready[sound].push(true)
 
-
-    # $(@ready).bind 'state', =>
-    #   if @ready.length is @soundbank.length
-    #     true
-    #     $(@ready).trigger('state')
-
-
-
-
-
-
+  render: (canvas) ->
+    ctx = canvas.getContext '2d'
+    start = Math.min (note.start for note in @clip.notes)...
+    end = Math.max (note.stop for note in @clip.notes)...
+    length = end - start
+    tickWidth = canvas.width / length
+    noteHeight = canvas.height / @clip.sounds.length
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
+    for note in @clip.notes
+      ctx.fillRect note.start * tickWidth, note.sound * noteHeight, (note.stop - note.start) * tickWidth, noteHeight

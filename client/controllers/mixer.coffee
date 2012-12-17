@@ -1,8 +1,15 @@
 window.previewers = {}
 
+preloadPreview = (clip) ->
+  unless previewers[clip._id]?
+    previewers[clip._id] = new ClipPreview(clip)
+
+getPreview = (clip) ->
+  previewers[clip._id]
+
 Template.clip.rendered = ->
-  unless previewers[@data.data._id]?
-    previewers[@data.data._id] = new ClipPreview(@data.data)
+  preloadPreview(@data.data)
+  getPreview(@data.data).render(@find('canvas'))
 
   $(@find('.clip')).draggable
     axis: 'x'
@@ -18,4 +25,16 @@ Template.clip.left = ->
 
 Template.clip.events
   'dblclick': (e, template) ->
-    previewers[template.data.data._id].play()
+    getPreview(template.data.data).play()
+
+Template.clip_library.clips = ->
+  Clips.find()
+
+Template.clip_preview.rendered = ->
+  preloadPreview(@data)
+  getPreview(@data).render(@find('canvas'))
+
+Template.clip_preview.events
+  'dblclick': (e, template) ->
+    getPreview(template.data).play()
+
