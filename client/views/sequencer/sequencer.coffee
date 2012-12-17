@@ -159,12 +159,15 @@ class Sequencer
       x = col * @tile_width + @tile_width
       ctx.fillRect x, 0, 5, @canvas.height
 
+<<<<<<< HEAD
   playBuffer: (buffer, time) ->
     source = audioContext.createBufferSource()
     source.buffer = buffer
     source.connect masterGainNode
     source.noteOn time
 
+=======
+>>>>>>> dd8e704dd50d21f16c01f3a8c220a44faa33e165
   playColumn: (col) ->
     for active, row in @state[col]
       if active
@@ -173,7 +176,7 @@ class Sequencer
            @soundbank[row].play()
 
   playRow: (row) ->
-    @playBuffer @soundbank[row], 0
+    playBuffer @soundbank[row], 0
     move = @tile_height * row
     $('.arrow').css("top", move)
 
@@ -186,7 +189,7 @@ class Sequencer
       contextPlayTime = @noteTime + @startTime # convert note time to context time
       for active, row in @state[@current]
         if active
-          @playBuffer @soundbank[row], contextPlayTime
+          playBuffer @soundbank[row], contextPlayTime
 
       # synchronize drawing with sound
       if @noteTime isnt @lastDrawTime
@@ -201,8 +204,11 @@ class Sequencer
     @current += 1
     if @current == @columns
       @current = 0
+
     secondsPerBeat = 60.0 / Session.get('bpm')
     @noteTime += Session.get('note') * secondsPerBeat
+
+    @noteTime += @tickLength()
 
   play: ->
     @noteTime = 0.0
@@ -213,7 +219,7 @@ class Sequencer
     Meteor.clearTimeout @ticker
 
   tickLength: ->
-    1000 * (Session.get('note') / Session.get('bpm'))
+    Session.get('note') * (60.0 / Session.get('bpm'))
 
   toggle: ->
     $(".hold").toggleClass("held")
