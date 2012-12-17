@@ -58,14 +58,13 @@ class Sequencer
     for letter, i in letters
       do (letter, i) =>
         row = @sounds.length - 1 - i
+
         Mousetrap.bind "shift+#{letter}", =>
           @state[@current][row] = not @state[@current][row]
           @drawCell(row, @current)
 
-    for letter, i in letters
-      do (letter, i) =>
         Mousetrap.bind letter, =>
-          @playRow(@sounds.length - 1 - i)
+          @playRow(row)
 
   redraw: (column) ->
     @clear()
