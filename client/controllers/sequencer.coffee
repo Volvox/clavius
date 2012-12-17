@@ -82,6 +82,21 @@ class Sequencer
       )(@sounds.length - 1 - i)
 
 
+  transposeKeys: ->
+    text = $("#toggle-trans").text()
+    $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
+    Mousetrap.reset()
+    letters = "awsedrfgyhujkolp;['".split ''
+    for letter, i in letters
+      Mousetrap.bind letter, ((row) =>
+        =>
+          @playSequence(row)
+      )(@sounds.length - 1 - i)
+
+  playSequence: (row) ->
+    pitch = row
+    #playback sequence at this pitch
+
   drawGrid: ->
     ctx = @canvas.getContext '2d'
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)'

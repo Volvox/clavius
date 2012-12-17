@@ -42,11 +42,11 @@ Template.stepsequencer.events
     Session.set 'hidden', true
   'click #clear': (e) ->
     sequencer.reset()
-
+  'click #toggle-trans': (e) ->
+    sequencer.transposeKeys()
 
   Template.clip_list.events
     'click ul#clips': (e) ->
-
       #get object from collection with the corresponding _id
       clipObject = Clips.findOne( _id: $(e.srcElement).attr('id') )
       clipPreview = new ClipPreview(clipObject)

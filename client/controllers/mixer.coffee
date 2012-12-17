@@ -37,4 +37,3 @@ Template.clip_preview.rendered = ->
 Template.clip_preview.events
   'dblclick': (e, template) ->
     getPreview(template.data).play()
-

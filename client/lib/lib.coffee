@@ -48,3 +48,18 @@ class ClipPreview
     ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
     for note in @clip.notes
       ctx.fillRect note.start * tickWidth, note.sound * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
+
+  # renderMini: (canvas) ->
+  #   ctx = canvas.getContext '2d'
+  #   start = Math.min (note.start for note in @clip.notes)...
+  #   end = Math.max (note.stop for note in @clip.notes)...
+  #   length = 100
+  #   tickWidth = canvas.width / length
+  #   noteHeight = canvas.height / @clip.sounds.length
+  #   ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
+  #   radius = 2
+  #   for note in @clip.notes
+  #     ctx.beginPath()
+  #     ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+  #     ctx.fill()
+  #     # ctx.fillRect note.start * tickWidth, note.sound * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
