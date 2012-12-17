@@ -1,7 +1,6 @@
 class ClipPreview
   constructor: (clip) ->
     @clip = clip
-    console.log(@clip)
     @soundbank = []
     for sound in @clip.sounds
       @soundbank.push new Audio(sound['preview-hq-ogg'])
