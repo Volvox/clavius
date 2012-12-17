@@ -43,7 +43,8 @@ Template.stepsequencer.events
   'click #clear': (e) ->
     sequencer.reset()
   'click #toggle-trans': (e) ->
-    sequencer.transposeKeys()
+    e.preventDefault()
+    sequencer.bindKeys("trans")
 
   Template.clip_list.events
     'click ul#clips': (e) ->

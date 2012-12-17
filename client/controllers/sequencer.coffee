@@ -42,38 +42,67 @@ class Sequencer
       @play()
     loader.load()
 
-  bindKeys: ->
+  bindKeys: (transpose) ->
+
     Mousetrap.reset()
-
-    Mousetrap.bind "space", =>
-      @toggle()
-
-    Mousetrap.bind "right", =>
-      @cursor += 1
-      if @cursor == @columns
-        @cursor = 0
-      @redraw(null, "cursor")
-
-    Mousetrap.bind "left", =>
-      @cursor -= 1
-      if @cursor == 0
-        @cursor = @columns-1
-      @redraw(null, "cursor")
-
     letters = "awsedrfgyhujkolp;['".split ''
-    for letter, i in letters
-      do (letter, i) =>
-        row = @sounds.length - 1 - i
 
-        #insert mode
-        Mousetrap.bind "shift+#{letter}", =>
-          @state[@current][row] = not @state[@current][row]
-          @drawCell(row, @current)
+    Mousetrap.bind "?", =>
+        alert 'keyboard shortcuts'
 
-        #live mode
-        Mousetrap.bind letter, =>
-          @playRow(row)
+      Mousetrap.bind "space", =>
+        @toggle()
 
+      Mousetrap.bind "right", =>
+        @cursor += 1
+        if @cursor == @columns
+          @cursor = 0
+        @redraw(null, "cursor")
+
+      Mousetrap.bind "left", =>
+        @cursor -= 1
+        if @cursor == 0
+          @cursor = @columns-1
+        @redraw(null, "cursor")
+
+    if transpose?
+    #playback sequence at designated pitch, and loop it while the key is held down. when key is off, stop
+
+      @hold = false
+      @toggle()
+      text = $("#toggle-trans").text()
+      $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
+      for letter, i in letters
+        do (letter, i) =>
+          row = @sounds.length - 1 - i
+          Mousetrap.bind letter, =>
+            pitch = row*0.0005
+            voice = audioContext.createBufferSource()
+            voice.playbackRate = pitch
+            Mousetrap.bind letter, (=>
+              @play()
+              # @play.loop = true
+              ), "keydown"
+            Mousetrap.bind letter, (=>
+              @stop()
+              @hold = false
+              @toggle()
+              ), "keyup"
+
+    else
+
+      for letter, i in letters
+        do (letter, i) =>
+          row = @sounds.length - 1 - i
+
+          #insert mode
+          Mousetrap.bind "shift+#{letter}", =>
+            @state[@cursor][row] = not @state[@cursor][row]
+            @drawDot(row, @cursor)
+
+          #live mode
+          Mousetrap.bind letter, =>
+            @playRow(row)
 
   redraw: (column, kind) ->
     @clear()
@@ -81,24 +110,6 @@ class Sequencer
     @draw()
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
     @highlightColumn @current
-
-  transposeKeys: ->
-    text = $("#toggle-trans").text()
-    $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
-    Mousetrap.reset()
-    letters = "awsedrfgyhujkolp;['".split ''
-    for letter, i in letters
-      Mousetrap.bind letter, ((row) =>
-        =>
-          @playSequence(row)
-      )(@sounds.length - 1 - i)
-
-  playSequence: (row) ->
-    pitch = row*0.05
-    voice = context.createBufferSource()
-
-    # voice.noteOn(noteTime)
-    #playback sequence at this pitch, and loop it while the key is held down, when key is off, stop
 
   drawGrid: () ->
     ctx = @canvas.getContext '2d'
