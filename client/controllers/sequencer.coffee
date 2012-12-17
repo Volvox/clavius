@@ -62,17 +62,18 @@ class Sequencer
 
     letters = "awsedrfgyhujkolp;['".split ''
     for letter, i in letters
-      Mousetrap.bind "shift+#{letter}", ((row) =>
-        =>
-          @state[@cursor][row] = not @state[@cursor][row]
-          @drawDot(row, @cursor)
-      )(@sounds.length - 1 - i)
+      do (letter, i) =>
+        row = @sounds.length - 1 - i
 
-    for letter, i in letters
-      Mousetrap.bind letter, ((row) =>
-        =>
+        #insert mode
+        Mousetrap.bind "shift+#{letter}", =>
+          @state[@current][row] = not @state[@current][row]
+          @drawCell(row, @current)
+
+        #live mode
+        Mousetrap.bind letter, =>
           @playRow(row)
-      )(@sounds.length - 1 - i)
+
 
   redraw: (column, kind) ->
     @clear()
@@ -98,8 +99,6 @@ class Sequencer
 
     # voice.noteOn(noteTime)
     #playback sequence at this pitch, and loop it while the key is held down, when key is off, stop
-
-
 
   drawGrid: () ->
     ctx = @canvas.getContext '2d'
