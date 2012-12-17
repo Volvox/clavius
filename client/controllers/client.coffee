@@ -35,7 +35,7 @@ Template.stepsequencer.events
     sequencer.toggle()
   'click a.btn': (e) ->
     e.preventDefault()
-    title = $("#nameSubmit").val()
+    title = $("#name-submit").val()
     sequencer.buildLib(sequencer.export(title))
   'click #save': (e) ->
     e.preventDefault()

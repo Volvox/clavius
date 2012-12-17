@@ -28,7 +28,7 @@
     <div class="span12">
       <form class="form-inline">
         {{#if hidden}}
-          <input type="text" id="nameSubmit" class="input-small" placeholder="name of sequence">
+          <input type="text" id="name-submit" class="input-small" placeholder="name of sequence">
           <a href="#" class="btn">  save
           </a>
         {{else}}
@@ -72,7 +72,7 @@
 <template name="canvas">
   {{#constant}}
   <div class="arrow"> &#10155;</div>
-      <canvas></canvas>
+    <canvas></canvas>
   {{/constant}}
 </template>
 
@@ -81,5 +81,5 @@
     {{#each clips}}
    <li id="{{_id}}"> {{title}}</li>
     {{/each}}
-</ul>
+  </ul>
 </template>
