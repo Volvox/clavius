@@ -1,42 +1,27 @@
 class ClipPreview
   constructor: (clip) ->
     @clip = clip
-    @soundsloaded = 0
-    console.log(@clip)
-    @soundbank = []
-    for sound in @clip.sounds
-      @soundbank.push new Audio(sound['preview-hq-ogg'])
+    @loadSounds()
+    @gainNode = audioContext.createGainNode()
+    @gainNode.gain.value = 0.7
 
-  playNote: (i) =>
-    note = @clip.notes[i]
-    @soundbank[note.sound].currentTime = 0
-    @soundbank[note.sound].play()
-    if i < @clip.notes.length - 1
-      next = @clip.notes[i+1].start - note.start
-      if next == 0
-        @playNote(i+1)
-      else
-        playNext = =>
-          @playNote(i+1)
-        @ticker = Meteor.setTimeout(playNext, next)
+  loadSounds: ->
+    loader = new BufferLoader audioContext, (sound['preview-hq-ogg'] for sound in @clip.sounds), (bufferList) =>
+      @soundbank = bufferList
+    loader.load()
 
-  play: ->
-    @loadListeners()
-    if @ready.length is @soundbank.length
-      console.log("ready")
-      @playNote(0)
+  play: =>
+    if @soundbank?
+      startTime = audioContext.currentTime
+      for note in @clip.notes
+        contextStart = startTime + note.start
+        contextStop = startTime + note.stop
+        playBuffer @soundbank[note.sound], contextStart, contextStop, @gainNode
     else
-      console.log("not ready yet...")
-      Meteor.setInterval(@play,5000)
+      Meteor.setTimeout @play, 100
 
   stop: ->
-    Meteor.clearTimeout @ticker
-
-  loadListeners: =>
-    @ready = []
-    for sound in @soundbank
-      $(@soundbank[sound]).on 'loadeddata', =>
-        @ready[sound].push(true)
+    @gainNode.gain.value = 0.0
 
   render: (canvas) ->
     ctx = canvas.getContext '2d'
