@@ -8,6 +8,7 @@ class Sequencer
     @fetchSounds(17)
     Session.set('bpm', 120)
     Session.set('note', 0.25)
+    Session.set('columns', 32)
     @octave = 0
     @letters = "awsedrfgyhujkolp;['".split ''
     @transpose = new Transpose()
@@ -31,7 +32,7 @@ class Sequencer
 
   resizeGrid: ->
     @current = 0
-    @columns = Session.get('columns') or 32
+    @columns = Session.get('columns')
     @tile_height = Math.floor(@canvas.height / (@sounds.length + 1))
     @tile_width = Math.floor(@canvas.width / (@columns + 1))
     @state = []
@@ -65,16 +66,15 @@ class Sequencer
       @redraw(null, "cursor")
 
     #shift octave up and down
-    Mousetrap.bind "shift+down", =>
+    Mousetrap.bind "shift+up", =>
       Session.set "display-octave", @octave
       if @octave > -2
         @octave -= 1
 
-    Mousetrap.bind "shift+up", =>
+    Mousetrap.bind "shift+down", =>
       Session.set "display-octave", @octave
       if @octave < 2
         @octave += 1
-
 
     #playback sequence at corresponding pitch, and loop it while the key is held down.
     if @transpose_sequence
@@ -178,8 +178,8 @@ class Sequencer
            @soundbank[row].play()
 
   playRow: (row, @octave) ->
-    octave = @transpose.pitchShift(@letters, @sounds.length, @soundbank[row], @octave)
-    console.log("playRow" +octave)
+    octave = @transpose.pitchShift(@letters, @sounds.length, row, @octave)
+    console.log("playRow() octave " +octave)
     playBuffer @soundbank[row], 0, null, null, octave
     move = @tile_height * row
     $('.arrow').css("top", move)
@@ -194,7 +194,7 @@ class Sequencer
       for active, row in @state[@current]
         if active
           octave = @transpose.pitchShift(@letters, @sounds.length, active, @octave)
-          console.log("schedule "+octave)
+          console.log("schedule() octave "+octave)
           playBuffer @soundbank[row], contextPlayTime, null, null, octave
 
       # synchronize drawing with sound
@@ -261,6 +261,10 @@ class Sequencer
     notes: notes
     sounds: @sounds
     title: title
+    state: @state
+    columns: Session.get('columns')
+    bpm: Session.get('bpm')
+
 
   buildLib: (exportObject) ->
     Meteor.call("createClip", exportObject)
@@ -270,6 +274,26 @@ class Sequencer
       @state[col] = []
       for row in [0...@sounds.length]
         @state[col][row] = false
+
+  seed: (clipObject) ->
+    #need to convert audio time to canvas divide start time by the time of one colum u get the column
+    bpm = clipObject.bpm
+    notes = clipObject.notes
+    columns = clipObject.columnsCount
+    sounds = clipObject.sounds
+    state = clipObject.state
+
+    @reset()
+    Session.set('bpm', bpm)
+    Session.set('columns', columns)
+    for col of state
+      for active, row in state[col]
+        if active
+          @state[col][row] = true
+          @drawDot row, col
+        else
+          @state[col][row] = false
+
 
 Template.sequencer.bpm = ->
   Session.get('bpm')
@@ -305,7 +329,6 @@ Template.sequencer.events
   'click #save': (e) ->
     e.preventDefault()
     Session.set 'hidden', true
-    console.log("save")
   'click #clear': (e) ->
     sequencer.reset()
   'click #toggle-trans': (e) ->

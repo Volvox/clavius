@@ -157,6 +157,15 @@ input.bpm{ width:80px;}
     position: relative;
 }
 
+#update {
+  font-size: 30px;
+  position:fixed;
+  top:100px;
+  left:15px;
+  color: rgba(55, 225, 172, 1);
+  padding:2px;
+  cursor:pointer;
+}
 ul#clips{
   margin: 100px 0 0 40px;
   position:fixed;
@@ -164,8 +173,12 @@ ul#clips{
 }
 #clips li{
     list-style:none;
+    padding:3px;
+    cursor:pointer;
     display:block;
 }
+#clips li:hover{ background-color:yellow;}
+.selected { background-color:yellow; }
 .arrow{
     font-size: 25px;
     color:blue;
