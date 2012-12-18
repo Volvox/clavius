@@ -9,7 +9,7 @@ class Instrument
     @envelope.connect @output
     @envelope.gain.value = 0
 
-    @oscillator.start(0)
+    @oscillator.noteOn(0)
 
   connect: (target) ->
     @output.connect target
@@ -39,4 +39,3 @@ noteToFrequency = (note) ->
 
 frequencyToNote = (frequency) ->
   12 * (Math.log(frequency / 440.0) / Math.log(2)) + 69
-

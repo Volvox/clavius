@@ -15,8 +15,8 @@ class AdditiveSynthesizer extends Instrument
     @envelope.connect @output
     @envelope.gain.value = 0
 
-    @osc1.start(0)
-    @osc2.start(0)
+    @osc1.noteOn(0)
+    @osc2.noteOn(0)
 
   playFrequency: (frequency, time) ->
     noteTime = time or audioContext.currentTime

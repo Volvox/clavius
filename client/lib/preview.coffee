@@ -14,9 +14,10 @@ class ClipPreview
     if @soundbank?
       startTime = audioContext.currentTime
       for note in @clip.notes
+        console.log(note)
         contextStart = startTime + note.start
         contextStop = startTime + note.stop
-        playBuffer @soundbank[note.sound], contextStart, contextStop, @gainNode
+        playBuffer @soundbank[note.sound], contextStart, null, @gainNode
     else
       Meteor.setTimeout @play, 100
 

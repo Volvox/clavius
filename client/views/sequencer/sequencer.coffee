@@ -8,7 +8,9 @@ class Sequencer
     @fetchSounds(17)
     Session.set('bpm', 120)
     Session.set('note', 0.25)
-
+    @octave = 0
+    @letters = "awsedrfgyhujkolp;['".split ''
+    @transpose = new Transpose()
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
@@ -46,15 +48,10 @@ class Sequencer
 
   bindKeys: () ->
 
-    Mousetrap.reset()
-    letters = "awsedrfgyhujkolp;['".split ''
-
-    Mousetrap.bind "?", =>
-        alert 'keyboard shortcuts'
-
     Mousetrap.bind "space", =>
       @toggle()
 
+    #move green cursor to insert notes
     Mousetrap.bind "right", =>
       @cursor += 1
       if @cursor == @columns
@@ -67,17 +64,28 @@ class Sequencer
         @cursor = @columns-1
       @redraw(null, "cursor")
 
+    #shift octave up and down
+    Mousetrap.bind "shift+down", =>
+      Session.set "display-octave", @octave
+      if @octave > -2
+        @octave -= 1
+
+    Mousetrap.bind "shift+up", =>
+      Session.set "display-octave", @octave
+      if @octave < 2
+        @octave += 1
+
+
     #playback sequence at corresponding pitch, and loop it while the key is held down.
     if @transpose_sequence
       @stop()
-      for letter, i in letters
+      for letter, i in @letters
         do (letter, i) =>
           Mousetrap.bind letter, (=>
             # @play()
-            val = (letters.length)/((@sounds.length - 1 - i))
-
-            # note C (key G) should be 1.0 pitch. 0.90476 yields 1.0000026405641742
-            pitchRate = Math.pow(2.0, 2.0 * (val - 0.90476))
+            pitchRate = @transpose.pitchShift(@letters, @sounds.length, i)
+            # val = (letters.length)/(@sounds.length - 1 - i)
+            # pitchRate = Math.pow(2.0, 2.0 * (val - (0.90476 * 1.6)))
             console.log(pitchRate)
 
             contextPlayTime = @noteTime + @startTime # convert note time to context time
@@ -94,7 +102,7 @@ class Sequencer
     else
 
       @play()
-      for letter, i in letters
+      for letter, i in @letters
         do (letter, i) =>
           row = @sounds.length - 1 - i
 
@@ -105,7 +113,6 @@ class Sequencer
 
           #live mode
           Mousetrap.bind letter, =>
-            console.log(row)
             @playRow(row)
 
   redraw: (column, kind) ->
@@ -170,12 +177,14 @@ class Sequencer
            @soundbank[row].currentTime = 0
            @soundbank[row].play()
 
-  playRow: (row) ->
-    playBuffer @soundbank[row], 0
+  playRow: (row, @octave) ->
+    octave = @transpose.pitchShift(@letters, @sounds.length, @soundbank[row], @octave)
+    console.log("playRow" +octave)
+    playBuffer @soundbank[row], 0, null, null, octave
     move = @tile_height * row
     $('.arrow').css("top", move)
 
-  schedule: =>
+  schedule: () =>
     currentTime = audioContext.currentTime
     currentTime -= @startTime # normalize to 0
     # console.log @current, currentTime
@@ -184,7 +193,9 @@ class Sequencer
       contextPlayTime = @noteTime + @startTime # convert note time to context time
       for active, row in @state[@current]
         if active
-          playBuffer @soundbank[row], contextPlayTime
+          octave = @transpose.pitchShift(@letters, @sounds.length, active, @octave)
+          console.log("schedule "+octave)
+          playBuffer @soundbank[row], contextPlayTime, null, null, octave
 
       # synchronize drawing with sound
       if @noteTime isnt @lastDrawTime
@@ -218,12 +229,9 @@ class Sequencer
 
   toggle: ->
     $(".hold").toggleClass("held")
-    if @hold is false
-      @stop()
-      @hold = true
-    else
-      @play()
-      @hold = false
+    @hold = not @hold
+    @hold = if false then @stop() else @play()
+
 
   click: (e, force) ->
     coords = @getCoords e
@@ -268,6 +276,9 @@ Template.sequencer.bpm = ->
 
 Template.sequencer.hidden = ->
   Session.get('hidden')
+
+Template.sequencer.octave = ->
+  Session.get('display-octave')
 
 Template.sequencer.events
   'change .bpm': (e) ->
