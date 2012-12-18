@@ -2,7 +2,6 @@ playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
   source = audioContext.createBufferSource()
   source.buffer = buffer
   source.playbackRate.value = playbackRate if playbackRate?
-
   if effectsPipeline?
     source.connect effectsPipeline
     effectsPipeline.connect masterGainNode
