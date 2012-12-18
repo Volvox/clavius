@@ -1,54 +1,34 @@
 class ClipPreview
   constructor: (clip) ->
     @clip = clip
-    @loadSounds()
-    @gainNode = audioContext.createGainNode()
-    @gainNode.gain.value = 0.7
+    @instrument = new SubtractiveSynthesizer()
+    @instrument.connect masterGainNode
 
-  loadSounds: ->
-    loader = new BufferLoader audioContext, (sound['preview-hq-ogg'] for sound in @clip.sounds), (bufferList) =>
-      @soundbank = bufferList
-    loader.load()
-
-  play: =>
-    if @soundbank?
-      startTime = audioContext.currentTime
-      for note in @clip.notes
-        contextStart = startTime + note.start
-        contextStop = startTime + note.stop
-        playBuffer @soundbank[note.sound], contextStart, null, @gainNode
-    else
-      Meteor.setTimeout @play, 100
+  play: ->
+    startTime = audioContext.currentTime
+    for note in @clip.notes
+      noteStart = startTime + note.start
+      noteStop = startTime + note.stop
+      @instrument.setNote note.sound, noteStop
+      @instrument.start noteStart
+      @instrument.stop noteStop
 
   stop: ->
-    @gainNode.gain.value = 0.0
+    @instrument.stop 0
 
   render: (canvas) ->
     ctx = canvas.getContext '2d'
-    start = Math.min (note.start for note in @clip.notes)...
+    start = 0
     end = Math.max (note.stop for note in @clip.notes)...
     length = end - start
+    pitches = (note.sound for note in @clip.notes)
+    noteMin = Math.min(pitches...)
+    noteMax = Math.max(pitches...)
     tickWidth = canvas.width / length
-    noteHeight = canvas.height / @clip.sounds.length
+    noteHeight = canvas.height / (noteMax - noteMin)
     ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
     for note in @clip.notes
-      ctx.fillRect note.start * tickWidth, note.sound * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
-
-
-  # renderMini: (canvas) ->
-  #   ctx = canvas.getContext '2d'
-  #   start = Math.min (note.start for note in @clip.notes)...
-  #   end = Math.max (note.stop for note in @clip.notes)...
-  #   length = 100
-  #   tickWidth = canvas.width / length
-  #   noteHeight = canvas.height / @clip.sounds.length
-  #   ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
-  #   radius = 2
-  #   for note in @clip.notes
-  #     ctx.beginPath()
-  #     ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
-  #     ctx.fill()
-  #     # ctx.fillRect note.start * tickWidth, note.sound * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
+      ctx.fillRect note.start * tickWidth, (note.sound - noteMin) * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
 
 Meteor.startup ->
   window.previewers = {}

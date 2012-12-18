@@ -2,6 +2,7 @@ Template.canvas.rendered = ->
   unless window.sequencer?
     canvas = @find('canvas')
     window.sequencer = new Sequencer(canvas)
+    sequencer.setInstrument(new SubtractiveSynthesizer())
 
 Template.canvas.events
   'mousedown': (e) ->

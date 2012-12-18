@@ -12,6 +12,9 @@ class Instrument
   connect: (target) ->
     @output.connect target
 
+  disconnect: ->
+    @output.disconnect()
+
   setFrequency: (frequency, time) ->
     noteTime = time or audioContext.currentTime
     @oscillator.frequency.setValueAtTime frequency, noteTime

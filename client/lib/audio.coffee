@@ -23,13 +23,7 @@ Meteor.startup ->
     unless prototype.stop?
       prototype.stop = prototype.noteOff
 
-  if audioContext.createDynamicsCompressor
-    compressor = audioContext.createDynamicsCompressor()
-    compressor.connect(audioContext.destination)
-    finalMixNode = compressor
-  else
-    finalMixNode = audioContext.destination
-
+  finalMixNode = audioContext.destination
   window.masterGainNode = audioContext.createGainNode() # master volume
   masterGainNode.gain.value = 0.7 # reduce overall volume to avoid clipping
   masterGainNode.connect(finalMixNode)
