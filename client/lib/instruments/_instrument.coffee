@@ -7,7 +7,7 @@ class Instrument
     @oscillator.connect @envelope.input
     @envelope.connect @output
 
-    @oscillator.noteOn(0)
+    @oscillator.start 0
 
   connect: (target) ->
     @output.connect target
