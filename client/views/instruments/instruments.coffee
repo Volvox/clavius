@@ -1,12 +1,21 @@
 Template.instruments.rendered = ->
-  instruments = [new Instrument(), new AdditiveSynthesizer(), new FMSynthesizer()]
+  instruments = [new Instrument(), new AdditiveSynthesizer(), new FMSynthesizer(), new SubtractiveSynthesizer()]
   instrument.connect masterGainNode for instrument in instruments
-  current = 0
+  currentInstrument = 0
+  currentNote = 60 # middle C
 
   Mousetrap.bind 'space', ->
-    instruments[current].stop()
-    current += 1
-    current = 0 if current == instruments.length
+    instruments[currentInstrument].stop()
+    currentInstrument += 1
+    currentInstrument = 0 if currentInstrument == instruments.length
+
+  Mousetrap.bind 'z', ->
+    # shift one octave down
+    currentNote -= 12
+
+  Mousetrap.bind 'x', ->
+    # shift one octave up
+    currentNote += 12
 
   keyPressed = null
   letters = "awsedrfgyhujkolp;['".split ''
@@ -15,11 +24,11 @@ Template.instruments.rendered = ->
       Mousetrap.bind letter, (->
         unless keyPressed is letter
           keyPressed = letter
-          instruments[current].setNote 60 + i # middle C
-          instruments[current].start()
+          instruments[currentInstrument].setNote currentNote + i
+          instruments[currentInstrument].start()
       ), 'keydown'
       Mousetrap.bind letter, (->
         if keyPressed is letter
           keyPressed = null
-          instruments[current].stop()
+          instruments[currentInstrument].stop()
       ), 'keyup'

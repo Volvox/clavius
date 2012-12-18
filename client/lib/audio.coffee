@@ -14,6 +14,7 @@ playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
 
 Meteor.startup ->
   window.audioContext = new webkitAudioContext()
+  window.tuna = new Tuna(audioContext)
 
   # support deprecated noteOn(), noteOff() methods
   for source in [audioContext.createBufferSource(), audioContext.createOscillator()]

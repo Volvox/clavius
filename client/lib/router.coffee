@@ -1,5 +1,6 @@
 Meteor.Router.add
-  '/': 'mixer'
+  '/': 'sequencer'
+  '/mixer': 'mixer'
   '/sequencer': 'sequencer'
   '/instruments': 'instruments'
 
