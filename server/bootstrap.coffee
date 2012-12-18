@@ -8,4 +8,3 @@ Meteor.startup ->
           data: Clips.findOne()
         ]
       ]
-
