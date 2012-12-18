@@ -10,7 +10,6 @@ class Sequencer
     Session.set('note', 0.25)
     Session.set('columns', 32)
     @octave = 1
-    @letters = "awsedrfgyhujkolp;['".split ''
 
   initializeCanvas: (canvas) ->
     @canvas = canvas
@@ -48,6 +47,8 @@ class Sequencer
 
   bindKeys: () ->
     Mousetrap.reset()
+    letters = "awsedftgyhujkolp;'".split ''
+
     Mousetrap.bind "space", =>
       @toggle()
 
@@ -65,27 +66,25 @@ class Sequencer
       @redraw(null, "cursor")
 
     #shift octave up and down
-    Mousetrap.bind "shift+up", =>
-      Session.set "display-octave", @octave
-      if @octave > -2
-        @octave -= 1
-
     Mousetrap.bind "shift+down", =>
       Session.set "display-octave", @octave
-      if @octave < 2
-        @octave += 1
+      if @octave < 1.5
+        @octave += 0.5
+
+    Mousetrap.bind "shift+up", =>
+      Session.set "display-octave", @octave
+      if @octave > -1.5
+        @octave -= 0.5
 
     #playback sequence at corresponding pitch, and loop it while the key is held down.
     if @transpose_sequence
       @stop()
-      for letter, i in @letters
+      for letter, i in letters
         do (letter, i) =>
           Mousetrap.bind letter, (=>
             # @play()
-
-            val = (letters.length)/(@sounds.length - 1 - i)
-            pitchRate = Math.pow(2.0, 2.0 * (val - (0.90476 * 1.6)))
-            console.log(pitchRate)
+            val = letters.length/(@sounds.length - 1 - i)
+            pitchRate = Math.pow(2.0, 2.0 * (val - 0.90476))
 
             contextPlayTime = @noteTime + @startTime # convert note time to context time
             for active, row in @state[@current]
@@ -101,7 +100,7 @@ class Sequencer
     else
 
       @play()
-      for letter, i in @letters
+      for letter, i in letters
         do (letter, i) =>
           row = @sounds.length - 1 - i
 
@@ -176,12 +175,13 @@ class Sequencer
            @soundbank[row].currentTime = 0
            @soundbank[row].play()
 
-  playRow: (row, @octave) ->
-    playBuffer @soundbank[row], 0, null, null, @octave
+  playRow: (row) ->
+    playBuffer @soundbank[row], 0
     move = @tile_height * row
     $('.arrow').css("top", move)
 
   schedule: () =>
+
     currentTime = audioContext.currentTime
     currentTime -= @startTime # normalize to 0
     # console.log @current, currentTime
@@ -189,14 +189,14 @@ class Sequencer
     while @noteTime < currentTime + 0.200
       contextPlayTime = @noteTime + @startTime # convert note time to context time
       for active, row in @state[@current]
+        pitchRate = Math.pow(2.0, 2.0 * (active - (0.90476 * @octave)))
         if active
-          playBuffer @soundbank[row], contextPlayTime, null, null, @octave
+          playBuffer @soundbank[row], contextPlayTime, null, null, pitchRate
 
       # synchronize drawing with sound
       if @noteTime isnt @lastDrawTime
         @lastDrawTime = @noteTime
         @redraw()
-
       @advanceNote()
 
     @ticker = Meteor.setTimeout @schedule, 0
@@ -226,7 +226,6 @@ class Sequencer
     $(".hold").toggleClass("held")
     @hold = not @hold
     @hold = if false then @stop() else @play()
-
 
   click: (e, force) ->
     coords = @getCoords e
