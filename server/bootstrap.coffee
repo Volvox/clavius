@@ -9,4 +9,3 @@ Meteor.startup ->
         ]
       ]
 
-      

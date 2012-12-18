@@ -47,6 +47,7 @@ class Sequencer
     loader.load()
 
   bindKeys: () ->
+    Mousetrap.reset()
 
     Mousetrap.bind "space", =>
       @toggle()
