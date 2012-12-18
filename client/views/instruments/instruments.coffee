@@ -1,5 +1,5 @@
 Template.instruments.rendered = ->
-  instruments = [new Instrument(), new AdditiveSynthesizer()]
+  instruments = [new Instrument(), new AdditiveSynthesizer(), new FMSynthesizer()]
   instrument.connect masterGainNode for instrument in instruments
   current = 0
 
