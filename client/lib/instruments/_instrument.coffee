@@ -2,27 +2,31 @@ class Instrument
   constructor: ->
     @output = audioContext.createGainNode()
     @oscillator = audioContext.createOscillator()
-    @envelope = audioContext.createGainNode()
-    @decay = 0.5
+    @envelope = new ADSREnvelope(0.01, 0.4, 0.7, 0.2)
 
-    @oscillator.connect @envelope
+    @oscillator.connect @envelope.input
     @envelope.connect @output
-    @envelope.gain.value = 0
 
     @oscillator.noteOn(0)
 
   connect: (target) ->
     @output.connect target
 
-  playFrequency: (frequency, time) ->
+  setFrequency: (frequency, time) ->
     noteTime = time or audioContext.currentTime
     @oscillator.frequency.setValueAtTime frequency, noteTime
-    @envelope.gain.cancelScheduledValues(0)
-    @envelope.gain.setValueAtTime 1.0, noteTime
-    @envelope.gain.linearRampToValueAtTime 0, noteTime + @decay
+
+  setNote: (note, time) ->
+    @setFrequency noteToFrequency(note), time
+
+  playFrequency: (frequency, time) ->
+    noteTime = time or audioContext.currentTime
+    @setFrequency frequency, time
+    @start noteTime
+    @stop noteTime
 
   playNote: (note, time) ->
-    @playFrequency noteToFrequency(note), time or 0
+    @playFrequency noteToFrequency(note), time
 
   playNotes: (notes) ->
     startTime = audioContext.currentTime + 0.005
@@ -30,6 +34,14 @@ class Instrument
     for note in notes
       contextStart = startTime + note.start
       @playNote note.sound, contextStart
+
+  start: (time) ->
+    noteTime = time or audioContext.currentTime
+    @envelope.start noteTime
+
+  stop: (time) ->
+    noteTime = time or audioContext.currentTime
+    @envelope.stop noteTime
 
   setGain: (gain) ->
     @output.gain.value = gain

@@ -9,11 +9,20 @@ playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
   else
     source.connect masterGainNode
 
-  source.noteOn start
-  source.noteOff stop if stop?
+  source.start start
+  source.stop stop if stop?
 
 Meteor.startup ->
   window.audioContext = new webkitAudioContext()
+
+  # support deprecated noteOn(), noteOff() methods
+  for source in [audioContext.createBufferSource(), audioContext.createOscillator()]
+    prototype = source.constructor.prototype
+    unless prototype.start?
+      prototype.start = prototype.noteOn
+    unless prototype.stop?
+      prototype.stop = prototype.noteOff
+
   if audioContext.createDynamicsCompressor
     compressor = audioContext.createDynamicsCompressor()
     compressor.connect(audioContext.destination)
