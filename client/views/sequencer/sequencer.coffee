@@ -1,5 +1,5 @@
 class Sequencer
-  constructor: (canvas, instrument) ->
+  constructor: (canvas) ->
     @current = 0
     @cursor = 0
     @hold = false
@@ -8,7 +8,6 @@ class Sequencer
     @letters = "awsedrfgyhujkolp;['".split ''
     @noteMin = 35 # B-3
     @noteMax = 71 # B0
-    @instrument = instrument
     Session.set('bpm', 120)
     Session.set('note', 0.25)
     Session.set('columns', 32)
