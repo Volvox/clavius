@@ -1,12 +1,13 @@
 class SubtractiveSynthesizer extends Instrument
-  constructor: (waveType, detune, envelope) ->
+  constructor: (cutoff, envelope) ->
     @output = audioContext.createGainNode()
     @oscillator = audioContext.createOscillator()
-    @envelope = envelope or new ADSREnvelope(0.1, 0.2, 0.7, 0.1)
+    @envelope = envelope or new ADSREnvelope(0.009, 0.2, 0.9, 0.7)
     @lowpass = audioContext.createBiquadFilter()
+    @cutoff = cutoff or 300
 
-    @oscillator.type = waveType or @oscillator.SQUARE
-    @lowpass.frequency.value = 300
+    @oscillator.type = @oscillator.SAWTOOTH
+    @lowpass.frequency.value = @cutoff
 
     @oscillator.connect @lowpass
     @lowpass.connect @envelope.input
