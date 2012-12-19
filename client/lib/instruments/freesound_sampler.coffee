@@ -17,6 +17,7 @@ class FreesoundSampler extends Instrument
           @samples = bufferList
         loader.load()
 
+
   setFrequency: (frequency, time) ->
     noteTime = time or audioContext.currentTime
     note = frequencyToNote(frequency) - 35 # general midi percussion mapping
@@ -24,7 +25,7 @@ class FreesoundSampler extends Instrument
       source = audioContext.createBufferSource()
       source.buffer = @samples[note]
       source.connect @output
-      source.noteOn noteTime
+      source.start noteTime
 
   noteOn: (note, time) ->
     time ?= audioContext.currentTime
@@ -33,7 +34,8 @@ class FreesoundSampler extends Instrument
       source = audioContext.createBufferSource()
       source.buffer = @samples[note]
       source.connect @output
-      source.noteOn noteTime
+      source.start noteTime
+
 
   noteOff: (note, time) ->
     false
