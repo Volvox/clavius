@@ -8,7 +8,7 @@ Template.clips.rendered = ->
         track = $('.clips').index(e.target)
         startTime = ui.offset.left - e.target.offsetLeft
         endTime = startTime + (clip.duration ? 250) # FIXME
-      
+
         update = {}
         update["tracks.#{track}.clips"] =
           start: startTime
