@@ -1,4 +1,5 @@
 Template.clip.rendered = ->
+<<<<<<< HEAD
     preloadPreview(@data.data)
     getPreview(@data.data).render(@find('canvas'))
     bottom = $("div.draggable:first").scrollTop()
@@ -14,12 +15,21 @@ Template.clip.rendered = ->
         snapMode: "both", grid: [50,100]
         snapTolerance: 0
         #snap: '.track',
+=======
+  preloadPreview(@data.data)
+  getPreview(@data.data).render(@find('canvas'))
 
-Template.clip.width = ->
-  @stop - @start
+  $(@find('.clip')).draggable
+    axis: 'x'
+    grid: [40, 40]
+    containment: 'parent'
+>>>>>>> c1a57ec9c21289f9a726e35911403f71e649c18f
 
-Template.clip.left = ->
-  @start
+  $ =>
+    $clips = $('.clips')
+    $clip = $(@find('.clip'))
+    $clip.css 'top', "#{$clips.offset().top + (($clips.outerHeight() - $clips.height()) / 2)}px"
+    $clip.css 'left', "#{$clips.offset().left + @data.start}px"
 
 Template.clip.events
   'dblclick': (e, template) ->

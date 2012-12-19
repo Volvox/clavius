@@ -1,28 +1,31 @@
 class FMSynthesizer extends Instrument
-  constructor: (modulationRatio, envelope) ->
+  constructor: (params) ->
+    params ?= {}
     @output = audioContext.createGainNode()
-    @modulationRatio = modulationRatio or 0.162
-
     @carrier = audioContext.createOscillator()
     @modulator = audioContext.createOscillator()
     @modulatorGain = audioContext.createGainNode()
-    @envelope = envelope or new ADSREnvelope(0.01, 0.4, 0.7, 0.2)
+    @amplifier = audioContext.createGainNode()
 
     @modulator.connect @modulatorGain
     @modulatorGain.connect @carrier.frequency
-    @carrier.connect @envelope.input
-    @envelope.connect @output
+    @carrier.connect @amplifier
+    @amplifier.connect @output
 
-    @setModulationDepth 100
+    @modulatorGain.gain.value = params.modulationDepth ? 100
+    @modulationRatio = params.modulationRatio ? 1.618
 
+    @amplifier.gain.value = 0
     @carrier.start 0
     @modulator.start 0
 
-  setFrequency: (frequency, time) ->
-    noteTime = time or audioContext.currentTime
-    @carrier.frequency.setValueAtTime frequency, noteTime
-    @modulator.frequency.setValueAtTime @modulationRatio * frequency, noteTime
+  noteOn: (note, time) ->
+    time ?= audioContext.currentTime
+    frequency = noteToFrequency note
+    @carrier.frequency.setValueAtTime frequency, time
+    @modulator.frequency.setValueAtTime @modulationRatio * frequency, time
+    @amplifier.gain.setValueAtTime 1, time
 
-  setModulationDepth: (depth) ->
-    @modulatorGain.gain.value = depth
-
+  noteOff: (note, time) ->
+    time ?= audioContext.currentTime
+    @amplifier.gain.setValueAtTime 0, time

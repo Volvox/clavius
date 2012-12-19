@@ -70,8 +70,11 @@ class Sequencer
         Mousetrap.bind "shift+#{letter}", =>
           @state[@cursor][row] = not @state[@cursor][row]
 
-        Mousetrap.bind letter, =>
-          @playNote @getNote(row)
+    @keyboard = new VirtualKeyboard
+      noteOn: (note) =>
+        @instrument.noteOn note, 0
+      noteOff: (note) =>
+        @instrument.noteOff note, 0
 
   clear: ->
     ctx = @canvas.getContext '2d'
@@ -84,7 +87,7 @@ class Sequencer
     @drawGrid()
     @drawNotes()
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
-    @highlightColumn @current
+    @highlightColumn (@current + @numColumns - 1) % @numColumns
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
@@ -158,10 +161,9 @@ class Sequencer
     @noteTime += @tickLength()
 
   playNote: (note, time) ->
-    noteTime = time or audioContext.currentTime
-    @instrument.setNote note, noteTime
-    @instrument.start noteTime
-    @instrument.stop noteTime + @tickLength()
+    time ?= audioContext.currentTime
+    @instrument.noteOn note, time
+    @instrument.noteOff note, time + @tickLength()
 
   getNote: (row) ->
     @noteMax - row
@@ -264,11 +266,11 @@ Template.sequencer.events
     val = $(e.srcElement).val()
     switch val
       when 'additive'
-        instrument = new AdditiveSynthesizer()
+        instrument = new Polyphonic(AdditiveSynthesizer)
       when 'subtractive'
-        instrument = new SubtractiveSynthesizer()
+        instrument = new Polyphonic(SubtractiveSynthesizer)
       when 'fm'
-        instrument = new FMSynthesizer()
+        instrument = new Polyphonic(FMSynthesizer)
       when 'drumkit'
         instrument = new FreesoundSampler(7417)
     sequencer.setInstrument instrument
