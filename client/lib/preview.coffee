@@ -1,14 +1,20 @@
 class ClipPreview
   constructor: (clip) ->
     @clip = clip
-    @instrument = new Polyphonic(SubtractiveSynthesizer, cutoff: 360)
+    @instrument = new SubtractiveSynthesizer()
     @instrument.connect masterGainNode
 
   play: ->
     startTime = audioContext.currentTime
     for note in @clip.notes
-      @instrument.noteOn note.sound, startTime + note.start
-      @instrument.noteOff note.sound, startTime + note.stop
+      noteStart = startTime + note.start
+      noteStop = startTime + note.stop
+      @instrument.setNote note.sound, noteStop
+      @instrument.start noteStart
+      @instrument.stop noteStop
+
+  stop: ->
+    @instrument.stop 0
 
   render: (canvas) ->
     ctx = canvas.getContext '2d'

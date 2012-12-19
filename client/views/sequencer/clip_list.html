@@ -1,9 +1,9 @@
 <template name="clip_list">
   <ul id="clips">
     {{#each clips}}
-        <li data-id="{{_id}}"> {{title}}</li>
+
+        <li data-id="{{_id}}" class="pattern-preview">
+            {{> pattern_preview}} {{title}}</li>
     {{/each}}
 </ul>
 </template>
-
-

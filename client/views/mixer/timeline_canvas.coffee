@@ -1,6 +1,4 @@
 class Timeline
-        # @song = Session.get "song"
-
     render: (canvas) ->
         canvas.height = $(canvas).height()
         canvas.width = $(canvas).width()
@@ -22,13 +20,8 @@ class Timeline
         ctx.strokeStyle = "#000"
         ctx.stroke()
 
-
 Template.timeline_canvas.rendered = ->
     unless window.timeline?
         canvas = @find('#timeline_canvas')
         window.timeline = new Timeline()
         timeline.render canvas
-        console.log timeline
-
-# Template.timeline_canvas.events
-#     'change '

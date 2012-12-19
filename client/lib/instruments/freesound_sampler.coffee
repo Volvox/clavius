@@ -24,7 +24,7 @@ class FreesoundSampler extends Instrument
       source = audioContext.createBufferSource()
       source.buffer = @samples[note]
       source.connect @output
-      source.start noteTime
+      source.noteOn noteTime
 
   noteOn: (note, time) ->
     time ?= audioContext.currentTime
@@ -33,7 +33,7 @@ class FreesoundSampler extends Instrument
       source = audioContext.createBufferSource()
       source.buffer = @samples[note]
       source.connect @output
-      source.start noteTime
+      source.noteOn noteTime
 
   noteOff: (note, time) ->
     false
