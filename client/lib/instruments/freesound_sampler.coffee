@@ -1,8 +1,8 @@
 class FreesoundSampler extends Instrument
-  constructor: (packId) ->
+  constructor: (params) ->
+    params ?= {}
     @output = audioContext.createGainNode()
-    @envelope = new ADSREnvelope(0, 0, 1, 0)
-    @samples = @loadPack packId
+    @samples = @loadPack params.packId ? 7417
 
   loadPack: (packId) ->
     @samples = []
@@ -25,3 +25,15 @@ class FreesoundSampler extends Instrument
       source.buffer = @samples[note]
       source.connect @output
       source.start noteTime
+
+  noteOn: (note, time) ->
+    time ?= audioContext.currentTime
+    note -= 35 # general midi percussion mapping
+    if @samples[note]?
+      source = audioContext.createBufferSource()
+      source.buffer = @samples[note]
+      source.connect @output
+      source.start noteTime
+
+  noteOff: (note, time) ->
+    false

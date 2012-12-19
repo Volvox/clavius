@@ -1,34 +1,23 @@
 Template.instruments.rendered = ->
-  instruments = [new Instrument(), new AdditiveSynthesizer(), new FMSynthesizer(), new SubtractiveSynthesizer()]
-  instrument.connect masterGainNode for instrument in instruments
-  currentInstrument = 0
-  currentNote = 60 # middle C
+  instrumentTypes = [Instrument, AdditiveSynthesizer, FMSynthesizer, SubtractiveSynthesizer]
+  currentInstrument = -1
+  instrument = null
+
+  switchInstrument = ->
+    instrument.disconnect() if instrument?
+    currentInstrument += 1
+    currentInstrument = 0 if currentInstrument == instrumentTypes.length
+    instrument = new Polyphonic(instrumentTypes[currentInstrument])
+    instrument.connect masterGainNode
+
+  switchInstrument()
+
+  keyboard = new VirtualKeyboard
+    noteOn: (note) ->
+      instrument.noteOn note, 0
+    noteOff: (note) ->
+      instrument.noteOff note, 0
 
   Mousetrap.bind 'space', ->
-    instruments[currentInstrument].stop()
-    currentInstrument += 1
-    currentInstrument = 0 if currentInstrument == instruments.length
+    switchInstrument()
 
-  Mousetrap.bind 'z', ->
-    # shift one octave down
-    currentNote -= 12
-
-  Mousetrap.bind 'x', ->
-    # shift one octave up
-    currentNote += 12
-
-  keyPressed = null
-  letters = "awsedrfgyhujkolp;['".split ''
-  for letter, i in letters
-    do (letter, i) ->
-      Mousetrap.bind letter, (->
-        unless keyPressed is letter
-          keyPressed = letter
-          instruments[currentInstrument].setNote currentNote + i
-          instruments[currentInstrument].start()
-      ), 'keydown'
-      Mousetrap.bind letter, (->
-        if keyPressed is letter
-          keyPressed = null
-          instruments[currentInstrument].stop()
-      ), 'keyup'

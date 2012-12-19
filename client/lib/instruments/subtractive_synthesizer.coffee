@@ -1,21 +1,28 @@
 class SubtractiveSynthesizer extends Instrument
-  constructor: (cutoff, envelope) ->
+  constructor: (params) ->
+    params ?= {}
     @output = audioContext.createGainNode()
     @oscillator = audioContext.createOscillator()
-    @envelope = envelope or new ADSREnvelope(0.009, 0.2, 0.9, 0.7)
     @lowpass = audioContext.createBiquadFilter()
-    @cutoff = cutoff or 300
+    @amplifier = audioContext.createGainNode()
+    @cutoff = params.cutoff ? 300
 
     @oscillator.type = @oscillator.SAWTOOTH
     @lowpass.frequency.value = @cutoff
 
     @oscillator.connect @lowpass
-    @lowpass.connect @envelope.input
-    @envelope.connect @output
+    @lowpass.connect @amplifier
+    @amplifier.connect @output
 
+    @amplifier.gain.value = 0
     @oscillator.start 0
 
-  setFrequency: (frequency, time) ->
-    noteTime = time or audioContext.currentTime
-    @oscillator.frequency.setValueAtTime frequency, noteTime
+  noteOn: (note, time) ->
+    time ?= audioContext.currentTime
+    frequency = noteToFrequency note
+    @oscillator.frequency.setValueAtTime frequency, time
+    @amplifier.gain.setValueAtTime 1, time
 
+  noteOff: (note, time) ->
+    time ?= audioContext.currentTime
+    @amplifier.gain.setValueAtTime 0, time
