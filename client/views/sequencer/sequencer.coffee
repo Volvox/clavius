@@ -201,7 +201,7 @@ class Sequencer
     x: e.pageX - @canvas.offsetLeft
     y: e.pageY - @canvas.offsetTop
 
-  export: (title) ->
+  export: () ->
     notes = []
     for col of @state
       for active, row in @state[col]
@@ -212,7 +212,6 @@ class Sequencer
             stop: col * @tickLength() + @tickLength()
 
     notes: notes
-    title: title
     numColumns: Session.get('columns')
     bpm: Session.get('bpm')
 
@@ -277,13 +276,9 @@ Template.sequencer.events
     e.srcElement.blur()
   'click .hold': (e) ->
     sequencer.toggle()
-  'click a.btn': (e) ->
-    e.preventDefault()
-    title = $("#name-submit").val()
-    sequencer.buildLib(sequencer.export(title))
   'click #save': (e) ->
     e.preventDefault()
-    Session.set 'hidden', true
+    sequencer.buildLib(sequencer.export())
   'click #clear': (e) ->
     sequencer.reset()
   'click #toggle-trans': (e) ->
