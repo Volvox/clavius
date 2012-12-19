@@ -1,12 +1,17 @@
 <template name="mixer">
 <div id="header">
 </div>
+
 <div id="tracks">
   {{#with song}}
+  <div id="multitrack-container">
   {{#each tracks}}
-  {{> track}}
+    {{> track}}
   {{/each}}
+</div>
+</div>
   {{/with}}
+  {{> timeline_canvas}}
 </div>
 {{> clip_library}}
 <div id="footer">

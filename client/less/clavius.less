@@ -59,7 +59,6 @@ body {
 #header {
 	height: @header-height;
 	width: 100%;
-	position: fixed;
 	top: 0;
 	left: 0;
 	background-color: #4e4e4e;
@@ -104,7 +103,7 @@ body {
 		.vertical-gradient(#ABABAB, #9D9D9D);
 
 		.clip {
-            position: relative;
+      position: relative;
 			height: 100%;
 			.rounded(6px);
 			box-sizing: border-box;
@@ -156,7 +155,10 @@ input.bpm{ width:80px;}
     float:right;
     position: relative;
 }
-
+#timeline_canvas {
+  width:100%;
+  height:20px;
+}
 #update {
   font-size: 30px;
   position:fixed;
@@ -198,6 +200,12 @@ label#key-trans{
     display: inline;
     letter-spacing:.15em;
     position: relative;
+}
+#multitrack-container{
+  height: @track-height*3;
+  padding:0;
+  margin:0;
+
 }
 #save{
     display: inline;
