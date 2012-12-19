@@ -57,8 +57,9 @@ Meteor.startup ->
   window.previewers = {}
 
 preloadPreview = (clip) ->
-  unless previewers[clip._id]?
-    previewers[clip._id] = new ClipPreview(clip)
+  if clip? and not previewers[clip._id]?
+      previewers[clip._id] = new ClipPreview(clip)
 
 getPreview = (clip) ->
-  previewers[clip._id]
+  if clip?
+    previewers[clip._id]
