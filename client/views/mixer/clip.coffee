@@ -4,7 +4,6 @@ Template.clip.rendered = ->
 
   $(@find('.clip')).draggable
     axis: 'x'
-    grid: [40, 40]
     containment: 'parent'
 
   $ =>

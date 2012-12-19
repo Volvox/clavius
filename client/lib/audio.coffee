@@ -27,3 +27,8 @@ Meteor.startup ->
   window.masterGainNode = audioContext.createGainNode() # master volume
   masterGainNode.gain.value = 0.7 # reduce overall volume to avoid clipping
   masterGainNode.connect(finalMixNode)
+
+  unless mainInstrument?
+    window.mainInstrument = new Polyphonic(SubtractiveSynthesizer)
+    mainInstrument.connect masterGainNode
+
