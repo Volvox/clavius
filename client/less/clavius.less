@@ -35,11 +35,27 @@ body {
 	background: #eee;
 }
 
-ul#clips li .mini-preview{
-  float: left;
-  width: 100px;
-  height: 10px;
+#clips{
+   margin: 100px 0 0 40px;
+   position:fixed;
+   float:left;
+
+
+  li{
+    height: 100px;
+    width: 100px;
+    list-style: none;
+    padding: 0px;
+    cursor: pointer;
+    display: block;
+
+      canvas {
+        position:absolute;
+        clip: rect(0px, 100px, 70px, 0px);
+      }
+   }
 }
+
 
 #clip-library {
   height: 300px;
@@ -57,6 +73,8 @@ ul#clips li .mini-preview{
     }
   }
 }
+
+
 
 .sequencer {
 	height: 600px;
@@ -176,18 +194,7 @@ input.bpm{ width:80px;}
   padding:2px;
   cursor:pointer;
 }
-ul#clips{
-  margin: 100px 0 0 40px;
-  position:fixed;
-  float:left;
-}
-#clips li{
-    list-style:none;
-    padding:3px;
-    cursor:pointer;
-    display:block;
-}
-#clips li:hover{ background-color:yellow;}
+
 .selected { background-color:yellow; }
 .arrow{
     font-size: 25px;

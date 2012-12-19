@@ -16,7 +16,7 @@ class ClipPreview
   stop: ->
     @instrument.stop 0
 
-  render: (canvas) ->
+  render: (canvas, dotted) ->
     ctx = canvas.getContext '2d'
     start = 0
     end = Math.max (note.stop for note in @clip.notes)...
@@ -27,8 +27,31 @@ class ClipPreview
     tickWidth = canvas.width / length
     noteHeight = canvas.height / (noteMax - noteMin)
     ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
-    for note in @clip.notes
-      ctx.fillRect note.start * tickWidth, (note.sound - noteMin) * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
+
+    #mini dotted pattern on sequencer page (pattern_preview)
+    if dotted?
+      radius = 1.3
+      for i in [0...31]
+        for j in [0...31]
+          ctx.fillStyle = '#C8C8C8'
+          ctx.beginPath()
+          ctx.arc(j*3, i*3, radius, 0, 2 * Math.PI, false)
+          ctx.fill()
+      for note in @clip.notes
+        tickLength = note.stop - note.start
+        col = note.start / tickLength
+        row = sequencer.getRow note.sound
+        if sequencer.state[col]? and sequencer.state[col][row]?
+          ctx.fillStyle = 'blue'
+          ctx.beginPath()
+          ctx.arc(col*3, row*3, radius, 0, 2 * Math.PI, false)
+          ctx.fill()
+
+    #rectangular horizontal pattern on mixer page
+    else
+      for note in @clip.notes
+        ctx.fillRect note.start * tickWidth, (note.sound - noteMin) * noteHeight, (note.stop - note.start) * tickWidth, noteHeight
+
 
 Meteor.startup ->
   window.previewers = {}
