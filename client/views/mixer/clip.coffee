@@ -1,12 +1,8 @@
 Template.clip.rendered = ->
-<<<<<<< HEAD
     preloadPreview(@data.data)
     getPreview(@data.data).render(@find('canvas'))
-    bottom = $("div.draggable:first").scrollTop()
-    right  = $("div.draggable:last").scrollTop()
     $(@find('.clip')).draggable
-        # containment: $('#multitrack-container')
-        #grid: [ 50, 100 ] #snaps from where you start dragging so not a good solution
+        containment: $('#multitrack-container')
         snap: true
         cursor: "pointer"
         containment: "#multitrack-container", scroll:false
@@ -15,15 +11,11 @@ Template.clip.rendered = ->
         snapMode: "both", grid: [50,100]
         snapTolerance: 0
         #snap: '.track',
-=======
-  preloadPreview(@data.data)
-  getPreview(@data.data).render(@find('canvas'))
 
-  $(@find('.clip')).draggable
-    axis: 'x'
-    grid: [40, 40]
-    containment: 'parent'
->>>>>>> c1a57ec9c21289f9a726e35911403f71e649c18f
+
+    # axis: 'x'
+    # grid: [40, 40]
+    # containment: 'parent'
 
   $ =>
     $clips = $('.clips')
