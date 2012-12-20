@@ -1,1 +1,1 @@
-class EndlessSequencer extends Sequencer
+class EndlessSequencer
