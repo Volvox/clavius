@@ -9,6 +9,12 @@ class ADSREnvelope
     @min = params.min ? 0
     @reset 0
 
+  setADSR: (attack, decay, sustain, release) ->
+    @attack = attack
+    @decay = decay
+    @sustain = sustain
+    @release = release
+
   reset: (time) ->
     @target.cancelScheduledValues time
     @target.setValueAtTime @min, time

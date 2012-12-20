@@ -26,19 +26,18 @@ class Sampler extends Instrument
   noteOn: (note, time) ->
     time ?= audioContext.currentTime
     if @sample?
-      if @source? then @noteOff 0
-      @source = audioContext.createBufferSource()
-      @source.connect @finalNode
-      @source.buffer = @sample
-      @source.loop = @loop
-      @source.start time, @offset, @duration
+      if not @loop or not @source?
+        @source = audioContext.createBufferSource()
+        @source.connect @finalNode
+        @source.buffer = @sample
+        @source.loop = @loop
+        @source.start time, @offset, @duration
       @volumeEnvelope.start time
       if @filterEnabled
         @filterEnvelope.start time
 
   noteOff: (note, time) ->
     time ?= audioContext.currentTime
-    @source.stop time
     @volumeEnvelope.stop time
     if @filterEnabled
       @filterEnvelope.stop time
@@ -47,7 +46,6 @@ class Sampler extends Instrument
     if bufferOrUrl instanceof ArrayBuffer
       @sample = audioContext.createBuffer bufferOrUrl
     else
-      console.log [bufferOrUrl]
       loader = new BufferLoader audioContext, [bufferOrUrl], (bufferList) =>
         @sample = bufferList[0]
         @duration = @sample.duration - @offset unless @duration?
@@ -71,4 +69,25 @@ getFreesoundSample = (soundId, callback) ->
       console.log(e)
     success: (data) =>
       callback data
+
+samplerDemo = ->
+  sampler = new Sampler
+    url: "http://www.freesound.org/data/previews/24/24749_7037-hq.ogg"
+    loop: on
+    filterEnabled: yes
+
+  sampler.connect masterGainNode
+
+  sampler.volumeEnvelope.setADSR 0.01, 0.2, 0.7, 0.5
+  sampler.filterEnvelope.setADSR 0.05, 0.1, 0.9, 0.3
+  sampler.filterEnvelope.max = 660
+  sampler.filterEnvelope.min = 120
+  sampler.filter.Q.value = 32
+
+  keyboard = new VirtualKeyboard
+    noteOn: ->
+      sampler.noteOn 0
+    noteOff: ->
+      sampler.noteOff 0
+  return sampler
 
