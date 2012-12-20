@@ -76,18 +76,19 @@ samplerDemo = ->
     loop: on
     filterEnabled: yes
 
-  sampler.connect masterGainNode
-
   sampler.volumeEnvelope.setADSR 0.01, 0.2, 0.7, 0.5
   sampler.filterEnvelope.setADSR 0.05, 0.1, 0.9, 0.3
-  sampler.filterEnvelope.max = 660
-  sampler.filterEnvelope.min = 120
-  sampler.filter.Q.value = 32
+  sampler.filterEnvelope.max = 550
+  sampler.filterEnvelope.min = 240
+  sampler.filter.Q.value = 15
+
+  sampler.connect masterGainNode
 
   keyboard = new VirtualKeyboard
     noteOn: ->
       sampler.noteOn 0
     noteOff: ->
       sampler.noteOff 0
-  return sampler
+
+  sampler
 
