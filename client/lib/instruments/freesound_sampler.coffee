@@ -2,7 +2,7 @@ class FreesoundSampler extends Instrument
   constructor: (params) ->
     params ?= {}
     @output = audioContext.createGainNode()
-    @samples = @loadPack params.packId ? 7417
+    @loadPack params.packId ? 7417
 
   loadPack: (packId) ->
     @samples = []
