@@ -5,11 +5,17 @@ class SubtractiveSynthesizer extends Instrument
     @oscillator = audioContext.createOscillator()
     @lowpass = audioContext.createBiquadFilter()
     @amplifier = audioContext.createGainNode()
+
+    #remove upper harmonic content
     @cutoff = params.cutoff ? 300
 
     @oscillator.type = @oscillator.SAWTOOTH
     @lowpass.frequency.value = @cutoff
 
+   # Controls how peaked the response will be at the cutoff frequency.
+   # A large value makes the response more peaked.
+   # resonance value in decibels.
+    @lowpass.Q.value = params.Q ?
     @oscillator.connect @lowpass
     @lowpass.connect @amplifier
     @amplifier.connect @output

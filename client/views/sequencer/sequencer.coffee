@@ -87,6 +87,7 @@ class Sequencer
     @drawGrid()
     @drawNotes()
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
+
     @highlightColumn (@current + @numColumns - 1) % @numColumns
 
   drawGrid: ->

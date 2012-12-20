@@ -5,6 +5,7 @@ Template.clip.rendered = ->
     containment: $('#multitrack-container')
     snap: true
     cursor: "pointer"
+    scroll: true
     containment: "#multitrack-container", scroll:false
     cursorAt: 0,0,0,0
     stack: '.clip'
@@ -14,6 +15,7 @@ Template.clip.rendered = ->
 
   $(@find('.clip')).draggable
     axis: 'x'
+    scroll: true
     containment: 'parent'
 
   $ =>
