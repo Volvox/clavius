@@ -13,8 +13,6 @@ class SubtractiveSynthesizer extends Instrument
     @volumeEnvelope = new ADSREnvelope(@amplifier.gain)
     @oscillator.type = @oscillator.SAWTOOTH
     @filterEnvelope.max = @filter.frequency.value
-    @oscillator.connect @lowpass
-    @lowpass.connect @amplifier
     @oscillator.connect @filter
     @filter.connect @amplifier
     @amplifier.connect @output

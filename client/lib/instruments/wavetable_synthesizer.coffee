@@ -1,0 +1,1 @@
+class WaveTable extends Instrument

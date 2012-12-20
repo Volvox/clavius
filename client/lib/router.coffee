@@ -3,4 +3,4 @@ Meteor.Router.add
   '/mixer': 'mixer'
   '/sequencer': 'sequencer'
   '/instruments': 'instruments'
-
+  '/demo/analyser': 'analyser'

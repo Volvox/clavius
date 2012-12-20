@@ -4,19 +4,22 @@ class Sampler extends Instrument
     @amplifier = audioContext.createGainNode()
     @filter = audioContext.createBiquadFilter()
     @volumeEnvelope = new ADSREnvelope(@amplifier.gain)
-    @filterEnvelope = new ADSREnvelope(@filter.frequency)
-    @filterEnvelope.max = @filter.frequency.value
 
     params ?= {}
     @loop = params.loop ? false
     @offset = params.offset ? 0
     @duration = params.duration
+    @filterEnvelopeEnabled = params.filterEnvelopeEnabled ? false
     @filterEnabled = params.filterEnabled ? false
 
     if @filterEnabled
       @finalNode = @filter
     else
       @finalNode = @amplifier
+
+    if @filterEnvelopeEnabled
+      @filterEnvelope = new ADSREnvelope(@filter.frequency)
+      @filterEnvelope.max = @filter.frequency.value
 
     @filter.connect @amplifier
     @amplifier.connect @output
@@ -33,13 +36,13 @@ class Sampler extends Instrument
         @source.loop = @loop
         @source.start time, @offset, @duration
       @volumeEnvelope.start time
-      if @filterEnabled
+      if @filterEnvelopeEnabled
         @filterEnvelope.start time
 
   noteOff: (note, time) ->
     time ?= audioContext.currentTime
     @volumeEnvelope.stop time
-    if @filterEnabled
+    if @filterEnvelopeEnabled
       @filterEnvelope.stop time
 
   loadSample: (bufferOrUrl) ->
@@ -75,13 +78,13 @@ samplerDemo = ->
     url: "http://www.freesound.org/data/previews/24/24749_7037-hq.ogg"
     loop: on
     filterEnabled: yes
+    filterEnvelopeEnabled: yes
 
   sampler.volumeEnvelope.setADSR 0.01, 0.2, 0.7, 0.5
   sampler.filterEnvelope.setADSR 0.05, 0.1, 0.9, 0.3
   sampler.filterEnvelope.max = 550
   sampler.filterEnvelope.min = 240
   sampler.filter.Q.value = 15
-
   sampler.connect masterGainNode
 
   keyboard = new VirtualKeyboard
