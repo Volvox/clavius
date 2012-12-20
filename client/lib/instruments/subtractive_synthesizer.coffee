@@ -13,11 +13,6 @@ class SubtractiveSynthesizer extends Instrument
     @volumeEnvelope = new ADSREnvelope(@amplifier.gain)
     @oscillator.type = @oscillator.SAWTOOTH
     @filterEnvelope.max = @filter.frequency.value
-
-   # Controls how peaked the response will be at the cutoff frequency.
-   # A large value makes the response more peaked.
-   # resonance value in decibels.
-    @lowpass.Q.value = params.Q ?
     @oscillator.connect @lowpass
     @lowpass.connect @amplifier
     @oscillator.connect @filter
@@ -56,4 +51,3 @@ subSynthDemo = ->
       subSynth.noteOff note
 
   subSynth
-

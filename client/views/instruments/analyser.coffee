@@ -14,11 +14,9 @@ class Analyser
         @audioAnalyser.connect audioContext.destination
         @draw()
 
-
     draw: ->
         @render()
         requestAnimationFrame @draw() #@canvas
-
 
     render: ->
         freqByteData = new Uint8Array @audioAnalyser.frequencyBinCount
