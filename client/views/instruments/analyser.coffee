@@ -42,7 +42,7 @@ class Analyser
     # unless window.analyser?
     canvas = @find('canvas#analyser')
     window.analyser = new Analyser(canvas)
-    # fmSynth = new FMSynthesizer()
+    window.fmSynth = new FMSynthesizer()
     window.sampler = new Sampler
       loop: true
       filterEnabled: true
@@ -53,27 +53,23 @@ class Analyser
 
     getFreesoundSample 60093, (url) ->
       sampler.loadSample url['preview-hq-ogg']
-
-
     # fmSynth.modulatorGain.gain.value = 200
-    # phaser = new tuna.Phaser()
     # sampler.filterEnvelopeEnabled = false
     # sampler.filter.frequency.value = 10000
     keyboard = new VirtualKeyboard
       noteOn: (note) ->
-        sampler.noteOn note
+        fmSynth.noteOn note
       noteOff: (note) ->
-        sampler.noteOff note
+        fmSynth.noteOff note
 
-
+    fmSynth.connect analyser.input
     # sampler.connect analyser.input
     # sampler.connect masterGainNode
     # sampler.connect phaser.input
-    # phaser.connect masterGainNode
+    fmSynth.connect masterGainNode
     $(@find('.filter-slider')).slider
-      max: 180
+      max: 10
       min: 0
       slide: ( e, ui ) ->
         # sampler.filter.frequency.setValueAtTime ui.value, audioContext.currentTime
-        # sampler.filter.Q.value = ui.value
-        phaser.stereoPhase.set ui.value
+        fmSynth.modulationRatio.gain.value = ui.value
