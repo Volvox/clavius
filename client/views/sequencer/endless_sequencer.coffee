@@ -51,7 +51,7 @@ class EndlessSequencer
             #playback mode: insert is false and notes have been stored to the state
             Mousetrap.bind letter, (=>
               @transposePitch = note
-              @playback()
+              @playback(letter)
             ), 'keydown'
 
             # stop playback
@@ -59,33 +59,27 @@ class EndlessSequencer
               Meteor.clearTimeout @ticker
             ), 'keyup'
 
+  copyState: ->
+    @queue = []
+    for data in @state
+      @queue.push(data)
 
-
-
-    #ALL KEYS
-    #reset state
-
-
-
-
-
-
-  playback: ->
-    @queue = @state
+  playback: (letter) ->
+    @copyState()
     console.log @queue
     @startTime = audioContext.currentTime
+    @noteTime = 0.0
     @schedule()
 
   schedule: ->
-
     if @queue[0]?
-      next = @queue.shift()
-      scheduledToStart = (next.start + @startTime) - audioContext.currentTime
+      scheduledToStart = (@queue[0].start + @startTime) - audioContext.currentTime
       while scheduledToStart < 0.200
+        next = @queue.shift()
         @instrument.noteOn next.note, @startTime + next.start
         @instrument.noteOff next.note, @startTime + next.stop
       if @queue[0]?
-        @ticker = Meteor.setTimeout @schedule, 200
+        @ticker = Meteor.setTimeout @schedule, 0
 
 
 
