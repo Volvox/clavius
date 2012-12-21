@@ -22,6 +22,11 @@ class Instrument
     time ?= audioContext.currentTime
     @amplifier.gain.setValueAtTime 0, time
 
+  export: ->
+    console.log 'override in subclass'
+    instrument: 'instrument'
+    params: {}
+
   connect: (target) ->
     @output.connect target
 
@@ -60,3 +65,9 @@ noteToFrequency = (note) ->
 
 frequencyToNote = (frequency) ->
   12 * (Math.log(frequency / 440.0) / Math.log(2)) + 69
+
+restorePreset = (preset) ->
+  instruments =
+    'drumkit': Drumkit
+  new instruments[preset.instrument](preset.params)
+

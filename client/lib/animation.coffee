@@ -1,3 +1,4 @@
+# requestAnimationFrame shim
 window.requestAnimationFrame         ||=
   window.webkitRequestAnimationFrame ||
   window.mozRequestAnimationFrame    ||

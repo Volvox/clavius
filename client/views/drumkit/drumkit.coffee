@@ -53,9 +53,11 @@ Template.drumpads.rendered = ->
       index = $(this).index '#drumkit .span3'
       sampleIndex = convertIndex index
       buffer = ui.draggable.data 'buffer'
+      url = ui.draggable.data 'url'
       ui.draggable.parent().remove()
       drawWaveform buffer, $(this).find('canvas')[0], 'rgba(0, 0, 0, 0.4)'
       drumkit.samples[sampleIndex] = buffer
+      drumkit.sampleUrls[sampleIndex] = url
 
   $drumkit.find('.span3').click ->
     playDrumNote(convertIndex($(this).index('#drumkit .span3')) + drumkit.rootNote)
