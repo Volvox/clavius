@@ -29,33 +29,25 @@ class EndlessSequencer
 
     Mousetrap.bind "shift", =>
       @insert = not @insert
-      console.log @insert
-
-    Mousetrap.bind "right", =>
-      @count+=1
-
-    #ALL KEYS
-    #reset state
-    @count = 1
-
-    for letter, i in @letters
-      do (letter, i) =>
-        note = @numNotes() - 1 - i
-        if @insert
-          Mousetrap.bind letter, =>
-            start = @count * 0.125
-            $('#step').text(@count)
-            @state.push(
-              note: @getNote(note)
-              root: letter
-              start: start
-              stop: start + 0.125
-            )
-            @count += 1
-
-        else
-          if @insert is false and @state[0]?
-
+      @bindKeys()
+      @count = 1
+      for letter, i in @letters
+        do (letter, i) =>
+          note = @numNotes() - 1 - i
+          if @insert
+            Mousetrap.bind letter, =>
+              start = @count * 0.125
+              $('#step').text(@count)
+              @state.push(
+                note: @getNote(note)
+                root: letter
+                start: start
+                stop: start + 0.125
+              )
+              @count += 1
+              Mousetrap.bind "right", =>
+                @count+=1
+          else
             #playback mode: insert is false and notes have been stored to the state
             Mousetrap.bind letter, (=>
               @transposePitch = note
@@ -68,16 +60,34 @@ class EndlessSequencer
             ), 'keyup'
 
 
+
+
+    #ALL KEYS
+    #reset state
+
+
+
+
+
+
   playback: ->
     @queue = @state
-    @schedule()
+    console.log @queue
     @startTime = audioContext.currentTime
+    @schedule()
 
   schedule: ->
-    while @queue[0].start + @startTime - audioContext.currentTime < 0.200
+
+    if @queue[0]?
       next = @queue.shift()
-      @instrument.noteOn next.note, @startTime + next.start
-    @ticker = Meteor.setTimeout @schedule, 0
+      scheduledToStart = (next.start + @startTime) - audioContext.currentTime
+      while scheduledToStart < 0.200
+        @instrument.noteOn next.note, @startTime + next.start
+        @instrument.noteOff next.note, @startTime + next.stop
+      if @queue[0]?
+        @ticker = Meteor.setTimeout @schedule, 200
+
+
 
   getNote: (note) ->
     @noteMax - note
