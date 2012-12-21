@@ -1,0 +1,73 @@
+<template name="drumkit">
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="span9">
+      {{#constant}}
+      {{> drumpads}}
+      {{/constant}}
+    </div>
+    <div class="span3">
+      <div id="freesound-search">
+        {{#constant}}
+        <input placeholder="Search" type="text" class="input-block-level search-query">
+        {{/constant}}
+        <div class="results">
+          {{#each results}}
+          {{> freesound_result}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template name="drumpads">
+<div id="drumkit">
+  <div class="row">
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+    <div class="span3">
+      <canvas></canvas>
+    </div>
+  </div>
+</div>
+</template>

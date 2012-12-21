@@ -64,15 +64,6 @@ class Sampler extends Instrument
       @source.disconnect()
       @source.connect @finalNode
 
-getFreesoundSample = (soundId, callback) ->
-  $.ajax
-    url: "http://www.freesound.org/api/sounds/#{soundId}?api_key=ec0c281cc7404d14b6f5216f96b8cd7c"
-    dataType: "jsonp"
-    error: (e) ->
-      console.log(e)
-    success: (data) =>
-      callback data
-
 samplerDemo = ->
   sampler = new Sampler
     url: "http://www.freesound.org/data/previews/24/24749_7037-hq.ogg"
