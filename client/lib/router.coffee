@@ -4,3 +4,4 @@ Meteor.Router.add
   '/sequencer': 'sequencer'
   '/instruments': 'instruments'
   '/demo/analyser': 'analyser'
+  '/endless': 'endless'
