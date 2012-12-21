@@ -8,7 +8,7 @@ class EndlessSequencer
     #total number of steps stored
     Session.set('steps', 0)
     #insert mode on/off
-    Session.set('insert', false)
+    @insert = false
 
     #current step
     @noteMin = 35 # B-3
@@ -16,64 +16,68 @@ class EndlessSequencer
     @maxNotes = 256
     @letters = "awsedrfgyhujkolp;['".split ''
     @state = []
-    @transpose = false
     @bindKeys()
 
   bindKeys: ->
     Mousetrap.reset()
 
-    if @transpose is false
-      @keyboard = new VirtualKeyboard
-        noteOn: (note) =>
-          @instrument.noteOn note, 0
-        noteOff: (note) =>
-          @instrument.noteOff note, 0
-
-    else
-      for letter, i in @letters
-        do (letter, i) =>
-          semitone = @numNotes() - 1 - i
-          Mousetrap.bind letter, (=>
-            for data, i in @state
-              masterGainNode.gain.value = 1
-              @playNote(data.note, data.start, data.stop, semitone)
-              @keyDown = true
-              ), 'keydown'
-          Mousetrap.bind letter, (=>
-            for data in @state
-              masterGainNode.gain.value = 0
-              @keyDown = false
-              ), 'keyup'
+    @keyboard = new VirtualKeyboard
+      noteOn: (note) =>
+        @instrument.noteOn note, 0
+      noteOff: (note) =>
+        @instrument.noteOff note, 0
 
     Mousetrap.bind "shift", =>
-      Session.set('insert', true)
-      for letter, i in @letters
-        #reset state
-        @count = 0
-        do (letter, i) =>
-          note = @numNotes() - 1 - i
+      @insert = not @insert
+      console.log @insert
+
+    Mousetrap.bind "right", =>
+      @count+=1
+
+    #ALL KEYS
+    #reset state
+    @count = 1
+
+    for letter, i in @letters
+      do (letter, i) =>
+        note = @numNotes() - 1 - i
+        if @insert
           Mousetrap.bind letter, =>
-              @state.push(
-                  note: @getNote(note)
-                  start: audioContext.currentTime
-                  stop: audioContext.currentTime + @noteLength()
-                  )
-              if Session.equals('insert', true)
-                @count += 1
-                $('#step').text(@count)
-              Mousetrap.bind "right", =>
-                if Session.equals('insert', true)
-                  @count += 1
-                  $('#step').text(@count)
+            start = @count * 0.125
+            $('#step').text(@count)
+            @state.push(
+              note: @getNote(note)
+              root: letter
+              start: start
+              stop: start + 0.125
+            )
+            @count += 1
 
-            #done inserting notes
-            Mousetrap.bind "shift", =>
-              Session.set('insert', false)
+        else
+          if @insert is false and @state[0]?
 
-              #playback recorded sequence on keys
-              @transpose = true
-              @bindKeys()
+            #playback mode: insert is false and notes have been stored to the state
+            Mousetrap.bind letter, (=>
+              @transposePitch = note
+              @playback()
+            ), 'keydown'
 
+            # stop playback
+            Mousetrap.bind letter, (=>
+              Meteor.clearTimeout @ticker
+            ), 'keyup'
+
+
+  playback: ->
+    @queue = @state
+    @schedule()
+    @startTime = audioContext.currentTime
+
+  schedule: ->
+    while @queue[0].start + @startTime - audioContext.currentTime < 0.200
+      next = @queue.shift()
+      @instrument.noteOn next.note, @startTime + next.start
+    @ticker = Meteor.setTimeout @schedule, 0
 
   getNote: (note) ->
     @noteMax - note
@@ -81,18 +85,17 @@ class EndlessSequencer
   numNotes: ->
     @noteMax - @noteMin
 
-  playNote: (note, start, stop, pitch) ->
-    time = stop - start
-    time += audioContext.currentTime
-    console.log time
-    # console.log time+@noteLength()
-    @instrument.noteOn note, time
-    @instrument.noteOff note, time + @noteLength()
+  playNote: (data, count) ->
+    if count is 0
+      console.log count
+      @instrument.noteOn data.note, 0
+    else
+      @instrument.noteOn data.note, audioContext.currentTime + @noteLength()
+    @instrument.noteOff data.note, audioContext.currentTime + (@noteLength() * count)
     # $('#step').text(@count)
 
   noteLength: ->
     0.25 * (60.0 / 120)
-
 
   setInstrument: (instrument) ->
     if @instrument?
@@ -102,19 +105,18 @@ class EndlessSequencer
 
 Template.endless.rendered = ->
   window.endless = new EndlessSequencer()
-  console.log endless
   endless.setInstrument(new Polyphonic(FMSynthesizer))
 
 
 Template.endless.events
-  'change .instrument': (e) ->
-    val = $(e.srcElement).val()
-    switch val
-      when 'additive'
-        instrument = new Polyphonic(AdditiveSynthesizer)
-      when 'subtractive'
-        instrument = new Polyphonic(SubtractiveSynthesizer)
-      when 'fm'
-        instrument = new Polyphonic(FMSynthesizer)
-      when 'drumkit'
-        instrument = new FreesoundSampler(7417)
+'change .instrument': (e) ->
+  val = $(e.srcElement).val()
+  switch val
+    when 'additive'
+      instrument = new Polyphonic(AdditiveSynthesizer)
+    when 'subtractive'
+      instrument = new Polyphonic(SubtractiveSynthesizer)
+    when 'fm'
+      instrument = new Polyphonic(FMSynthesizer)
+    when 'drumkit'
+      instrument = new FreesoundSampler(7417)
