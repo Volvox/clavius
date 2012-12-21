@@ -11,7 +11,7 @@ class Analyser
 
     # analyser properties
     @audioAnalyser.fftSize = 1024 #desired canv width * 2
-    @audioAnalyser.smoothingTimeConstant = 0.75
+    @audioAnalyser.smoothingTimeConstant = 0
 
     # canvas
     @ctx = @canvas.getContext('2d')
@@ -19,12 +19,9 @@ class Analyser
     @canvas.width = @audioAnalyser.frequencyBinCount #only ^2
     @draw()
 
-    #connect analyser to the speakers
-    # @audioAnalyser.connect audioContext.destination
-
   draw: =>
     @render()
-    requestAnimationFrame @draw #@canvas
+    requestAnimationFrame @draw
 
   render: ->
     freqByteData = new Uint8Array @audioAnalyser.frequencyBinCount
@@ -38,42 +35,27 @@ class Analyser
       @ctx.lineTo(i, @canvas.height-(@canvas.height*freqByteData[i]/256))
       @ctx.stroke()
 
-  Template.analyser.rendered = ->
-    # unless window.analyser?
-    canvas = @find('canvas#analyser')
-    window.analyser = new Analyser(canvas)
-    # fmSynth = new FMSynthesizer()
-    window.sampler = new Sampler
-      loop: true
-      filterEnabled: true
-      filterEnvelopeEnabled: true
-    sampler.volumeEnvelope.setADSR 0.09, 0.2, 0.1, 0.5
-    sampler.filterEnvelope.setADSR 0.05, 0.1, 0.9, Math.random()*4000
+Template.analyser.rendered = ->
+  canvas = @find('canvas#analyser')
+  analyser = new Analyser(canvas)
+  synth = new SubtractiveSynthesizer
+    filterEnvelopeEnabled: false
+
+  synth.volumeEnvelope.setADSR 0.01, 0.2, 0.7, 0.5
+  synth.filter.Q.value = 5.7
+
+  synth.connect analyser.input
+  synth.connect masterGainNode
+
+  keyboard = new VirtualKeyboard
+    noteOn: (note) ->
+      synth.noteOn note
+    noteOff: (note) ->
+      synth.noteOff note
 
 
-    getFreesoundSample 60093, (url) ->
-      sampler.loadSample url['preview-hq-ogg']
-
-
-    # fmSynth.modulatorGain.gain.value = 200
-    # phaser = new tuna.Phaser()
-    # sampler.filterEnvelopeEnabled = false
-    # sampler.filter.frequency.value = 10000
-    keyboard = new VirtualKeyboard
-      noteOn: (note) ->
-        sampler.noteOn note
-      noteOff: (note) ->
-        sampler.noteOff note
-
-
-    # sampler.connect analyser.input
-    # sampler.connect masterGainNode
-    # sampler.connect phaser.input
-    # phaser.connect masterGainNode
-    $(@find('.filter-slider')).slider
-      max: 180
-      min: 0
-      slide: ( e, ui ) ->
-        # sampler.filter.frequency.setValueAtTime ui.value, audioContext.currentTime
-        # sampler.filter.Q.value = ui.value
-        phaser.stereoPhase.set ui.value
+  $(@find('.filter-slider')).slider
+    max: 18000
+    min: 50
+    slide: ( e, ui ) ->
+      synth.filter.frequency.value = ui.value
