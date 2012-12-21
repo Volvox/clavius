@@ -2,14 +2,22 @@ class Drumkit extends Instrument
   constructor: (params) ->
     @output = audioContext.createGainNode()
     @rootNote = 60 # middle C
-    @samples = []
+
+    params ?= {}
+    if params.sampleUrls?
+      @loadSamples params.sampleUrls
+    else
+      @sampleUrls = []
+      @samples = []
 
   loadSample: (url, index) ->
+    @sampleUrls[index] = url
     loader = new BufferLoader audioContext, [url], (bufferList) =>
       @samples[index] = bufferList[0]
     loader.load()
 
   loadSamples: (urls) ->
+    @sampleUrls = urls
     loader = new BufferLoader audioContext, urls, (bufferList) =>
       @samples = bufferList
     loader.load()
@@ -25,6 +33,11 @@ class Drumkit extends Instrument
 
   noteOff: (note, time) ->
     false
+
+  export: ->
+    instrument: 'drumkit'
+    params:
+      sampleUrls: @sampleUrls
 
 drumkitDemo = ->
   drumkit = new Drumkit()

@@ -3,3 +3,6 @@ Meteor.publish "clips", ->
 
 Meteor.publish "songs", ->
   Songs.find()
+
+Meteor.publish "presets", ->
+  Presets.find()

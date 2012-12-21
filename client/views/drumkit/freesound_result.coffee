@@ -16,5 +16,6 @@ Template.freesound_result.rendered = ->
       distance: 10
 
     $(canvas).data 'buffer', buffer
+    $(canvas).data 'url', @data['preview-hq-ogg']
 
   loader.load()
