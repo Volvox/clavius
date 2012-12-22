@@ -16,6 +16,7 @@ class EndlessSequencer
     @maxNotes = 256
     @letters = "awsedrfgyhujkolp;['".split ''
     @state = []
+    @keysPressed = {}
     @bindKeys()
 
   bindKeys: ->
@@ -23,83 +24,81 @@ class EndlessSequencer
 
     @keyboard = new VirtualKeyboard
       noteOn: (note) =>
-        @instrument.noteOn note, 0
+        if @insert
+          @insertNote(note)
+          @instrument.noteOn note, 0
+
+
+        else
+          @initiatePlayback(note)
       noteOff: (note) =>
-        @instrument.noteOff note, 0
+        if @insert
+         @advanceNote(note)
+         @instrument.noteOff note, 0
+        else
+          @stopPlayback(note)
 
     Mousetrap.bind "shift", =>
-      @insert = not @insert
-      @bindKeys()
-      @count = 1
-      for letter, i in @letters
-        do (letter, i) =>
-          note = @numNotes() - 1 - i
-          if @insert
-            Mousetrap.bind letter, =>
-              start = @count * 0.125
-              $('#step').text(@count)
-              @state.push(
-                note: @getNote(note)
-                root: letter
-                start: start
-                stop: start + 0.125
-              )
-              @count += 1
-              Mousetrap.bind "right", =>
-                @count+=1
-          else
-            #playback mode: insert is false and notes have been stored to the state
-            Mousetrap.bind letter, (=>
-              @transposePitch = note
-              @playback(letter)
-            ), 'keydown'
+      @toggleInsertMode()
 
-            # stop playback
-            Mousetrap.bind letter, (=>
-              Meteor.clearTimeout @ticker
-            ), 'keyup'
+    Mousetrap.bind "right", =>
+      @advanceNote()
+
+  toggleInsertMode: ->
+    @insert = not @insert
+    @count = 1
+
+  advanceNote: ->
+    @count+=1
+    $('#step').text(@count)
+
+  initiatePlayback: (note) ->
+    @playback(note)
+
+  insertNote: (note) ->
+    start = @count * 0.4
+    $('#step').text(@count)
+    @state.push(
+      note: note
+      start: start
+      stop: start + 0.4
+    )
 
   copyState: ->
     @queue = []
     for data in @state
       @queue.push(data)
 
-  playback: (letter) ->
+  playback: (note) ->
     @copyState()
-    console.log @queue
     @startTime = audioContext.currentTime
-    @noteTime = 0.0
-    @schedule()
+    offset = note - @state[0].note
+    console.log "offset " + offset
+    console.log "state note " + @state[0].note
+    console.log "note " + note
+    @schedule(offset)
 
-  schedule: ->
-    if @queue[0]?
-      scheduledToStart = (@queue[0].start + @startTime) - audioContext.currentTime
-      while scheduledToStart < 0.200
-        next = @queue.shift()
-        @instrument.noteOn next.note, @startTime + next.start
-        @instrument.noteOff next.note, @startTime + next.stop
-      if @queue[0]?
-        @ticker = Meteor.setTimeout @schedule, 0
+  stopPlayback: (note) ->
+    Meteor.clearTimeout @ticker
+
+  schedule: (offset) =>
+    if @queue.length is 0
+        @copyState()
+        @startTime += @queue[@queue.length-1].stop
 
 
+    while @queue[0]? and (@startTime + @queue[0].start) - audioContext.currentTime < 0.2
+      next = @queue.shift()
+      @instrument.noteOn next.note, (@startTime + next.start)
+      @instrument.noteOff next.note, (@startTime + next.stop)
 
-  getNote: (note) ->
-    @noteMax - note
+    @ticker = Meteor.setTimeout @schedule, 0
 
   numNotes: ->
     @noteMax - @noteMin
 
-  playNote: (data, count) ->
-    if count is 0
-      console.log count
-      @instrument.noteOn data.note, 0
-    else
-      @instrument.noteOn data.note, audioContext.currentTime + @noteLength()
-    @instrument.noteOff data.note, audioContext.currentTime + (@noteLength() * count)
-    # $('#step').text(@count)
-
   noteLength: ->
-    0.25 * (60.0 / 120)
+    0.4 * (60.0 / 120)
 
   setInstrument: (instrument) ->
     if @instrument?
@@ -109,17 +108,22 @@ class EndlessSequencer
 
 Template.endless.rendered = ->
   window.endless = new EndlessSequencer()
-  endless.setInstrument(new Polyphonic(FMSynthesizer))
-
+  drumkit = new Drumkit()
+  freesoundIds = [26885, 26887, 26900, 26902, 26896, 26889, 26879, 26880, 26881, 26883, 26884, 26878]
+  for id, i in freesoundIds
+    do (id, i) ->
+      getFreesoundSample id, (sound) ->
+        drumkit.loadSample sound['preview-hq-ogg'], i
+  endless.setInstrument(drumkit)
 
 Template.endless.events
 'change .instrument': (e) ->
   val = $(e.srcElement).val()
   switch val
     when 'additive'
-      instrument = new Polyphonic(AdditiveSynthesizer)
+      instrument = new AdditiveSynthesizer()
     when 'subtractive'
-      instrument = new Polyphonic(SubtractiveSynthesizer)
+      instrument = new SubtractiveSynthesizer()
     when 'fm'
       instrument = new Polyphonic(FMSynthesizer)
     when 'drumkit'
