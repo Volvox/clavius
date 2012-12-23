@@ -1,20 +1,10 @@
 class EndlessSequencer
   constructor: ->
-    #counter variable for showing the current step as it changes
-    # Session.set('count', 0)
-
-    #note length
-    Session.set('note', 0.25)
-    #total number of steps stored
-    Session.set('steps', 0)
     #insert mode on/off
     @insert = false
-
-    #current step
     @noteMin = 35 # B-3
     @noteMax = 71 # B0
     @maxNotes = 256
-    @letters = "awsedrfgyhujkolp;['".split ''
     @state = []
     @keysPressed = {}
     @bindKeys()
@@ -27,7 +17,6 @@ class EndlessSequencer
         if @insert
           @insertNote(note)
           @instrument.noteOn note, 0
-
 
         else
           @initiatePlayback(note)

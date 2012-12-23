@@ -6,13 +6,15 @@ class SubtractiveSynthesizer extends Instrument
     @filter = audioContext.createBiquadFilter()
     @amplifier = audioContext.createGainNode()
 
-
-    #remove upper harmonic content
     @cutoff = params.cutoff ? 300
-    @filterEnvelope = new ADSREnvelope(@filter.frequency)
+    @filterEnvelopeEnabled = params.filterEnvelopeEnabled ? false
+
     @volumeEnvelope = new ADSREnvelope(@amplifier.gain)
+    if @filterEnvelopeEnabled
+      @filterEnvelope = new ADSREnvelope(@filter.frequency)
+      @filterEnvelope.max = @filter.frequency.value
+
     @oscillator.type = @oscillator.SAWTOOTH
-    @filterEnvelope.max = @filter.frequency.value
     @oscillator.connect @filter
     @filter.connect @amplifier
     @amplifier.connect @output
@@ -23,13 +25,15 @@ class SubtractiveSynthesizer extends Instrument
     frequency = noteToFrequency note
     @oscillator.frequency.setValueAtTime frequency, time
     @volumeEnvelope.start time
-    @filterEnvelope.start time
+    if @filterEnvelopeEnabled
+      @filterEnvelope.start time
 
   noteOff: (note, time) ->
     time ?= audioContext.currentTime
     @amplifier.gain.setValueAtTime 0, time
     @volumeEnvelope.stop time
-    @filterEnvelope.stop time
+    if @filterEnvelopeEnabled
+      @filterEnvelope.stop time
 
 subSynthDemo = ->
   subSynth = new SubtractiveSynthesizer

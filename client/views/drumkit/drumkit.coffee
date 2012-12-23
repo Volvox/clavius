@@ -70,5 +70,3 @@ Template.drumkit.events
 
 Template.drumkit.results = ->
   Session.get 'search_results'
-
-
