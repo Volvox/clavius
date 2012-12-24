@@ -45,8 +45,7 @@ class Analyser
         when 'volume meter'                   #real-time signal strength for the L + R audio channel
           splitter = params.splitter
           @input.connect splitter
-          splitter.connect @audioAnalyser, 1, 0
-          # splitter.connect analyseVU_ch2, 1, 0
+          splitter.connect @audioAnalyser, 0, 0
           @drawVU()
     else
       @drawBF()
@@ -57,15 +56,7 @@ class Analyser
 
   floatFrequency: ->
     data = new Float32Array @audioAnalyser.frequencyBinCount
-    @audioAnalyser.getFloatFrequencyData(@data)
-    @ctx.beginPath()
-    @ctx.clearRect 0, 0, @canvas.width, @canvas.height
-    @ctx.fillStyle = "#000"
-    @ctx.fill()
-    @ctx.moveTo(i, @canvas.height-(@canvas.height*data[0]/256))
-    for i in [1...@canvas.width]
-      @ctx.lineTo(i, @canvas.height-(@canvas.height*data[i]/256))
-      @ctx.stroke()
+    @audioAnalyser.getFloatFrequencyData(data)
 
   drawBF: =>
     @byteFrequency()
@@ -74,18 +65,16 @@ class Analyser
   byteFrequency: ->
     data = new Uint8Array @audioAnalyser.frequencyBinCount
     @audioAnalyser.getByteFrequencyData(data)
-    # @ctx.beginPath()
-    #@ctx.clearRect 0, 0, @canvas.width, @canvas.height
     @ctx.fillStyle = "rgba(255,255,255,0.2)"
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
     @ctx.fillStyle = "#000"
-    height = Math.floor((data.length*0.33) / @canvas.width)
-    vertical = 0
-    signal = 0
+    h = Math.floor((data.length*0.33) / @canvas.width)
+    v = 0
+    s = 0
     for i in [0...@canvas.width]
-      vertical = data[i*height]
-      signal = (vertical/255) * @canvas.height
-      @ctx.fillRect(i, (@canvas.height-signal), 1, signal)
+      v = data[i*h]
+      s = (v/255) * @canvas.height
+      @ctx.fillRect(i, (@canvas.height-s), 1, s)
 
   drawTD: =>
     @timeDomain()
@@ -97,15 +86,15 @@ class Analyser
     @ctx.fillStyle = 'rgba(255,255,255,0.2)'
     @ctx.fillRect 0,0,@canvas.width,@canvas.height
     @ctx.strokeStyle = 'rgba(200,0,0,0.5)'
-    height = Math.floor( data.length / @canvas.width )
-    vertical = 0
-    signal = 0
+    h = Math.floor( data.length / @canvas.width )
+    v = 0
+    s = 0
     @ctx.beginPath()
     @ctx.moveTo( 0, (data[0]/255) * @canvas.height )
     for i in [1...@canvas.width]
-      vertical = data[i*height]
-      signal = (vertical/255) * @canvas.height
-      @ctx.lineTo i, signal
+      v = data[i*h]
+      s = (v/255) * @canvas.height
+      @ctx.lineTo i, s
     @ctx.stroke()
 
   drawVU: =>
@@ -130,7 +119,6 @@ class Analyser
     average
 
 
-
 # /demo/analyser
 Template.analyser.rendered = ->
 
@@ -146,10 +134,10 @@ Template.analyser.rendered = ->
       synth.noteOff note
 
   # not currently working
-  analyseFF = new Analyser
-    canvas: @find('canvas#ff-analyser')
-    get: 'float frequency'
-  synth.connect analyseFF.input
+  # analyseFF = new Analyser
+  #   canvas: @find('canvas#ff-analyser')
+  #   get: 'float frequency'
+  # synth.connect analyseFF.input
 
   analyseBF = new Analyser
     canvas: @find('#bf-analyser')
