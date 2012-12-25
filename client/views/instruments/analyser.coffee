@@ -4,9 +4,9 @@ class Analyser
     @audioAnalyser = audioContext.createAnalyser()
     # Connect the stream to an analyser
     @input.connect @audioAnalyser
-
     params ?= {}
 
+    @FXinterface()
     @canvas = params.canvas
     @ctx = @canvas.getContext('2d')
 
@@ -118,6 +118,50 @@ class Analyser
     average = vals / data.length
     average
 
+  FXinterface: =>
+    console.log $(".FX")
+    for element in $(".FX")
+      switch $(element).attr('id')
+        when 'phaser' then @adjustPhaser()
+        when 'chorus' then @adjustChorus()
+
+  adjustPhaser: ->
+    phaser = new tuna.Phaser
+    @input.connect phaser.input
+    phaser.connect masterGainNode
+    $( "#phaser > span" ).each (i, element) =>
+      el = $(element)
+      console.log el
+      param = el.attr('id')
+      label = '<label>' + param + '</label>'
+      el.slider
+        orientation: 'vertical'
+        animate: true
+        range: 'min'
+        max: parseFloat( el.data('max'), 10 )
+        min: parseFloat( el.data('min'), 10 )
+        step: parseFloat( el.data('step'), 10 )
+        slide: ( e, ui ) ->
+          phaser[param] = ui.value
+
+  adjustChorus: ->
+    chorus = new tuna.Chorus
+    @input.connect chorus.input
+    chorus.connect masterGainNode
+    $( "#chorus > span" ).each (i, element) =>
+      el = $(element)
+      param = el.attr('id')
+      label = '<label>' + param + '</label>'
+      el.slider
+        orientation: 'vertical'
+        animate: true
+        range: 'min'
+        max: parseFloat( el.data('max'), 10 )
+        min: parseFloat( el.data('min'), 10 )
+        step: parseFloat( el.data('step'), 10 )
+        slide: ( e, ui ) ->
+          chorus[param] = ui.value
+
 
 # /demo/analyser
 Template.analyser.rendered = ->
@@ -171,10 +215,3 @@ Template.analyser.rendered = ->
   synth.connect analyseVU_ch2.input
 
   synth.connect masterGainNode
-
-  $(@find('.filter-slider')).slider
-    max: 18000
-    min: 50
-    slide: ( e, ui ) ->
-      synth.filter.frequency.value = ui.value
-      synth.filter.Q.value = ui.value

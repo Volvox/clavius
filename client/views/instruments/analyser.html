@@ -1,10 +1,26 @@
 <template name="analyser">
-     <div class="filter-slider"></div>
-    {{#constant}}
-    <canvas id="ff-analyser"></canvas>
-    <canvas id="td-analyser"></canvas>
-    <canvas id="bf-analyser"></canvas>
-    <canvas id="vu1-analyser"></canvas>
-    <canvas id="vu2-analyser"></canvas>
-    {{/constant}}
+ <div class="FX" id="chorus">
+    <label>chorus</label>
+    <span id="rate" data-min="0.01" data-max="10" data-step="0.01"></span>
+    <span id="feedback" data-min="0" data-max="1" data-step="0.001"></span>
+    <span id="delay" data-min="0" data-max="1" data-step="0.001"></span>
+    <span id="bypass" data-min="0" data-max="1" data-step="1"></span>
+ </div>
+  <div class="FX" id="phaser">
+    <label>phaser</label>
+    <span id="rate" data-min="0.01" data-max="10" data-step="0.01"></span>
+    <span id="depth" data-min="0" data-max="1" data-step="0.001"></span>
+    <span id="feedback" data-min="0" data-max="1" data-step="0.01"></span>
+    <span id="stereoPhase" data-min="0" data-max="180" data-step="0.5"></span>
+    <span id="baseModulationFrequency" data-min="500" data-max="1500" data-step="1"></span>
+    <span id="bypass" data-min="0" data-max="1" data-step="1"></span>
+ </div>
+
+{{#constant}}
+<canvas id="ff-analyser"></canvas>
+<canvas id="td-analyser"></canvas>
+<canvas id="bf-analyser"></canvas>
+<canvas id="vu1-analyser"></canvas>
+<canvas id="vu2-analyser"></canvas>
+{{/constant}}
 </template>
