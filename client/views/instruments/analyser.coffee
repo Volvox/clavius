@@ -2,10 +2,8 @@ class Analyser
   constructor: (params) ->
     @input = audioContext.createGainNode()
     @audioAnalyser = audioContext.createAnalyser()
-    # Connect the stream to an analyser
     @input.connect @audioAnalyser
     params ?= {}
-
     @FXinterface()
     @canvas = params.canvas
     @ctx = @canvas.getContext('2d')
@@ -38,17 +36,20 @@ class Analyser
       @canvas.width = @audioAnalyser.frequencyBinCount
 
     if params.get?
-      switch params.get
-        when 'float frequency' then @drawFF() #real-time frequency domain data
-        when 'byte frequency' then @drawBF()  #real-time frequency domain data
-        when 'time domain' then @drawTD()     #real-time waveform data
-        when 'volume meter'                   #real-time signal strength for the L + R audio channel
-          splitter = params.splitter
-          @input.connect splitter
-          splitter.connect @audioAnalyser, 0, 0
-          @drawVU()
+      @getData params.get
     else
       @drawBF()
+
+  getData: (params) =>
+    switch params
+      when 'float frequency' then @drawFF() #real-time frequency domain data
+      when 'byte frequency' then @drawBF()  #real-time frequency domain data
+      when 'time domain' then @drawTD()     #real-time waveform data
+      when 'volume meter'                   #real-time signal strength for the L + R audio channel
+        splitter = params.splitter
+        @input.connect splitter
+        splitter.connect @audioAnalyser, 0, 0
+        @drawVU()
 
   drawFF: =>
     @floatFrequency()
@@ -119,7 +120,6 @@ class Analyser
     average
 
   FXinterface: =>
-    console.log $(".FX")
     for element in $(".FX")
       switch $(element).attr('id')
         when 'phaser' then @adjustPhaser()
@@ -165,7 +165,6 @@ class Analyser
 
 # /demo/analyser
 Template.analyser.rendered = ->
-
   synth = new SubtractiveSynthesizer
     filterEnvelopeEnabled: false
   synth.volumeEnvelope.setADSR 0.01, 0.2, 0.7, 0.5

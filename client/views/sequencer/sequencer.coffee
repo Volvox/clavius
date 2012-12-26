@@ -129,10 +129,10 @@ class Sequencer
     ctx.fill()
 
   highlightColumn: (col, color) ->
-      ctx = @canvas.getContext '2d'
-      ctx.fillStyle = color or 'rgba(0, 0, 255, 0.4)'
-      x = col * @tile_width + @tile_width
-      ctx.fillRect x, 0, 5, @canvas.height
+    ctx = @canvas.getContext '2d'
+    ctx.fillStyle = color or 'rgba(0, 0, 255, 0.4)'
+    x = col * @tile_width + @tile_width
+    ctx.fillRect x, 0, 5, @canvas.height
 
   setInstrument: (instrument) ->
     if @instrument?

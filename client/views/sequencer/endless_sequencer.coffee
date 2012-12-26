@@ -6,7 +6,8 @@ class EndlessSequencer
     @noteMax = 71 # B0
     @maxNotes = 256
     @state = []
-    @keysPressed = {}
+    @adjustTiming()
+    Session.set('note', 0.25)
     @bindKeys()
 
   bindKeys: ->
@@ -17,7 +18,6 @@ class EndlessSequencer
         if @insert
           @insertNote(note)
           @instrument.noteOn note, 0
-
         else
           @initiatePlayback(note)
       noteOff: (note) =>
@@ -42,15 +42,16 @@ class EndlessSequencer
     $('#step').text(@count)
 
   initiatePlayback: (note) ->
+    @step = 1
     @playback(note)
 
   insertNote: (note) ->
-    start = @count * 0.4
+    start = @count * @noteLength()
     $('#step').text(@count)
     @state.push(
       note: note
       start: start
-      stop: start + 0.4
+      stop: start + Session.get('note')
     )
 
   copyState: ->
@@ -59,12 +60,10 @@ class EndlessSequencer
       @queue.push(data)
 
   playback: (note) ->
+    @noteTime = 0.0
     @copyState()
     @startTime = audioContext.currentTime
     offset = note - @state[0].note
-    console.log "offset " + offset
-    console.log "state note " + @state[0].note
-    console.log "note " + note
     @schedule(offset)
 
   stopPlayback: (note) ->
@@ -72,14 +71,18 @@ class EndlessSequencer
 
   schedule: (offset) =>
     if @queue.length is 0
-        @copyState()
-        @startTime += @queue[@queue.length-1].stop
-
+      @step = 1
+      $('#step').text(@step)
+      @copyState()
+      @startTime += @queue[@queue.length-1].stop
 
     while @queue[0]? and (@startTime + @queue[0].start) - audioContext.currentTime < 0.2
       next = @queue.shift()
-      @instrument.noteOn next.note, (@startTime + next.start)
-      @instrument.noteOff next.note, (@startTime + next.stop)
+      @step+=1
+      $('#step').text(@step)
+      @noteTime += @noteLength()
+      @instrument.noteOn next.note, (@startTime + (next.start+@noteTime))
+      @instrument.noteOff next.note, @startTime #+ next.stop)
 
     @ticker = Meteor.setTimeout @schedule, 0
 
@@ -87,7 +90,18 @@ class EndlessSequencer
     @noteMax - @noteMin
 
   noteLength: ->
-    0.4 * (60.0 / 120)
+    Session.get('note') * (60.0 / 120)
+
+  adjustTiming: ->
+    $('#note-length').slider
+      orientation: 'vertical'
+      animate: true
+      range: 'min'
+      max: 1
+      min: 0.03125
+      step: 0.03125
+      slide: ( e, ui ) ->
+        Session.set('note', ui.value)
 
   setInstrument: (instrument) ->
     if @instrument?
@@ -104,6 +118,7 @@ Template.endless.rendered = ->
       getFreesoundSample id, (sound) ->
         drumkit.loadSample sound['preview-hq-ogg'], i
   endless.setInstrument(drumkit)
+
 
 Template.endless.events
 'change .instrument': (e) ->
