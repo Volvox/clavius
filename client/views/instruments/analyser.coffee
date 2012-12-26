@@ -36,20 +36,17 @@ class Analyser
       @canvas.width = @audioAnalyser.frequencyBinCount
 
     if params.get?
-      @getData params.get
+      switch params.get
+        when 'float frequency' then @drawFF() #real-time frequency domain data
+        when 'byte frequency' then @drawBF()  #real-time frequency domain data
+        when 'time domain' then @drawTD()     #real-time waveform data
+        when 'volume meter'                   #real-time signal strength for the L + R audio channel
+          splitter = params.splitter
+          @input.connect splitter
+          splitter.connect @audioAnalyser, 0, 0
+          @drawVU()
     else
       @drawBF()
-
-  getData: (params) =>
-    switch params
-      when 'float frequency' then @drawFF() #real-time frequency domain data
-      when 'byte frequency' then @drawBF()  #real-time frequency domain data
-      when 'time domain' then @drawTD()     #real-time waveform data
-      when 'volume meter'                   #real-time signal strength for the L + R audio channel
-        splitter = params.splitter
-        @input.connect splitter
-        splitter.connect @audioAnalyser, 0, 0
-        @drawVU()
 
   drawFF: =>
     @floatFrequency()
@@ -131,7 +128,6 @@ class Analyser
     phaser.connect masterGainNode
     $( "#phaser > span" ).each (i, element) =>
       el = $(element)
-      console.log el
       param = el.attr('id')
       label = '<label>' + param + '</label>'
       el.slider
