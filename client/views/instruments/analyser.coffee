@@ -7,33 +7,20 @@ class Analyser
     @FXinterface()
     @canvas = params.canvas
     @ctx = @canvas.getContext('2d')
+    @canvas.height = params.height or 128
+    @canvas.width = params.width or @audioAnalyser.frequencyBinCount
 
     # must be a power of two and 2x size of the canvas.width
-    if params.fftSize?
-      @audioAnalyser.fftSize = params.fftSize
-    else
-      @audioAnalyser.fftSize = 1024
+    @audioAnalyser.fftSize = params.fftSize or 1024
 
     # value from 0 -> 1 where 0 represents no time averaging with the last analysis frame.
-    if params.smoothingTimeConstant?
-      @audioAnalyser.smoothingTimeConstant = params.smoothingTimeConstant
-    else
-      @audioAnalyser.smoothingTimeConstant = 0
+    @audioAnalyser.smoothingTimeConstant = params.smoothingTimeConstant or 0
 
     # power value in the scaling range for the FFT analysis data for conversion to unsigned byte values.
     if params.minDecibels?
       @audioAnalyser.minDecibels = params.minDecibels
     if params.maxDecibels?
       @audioAnalyser.maxDecibels = params.maxDecibels
-
-    if params.height?
-      @canvas.height = params.height
-    else
-      @canvas.height = 128
-    if params.width?
-      @canvas.width = params.width
-    else
-      @canvas.width = @audioAnalyser.frequencyBinCount
 
     if params.get?
       switch params.get

@@ -123,7 +123,7 @@ class Sequencer
       ctx.fillStyle = 'rgb(255, 255, 255)'
     x = col * @tile_width + @tile_width
     y = row * @tile_height + @tile_height
-    radius = 8
+    radius = 3
     ctx.beginPath()
     ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
     ctx.fill()

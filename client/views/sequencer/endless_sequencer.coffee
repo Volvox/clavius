@@ -7,6 +7,7 @@ class EndlessSequencer
     @maxNotes = 256
     @state = []
     @adjustTiming()
+    @paper = paper
     Session.set('note', 0.25)
     @bindKeys()
 
