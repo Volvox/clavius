@@ -6,7 +6,6 @@ class EndlessSequencer
     @noteMax = 71 # B0
     @maxNotes = 256
     @state = []
-    @adjustTiming()
     @paper = paper
     Session.set('note', 0.25)
     @bindKeys()
@@ -93,16 +92,6 @@ class EndlessSequencer
   noteLength: ->
     Session.get('note') * (60.0 / 120)
 
-  adjustTiming: ->
-    $('#note-length').slider
-      orientation: 'vertical'
-      animate: true
-      range: 'min'
-      max: 1
-      min: 0.03125
-      step: 0.03125
-      slide: ( e, ui ) ->
-        Session.set('note', ui.value)
 
   setInstrument: (instrument) ->
     if @instrument?
