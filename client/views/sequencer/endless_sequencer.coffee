@@ -27,9 +27,12 @@ class EndlessSequencer
         else
           @stopPlayback(note)
 
-    Mousetrap.bind "shift", =>
+    Mousetrap.bind "shift", (=>
       @toggleInsertMode()
-
+    ), 'keydown'
+    Mousetrap.bind 'shift', (=>
+      @stopPlayback()
+    ), 'keyup'
     Mousetrap.bind "right", =>
       @advanceNote()
 
@@ -66,7 +69,7 @@ class EndlessSequencer
     offset = note - @state[0].note
     @schedule(offset)
 
-  stopPlayback: (note) ->
+  stopPlayback: =>
     Meteor.clearTimeout @ticker
 
   schedule: (offset) =>

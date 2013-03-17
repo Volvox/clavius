@@ -1,11 +1,23 @@
 <template name="endless">
-    <label>instrument</label>
-        <select class="instrument">
-          <option value="additive">Additive Synth</option>
-          <option value="subtractive">Subtractive Synth</option>
-          <option value="fm" selected>FM Synth</option>
-          <option value="drumkit">Drumkit</option>
-        </select>
-    <div id="step"></div>
-    <div id="note-length"></div>
+    <div id="endless">
+        <h3>Endless Sequencer</h3>
+        <ol>
+            <li>Press the Shift key</li>
+            <li>Type the keys of the notes to store in the sequence</li>
+            <li>Use the arrow keys to increase steps in the sequence</li>
+            <li>After inserting the notes, press the Shift key again</li>
+            <li>Hold down any musical key to play back the completed sequence</li>
+        </ol>
+        <label>instrument</label>
+            <select class="instrument">
+              <option value="additive">Additive Synth</option>
+              <option value="subtractive">Subtractive Synth</option>
+              <option value="fm" selected>FM Synth</option>
+              <option value="drumkit">Drumkit</option>
+            </select>
+        <aside>
+            <div id="step"></div>
+        </aside>
+        <div id="note-length"></div>
+    </div>
 </template>
