@@ -1,0 +1,7 @@
+@sidebar-width: 350px;
+@subsidebar-width: 100px;
+@sidebar-color: #100819;
+@subsidebar-color: #0A0A0A;
+@content-color: #0A0A0A;
+@border-color: #333333;
+
