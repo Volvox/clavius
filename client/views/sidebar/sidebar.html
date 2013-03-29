@@ -1,3 +1,15 @@
 <template name="sidebar">
-<div id="sidebar"></div>
+<div id="sidebar">
+	{{> header}}
+	<div id="tabs">
+		<ul>
+			<li class="active">Synthesis</li>
+			<li>Drum</li>
+			<li>Sampler</li>
+			<li>FX</li>
+			<li>LFO</li>
+		</ul>
+	</div>
+	<div id="tab-content"></div>
+</div>
 </template>

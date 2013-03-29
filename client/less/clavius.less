@@ -25,3 +25,73 @@
 	background-color: @content-color;
 	border-left: 1px solid @border-color;
 }
+
+#header, #subheader {
+	height: @header-height;
+	border-bottom: 1px solid @border-color;
+	line-height: @header-height;
+	font-size: 0.25 * @header-height;
+}
+
+#header {
+	background-color: @content-color;
+}
+
+#subheader {
+	background-color: @subheader-color;
+	text-transform: uppercase;
+	text-align: center;
+	color: #676767;
+}
+
+#toolbar {
+	list-style: none;
+	color: @highlight-color;
+	margin: 0;
+	padding: 0;
+}
+
+#toolbar li {
+	border-left: 1px solid @border-color;
+	float: left;
+	height: @header-height;
+	line-height: @header-height;
+	text-transform: uppercase;
+	margin: 0;
+	padding: 0 10px;
+}
+
+#logo {
+	line-height: @header-height;
+	font-size: 0.25 * @header-height;
+	font-weight: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+#tabs {
+	border-bottom: 1px solid @subdued-color;
+}
+
+#tabs ul {
+	list-style: none;
+	display: table;
+	margin: 0 auto;
+	padding: 0;
+}
+
+#tabs ul li {
+	float: left;
+	height: @tab-height;
+	line-height: @tab-height;
+	text-transform: uppercase;
+	font-size: 0.3 * @tab-height;
+	margin: 0;
+	padding: 0px 10px;
+	color: @subdued-color;
+
+	&.active, &:hover {
+		color: @highlight-color;
+	}
+}
+

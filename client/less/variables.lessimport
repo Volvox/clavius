@@ -1,7 +1,13 @@
-@sidebar-width: 350px;
-@subsidebar-width: 100px;
+@sidebar-width: 390px;
+@subsidebar-width: 120px;
+@header-height: 50px;
+@tab-height: 45px;
+
 @sidebar-color: #100819;
 @subsidebar-color: #0A0A0A;
 @content-color: #0A0A0A;
 @border-color: #333333;
+@subheader-color: #191919;
+@highlight-color: #FFFFFF;
+@subdued-color: #30213B;
 
