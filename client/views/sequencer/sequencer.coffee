@@ -92,7 +92,7 @@ class Sequencer
 
   drawGrid: ->
     ctx = @canvas.getContext '2d'
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)'
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'
 
     for row in [0...@numRows()]
       offset =  (1 + row) * @tile_height
@@ -118,7 +118,7 @@ class Sequencer
   drawDot: (row, col) ->
     ctx = @canvas.getContext '2d'
     if @state[col][row]
-      ctx.fillStyle = 'rgba(0, 0, 255, 0.4)'
+      ctx.fillStyle = '#fa435f'
     else
       ctx.fillStyle = 'rgb(255, 255, 255)'
     x = col * @tile_width + @tile_width
@@ -274,15 +274,13 @@ Template.sequencer.events
     e.srcElement.blur()
   'click #note-picker path': (e) ->
     note = $(e.srcElement).data("note")
-    $.each $("#note-display span"), (i) ->
+    $.each $("#note-display span"), ->
       if $(@).data("note") is note
         $(@).css "display", "block"
       else
         $(@).css "display", "none"
     $("#note-picker path").css "opacity", "0.5"
-    $(e.srcElement).css
-      opacity: 1
-
+    $(e.srcElement).css "opacity", "1"
     Session.set "note", Number(note)
   'click .hold': (e) ->
     sequencer.toggle()
@@ -297,3 +295,7 @@ Template.sequencer.events
     $("#toggle-trans").toggleClass("btn btn-small btn-primary").text(if text is "OFF" then "ON" else "OFF")
     sequencer.transpose_sequence = not sequencer.transpose_sequence
     sequencer.bindKeys()
+  'hover #note-picker path': ->
+    $(@).css "opacity", "0.75"
+
+

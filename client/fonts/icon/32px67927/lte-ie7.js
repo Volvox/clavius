@@ -1,4 +1,4 @@
-/* Load this script using conditional IE comments if you need to support IE 7 and IE 6. */
+ /* Load this script using conditional IE comments if you need to support IE 7 and IE 6. */
 
 window.onload = function() {
 	function addIcon(el, entity) {

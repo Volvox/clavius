@@ -8,7 +8,8 @@
 @content-color: #0A0A0A;
 @border-color: #333333;
 @subheader-color: #191919;
-@highlight-color: #FFFFFF;
-@subdued-color: #30213B;
+@highlight-color-a: #FFFFFF;
+@highlight-color-b: rgb(254, 239, 136);
+@subdued-color: rgb(102, 70, 126);
 @color-a: #fa435f;
-
+@color-b: #676767;

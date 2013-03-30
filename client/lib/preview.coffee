@@ -33,7 +33,7 @@ class ClipPreview
       radius = 1.3
       for i in [0...31]
         for j in [0...31]
-          ctx.fillStyle = '#C8C8C8'
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.2)'
           ctx.beginPath()
           ctx.arc(j*3, i*3, radius, 0, 2 * Math.PI, false)
           ctx.fill()
@@ -42,7 +42,7 @@ class ClipPreview
         col = note.start / tickLength
         row = sequencer.getRow note.sound
         if sequencer.state[col]? and sequencer.state[col][row]?
-          ctx.fillStyle = 'blue'
+          ctx.fillStyle = '#fa435f'
           ctx.beginPath()
           ctx.arc(col*3, row*3, radius, 0, 2 * Math.PI, false)
           ctx.fill()

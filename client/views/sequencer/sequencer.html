@@ -1,34 +1,6 @@
 <template name="sequencer">
   {{> clip_list }}
 <div class="container">
-  <div class="row">
-    <div class="span12">
-      <form class="form-inline">
-          <div id="save">Add to Library</div>
-        <label>bpm</label>
-        <input class="bpm" value="120" type="number" />
-        <label>note</label>
-        <label>size</label>
-        <select class="bars">
-          <option value="16">16</option>
-          <option value="32" selected>32</option>
-          <option value="64">64</option>
-        </select>
-        <label>instrument</label>
-        <select class="instrument">
-          <option value="additive">Additive Synth</option>
-          <option value="subtractive">Subtractive Synth</option>
-          <option value="fm" selected>FM Synth</option>
-          <option value="drumkit">Drumkit</option>
-        </select>
-        <div class="btn" id="clear">clear</div>
-        <label id="key-trans">Key Transposition</label>
-        <button class="btn btn-small" id="toggle-trans" type="button">OFF</button>
-        <div class="hold">HOLD</div>
-      </form>
-      <div id="note">space bar</div>
-    </div>
-  </div>
   <div class="row sequencer">
     <div class="span12 sequencer">
       {{> canvas}}
@@ -39,6 +11,13 @@
     <span data-note="0.5">1/8</span>
     <span data-note="0.25">1/16</span>
     <span data-note="0.125">1/32</span>
-  {{> note_picker}}
+    {{> note_picker}}
   </div>
+  <div id="controls">
+    <div id="save">Add to Library</div>
+    <div class="button" id="clear">clear</div>
+    <div class="hold">hold</div>
+    <div id="note">space bar</div>
+  </div>
+</div>
 </template>

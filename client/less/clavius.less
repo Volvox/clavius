@@ -1,6 +1,14 @@
 @import "base.lessimport";
 @import "variables.lessimport";
 
+ul {
+	list-style: none;
+}
+
+canvas {
+	cursor: pointer;
+}
+
 #sidebar, #subsidebar, #content {
 	position: absolute;
 	top: 0;
@@ -19,10 +27,23 @@
 	border-left: 1px solid @border-color;
 }
 
+#subsidebar li{
+	cursor: pointer;
+	text-transform: uppercase;
+	color: @color-b;
+	font-size: 12px;
+	letter-spacing: 2pt;
+	margin-top: 20px;
+	&.active, &:hover {
+		color: @highlight-color-a;
+	}
+}
+
+
 #content {
 	left: @sidebar-width + @subsidebar-width;
 	right: 20px;
-	padding-top: 20px;
+	padding: 20px;
 	background-color: @content-color;
 	border-left: 1px solid @border-color;
 }
@@ -42,12 +63,11 @@
 	background-color: @subheader-color;
 	text-transform: uppercase;
 	text-align: center;
-	color: #676767;
+	color: @color-b;
 }
 
 #toolbar {
-	list-style: none;
-	color: @highlight-color;
+	color: @highlight-color-a;
 	margin: 0;
 	padding: 0;
 }
@@ -75,13 +95,13 @@
 }
 
 #tabs ul {
-	list-style: none;
 	display: table;
-	margin: 0 auto;
-	padding: 0;
+	margin: 0;
+	padding: 0 0 0 20px;
 }
 
 #tabs ul li {
+	cursor: pointer;
 	float: left;
 	height: @tab-height;
 	line-height: @tab-height;
@@ -92,8 +112,26 @@
 	color: @subdued-color;
 
 	&.active, &:hover {
-		color: @highlight-color;
+		color: @highlight-color-a;
 	}
+}
+
+#tab-content ul{
+	color: @subdued-color;
+	margin-top: 20px;
+}
+#tab-content nav ul li{
+	cursor: pointer;
+	line-height: 40px;
+	&.active, &:hover {
+		color: @highlight-color-b;
+	}
+}
+
+// font icons
+#tab-content nav ul li div{
+	margin-right: 15px;
+	font-size: 150%;
 }
 
 #note-picker {
@@ -135,3 +173,17 @@
 	opacity: 1;
 }
 
+#clips{
+	li{
+		height: 100px;
+		width: 100px;
+		padding: 0px;
+		margin-right: 10px;
+		float: left;
+
+		canvas {
+			position:absolute;
+			clip: rect(0px, 91px, 60px, 0px);
+		}
+	}
+}
