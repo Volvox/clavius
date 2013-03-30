@@ -10,4 +10,5 @@
 @subheader-color: #191919;
 @highlight-color: #FFFFFF;
 @subdued-color: #30213B;
+@color-a: #fa435f;
 

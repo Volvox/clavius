@@ -273,10 +273,17 @@ Template.sequencer.events
     sequencer.setInstrument instrument
     e.srcElement.blur()
   'click #note-picker path': (e) ->
-    val = Number($(e.srcElement).data("note"))
+    note = $(e.srcElement).data("note")
+    $.each $("#note-display span"), (i) ->
+      if $(@).data("note") is note
+        $(@).css "display", "block"
+      else
+        $(@).css "display", "none"
     $("#note-picker path").css "opacity", "0.5"
-    $(e.srcElement).css "opacity", "1"
-    Session.set "note", val
+    $(e.srcElement).css
+      opacity: 1
+
+    Session.set "note", Number(note)
   'click .hold': (e) ->
     sequencer.toggle()
   'click #save': (e) ->
