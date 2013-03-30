@@ -255,9 +255,6 @@ Template.sequencer.events
     val =  Number($(e.srcElement).val())
     if val > 0
       Session.set 'bpm', val
-  'change .note': (e) ->
-    val =  Number($(e.srcElement).val())
-    Session.set 'note', val
   'change .bars': (e) ->
     val =  Number($(e.srcElement).val())
     Session.set 'columns', val
@@ -275,6 +272,11 @@ Template.sequencer.events
         instrument = new FreesoundSampler(7417)
     sequencer.setInstrument instrument
     e.srcElement.blur()
+  'click #note-picker path': (e) ->
+    val = Number($(e.srcElement).data("note"))
+    $("#note-picker path").css "opacity", "0.5"
+    $(e.srcElement).css "opacity", "1"
+    Session.set "note", val
   'click .hold': (e) ->
     sequencer.toggle()
   'click #save': (e) ->
