@@ -1,55 +1,28 @@
 <template name="sequencer">
-<div class="container">
-  {{> clip_list }}
-  <div class="row sequencer">
-    <div class="span12 sequencer">
-      {{> canvas}}
-    </div>
-  </div>
+{{> clip_list }}
+{{> sequencer_canvas}}
+{{> sequencer_controls}}
+</template>
 
-  <ul class="controls">
-    <li>
-      <a class="box" id="save" href="#">
-        <div class="icon-save"></div>
-         save
-    </a></li>
-    <li>
-      <a class="box" id="clear" href="#">
-      <div class="icon-clear"></div>
-        clear
-    </a></li>
-    <li><a class="box"  id="hold" href="#">
-      <div class="icon-hold"></div>
-        hold
-    </a></li>
-  </ul>
-  <div id="note-display">
-    <span data-note="1.0">1/4</span>
-    <span data-note="0.5">1/8</span>
-    <span data-note="0.25">1/16</span>
-    <span data-note="0.125">1/32</span>
-    {{> note_picker}}
-  </div>
+<template name="sequencer_canvas">
+<div id="sequencer_canvas">
+  {{#constant}}
+  <canvas></canvas>
+  {{/constant}}
 </div>
-<div id="shortcuts">
-  <ul>
-    <li>
-      <h3>hold</h3>
-      <span>space bar</span>
-    </li>
-    <li>
-      <h3>insert</h3>
-      <span>shift + any key</span>
-    </li>
-    <li>
-      <h3>move cursor</h3>
-      <span>left/right arrow keys</span>
-    </li>
-    <li>
-      <h3>+ / - octave</h3>
-      <span>Z / X</span>
-    </li>
+</template>
 
-  </ul>
+<template name="sequencer_controls">
+<ul id="sequencer_controls">
+  <li id="save"><span class="icon-save"></span> Save</li>
+  <li id="clear"><span class="icon-clear"></span> Clear</li>
+  <li class="hold"><span class="icon-hold"></span> Hold</li>
+</ul>
+<div id="note_display">
+  <span data-note="1.0">1/4</span>
+  <span data-note="0.5">1/8</span>
+  <span data-note="0.25">1/16</span>
+  <span data-note="0.125">1/32</span>
+  {{> note_picker}}
 </div>
 </template>

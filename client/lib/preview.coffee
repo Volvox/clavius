@@ -30,9 +30,9 @@ class ClipPreview
 
     #mini dotted pattern on sequencer page (pattern_preview)
     if dotted?
-      radius = 1.3
-      for i in [0...31]
-        for j in [0...31]
+      radius = noteHeight / 2.0
+      for i in [0...(noteMax - noteMin)]
+        for j in [0...(noteMax - noteMin)]
           ctx.fillStyle = 'rgba(255, 255, 255, 0.2)'
           ctx.beginPath()
           ctx.arc(j*3, i*3, radius, 0, 2 * Math.PI, false)

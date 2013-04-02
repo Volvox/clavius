@@ -1,10 +1,10 @@
-Template.canvas.rendered = ->
+Template.sequencer_canvas.rendered = ->
   unless window.sequencer?
     canvas = @find('canvas')
     window.sequencer = new Sequencer(canvas)
-    sequencer.setInstrument(new Polyphonic(SubtractiveSynthesizer))
+    sequencer.setInstrument(new SubtractiveSynthesizer)
 
-Template.canvas.events
+Template.sequencer_canvas.events
   'mousedown': (e) ->
     Session.set('mousedown', true)
     sequencer.click e

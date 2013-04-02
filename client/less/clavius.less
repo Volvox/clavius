@@ -1,287 +1,251 @@
 @import "base.lessimport";
 @import "variables.lessimport";
 
-a:link, a:hover {
-	text-decoration: none;
-}
-
 ul {
-	list-style: none;
+  list-style: none;
 }
 
 canvas {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 #sidebar, #subsidebar, #content {
-	position: absolute;
-	top: 0;
-	bottom: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
 
 #sidebar {
-	width: @sidebar-width;
-	background-color: @sidebar-color;
+  width: @sidebar-width;
+  background-color: @sidebar-color;
 }
 
 #subsidebar {
-	left: @sidebar-width;
-	width: @subsidebar-width;
-	background-color: @subsidebar-color;
-	border-left: 1px solid @border-color;
+  left: @sidebar-width;
+  width: @subsidebar-width;
+  background-color: @subsidebar-color;
+  border-left: 1px solid @border-color;
 }
 
 #subsidebar li{
-	cursor: pointer;
-	text-transform: uppercase;
-	color: @color-b;
-	font-size: 12px;
-	letter-spacing: 2pt;
-	margin-top: 20px;
-	&.active, &:hover {
-		color: @highlight-color-a;
-	}
+  cursor: pointer;
+  text-transform: uppercase;
+  color: @color-b;
+  font-size: 12px;
+  letter-spacing: 2pt;
+  margin-top: 20px;
+  &.active, &:hover {
+    color: @highlight-color-a;
+  }
 }
 
-.container {
-	padding: 20px;
-}
 
 #content {
-	left: @sidebar-width + @subsidebar-width;
-	background-color: @content-color;
-	border-left: 1px solid @border-color;
+  left: @sidebar-width + @subsidebar-width;
+  right: 20px;
+  padding: 20px;
+  background-color: @content-color;
+  border-left: 1px solid @border-color;
 }
 
 #header, #subheader {
-	height: @header-height;
-	border-bottom: 1px solid @border-color;
-	line-height: @header-height;
-	font-size: 0.25 * @header-height;
+  height: @header-height;
+  border-bottom: 1px solid @border-color;
+  line-height: @header-height;
+  font-size: 0.25 * @header-height;
 }
 
 #header {
-	background-color: @content-color;
+  background-color: @content-color;
 }
 
 #subheader {
-	background-color: @subheader-color;
-	text-transform: uppercase;
-	text-align: center;
-	color: @color-b;
+  background-color: @subheader-color;
+  text-transform: uppercase;
+  text-align: center;
+  color: @color-b;
 }
 
 #toolbar {
-	color: @highlight-color-a;
-	margin: 0;
-	padding: 0;
+  color: @highlight-color-a;
+  margin: 0;
+  padding: 0;
 }
 
 #toolbar li {
-	border-left: 1px solid @border-color;
-	float: left;
-	height: @header-height;
-	line-height: @header-height;
-	text-transform: uppercase;
-	margin: 0;
-	padding: 0 10px;
+  border-left: 1px solid @border-color;
+  float: left;
+  height: @header-height;
+  line-height: @header-height;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0 10px;
 }
 
 #logo {
-	line-height: @header-height;
-	font-size: 0.25 * @header-height;
-	font-weight: inherit;
-	margin: 0;
-	padding: 0;
+  line-height: @header-height;
+  font-size: 0.25 * @header-height;
+  font-weight: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 #tabs {
-	border-bottom: 1px solid @subdued-color;
+  border-bottom: 1px solid @subdued-color;
 }
 
 #tabs ul {
-	display: table;
-	margin: 0;
-	padding: 0 0 0 20px;
+  display: table;
+  margin: 0;
+  padding: 0 0 0 20px;
 }
 
 #tabs ul li {
-	cursor: pointer;
-	float: left;
-	height: @tab-height;
-	line-height: @tab-height;
-	text-transform: uppercase;
-	font-size: 0.3 * @tab-height;
-	margin: 0;
-	padding: 0px 10px;
-	color: @subdued-color;
+  cursor: pointer;
+  float: left;
+  height: @tab-height;
+  line-height: @tab-height;
+  text-transform: uppercase;
+  font-size: 0.3 * @tab-height;
+  margin: 0;
+  padding: 0px 10px;
+  color: @subdued-color;
 
-	&.active, &:hover {
-		color: @highlight-color-a;
-	}
+  &.active, &:hover {
+    color: @highlight-color-a;
+  }
 }
 
 #tab-content ul{
-	color: @subdued-color;
-	margin-top: 20px;
+  color: @subdued-color;
+  margin-top: 20px;
 }
 #tab-content nav ul li{
-	cursor: pointer;
-	line-height: 40px;
-	&.active, &:hover {
-		color: @highlight-color-b;
-	}
+  cursor: pointer;
+  line-height: 40px;
+  &.active, &:hover {
+    color: @highlight-color-b;
+  }
 }
 
 // font icons
 #tab-content nav ul li div{
-	margin-right: 15px;
-	font-size: 150%;
+  margin-right: 15px;
+  font-size: 150%;
 }
 
 #note-picker {
-	margin:0 auto;
+  margin:0 auto;
 }
 
 #note-picker path{
-	-webkit-transition: all .35s ease;
-	   -moz-transition: all .35s ease;
-	    -ms-transition: all .35s ease;
-	     -o-transition: all .35s ease;
-	        transition: all .35s ease;
-	cursor: pointer;
-	opacity: 0.5;
+  -webkit-transition: all .35s ease;
+  -moz-transition: all .35s ease;
+  -ms-transition: all .35s ease;
+  -o-transition: all .35s ease;
+  transition: all .35s ease;
+  cursor: pointer;
+  opacity: 0.5;
 }
 
 #note-picker path:hover {
-	opacity: 0.75;
+  opacity: 0.75;
 }
 
-#note-display {
-	display: inline-block;
+#note_display {
   width: 102px;
-  margin: 20px 30px 0 30px;
+  margin: 60px 20px;
 }
-#note-display span {
+#note_display span {
   width: 50px;
   display: none;
   position: relative;
   text-align: center;
-  margin: 10px auto;
+  margin: 0 auto;
+  margin-bottom: 10px;
   border: 2px solid #fa435f;
   color: white;
   border-radius: 20px;
 }
-#note-display span:nth-child(2) {
-	display:block;
+#note_display span:nth-child(2) {
+  display:block;
 }
 #note-picker path:nth-child(3) {
-	opacity: 1;
+  opacity: 1;
 }
 
 #clips {
-	li{
-		height: 100px;
-		width: 100px;
-		padding: 0px;
-		margin-right: 10px;
-		float: left;
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  border-top: 1px solid @border-color;
+  border-bottom: 1px solid @border-color;
 
-		canvas {
-			position:absolute;
-			clip: rect(0px, 91px, 60px, 0px);
-		}
-	}
+  li {
+    margin: 0;
+    padding: 10px;
+    border-left: 1px solid @subheader-color;
+    float: left;
+
+    &:last-child {
+      border-right: 1px solid @subheader-color;
+    }
+  }
 }
 
-ul.controls {
-	display:inline-block;
-	margin-bottom: 50px;
-	li {
-		float: left;
-		width: 70px;
-		height: 52px;
-		margin: 0px;
-
-		a {
-			float: left;
-			width: 70px;
-			font-size: 16px;
-		}
-	}
+#sequencer_canvas {
+  height: @sequencer-height;
+  clear: both;
+  margin-bottom: 20px;
 }
 
-ul.controls li a.box {
-	background-color: @sidebar-color;
-	color: #fff;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	font-size: 11px;
-	text-align: center;
-	vertical-align: middle;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	cursor: pointer;
-	-webkit-transition: all 0.12s ease-out;
-  -moz-transition: all 0.12s ease-out;
-  -o-transition: all 0.12s ease-out;
-  text-shadow: 0 -1px @color-c;
-  border: 1px solid @color-d;
+#sequencer_controls {
+  list-style: none;
+  float: left;
+  width: @button-width;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid @border-color;
+    color: @highlight-color-c;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      color: @highlight-color-a;
+      border: 1px solid @highlight-color-c;
+    }
+
+    span {
+      font-weight: normal;
+      font-size: 1.2em;
+      margin-right: 0.7em;
+
+      &.icon-save {
+        color: @color-c;
+      }
+
+      &.icon-clear {
+        color: @color-d;
+      }
+
+      &.icon-hold {
+        color: @color-a;
+      }
+    }
+  }
 }
 
-ul.controls li a.box:hover {
-	-webkit-box-shadow: 1px 1px @color-c, 2px 2px @color-c, 3px 3px @color-c, 4px 4px @color-c, 5px 5px @color-c;
-	-moz-box-shadow: 1px 1px @color-c, 2px 2px @color-c, 3px 3px @color-c, 4px 4px @color-c, 5px 5px @color-c;
-	margin-top: -5px;
-	margin-left: -5px;
+#note_display {
+  float: left;
+  margin: 0;
+  margin-left: 40px;
+  padding: 0;
 }
-
-ul.controls li a.box:active {
-	background-color: #000;
-}
-
-ul.controls a div {
-	font-size: 16px;
-	padding:2px 0 4px 0;
-	display: block;
-	margin: 0 auto;
-}
-
-.icon-hold {
-	color: @color-a;
-}
-.icon-save {
-	color: @color-e;
-}
-.icon-clear {
-	color: @color-f;
-}
-
-.icon-tape {
-	padding-right:10px;
-	margin-top: -2px;
-	font-size: 25px;
-	color: @color-e;
-}
-
-#shortcuts {
-	border-top:1px solid @border-color;
-	font-size: 12px;
-
-	li {
-		float:left;
-		margin-right: 40px;
-
-		h3 {
-			font-weight:normal;
-			font-size: 12px;
-			padding:0;
-			margin:20px 0 0 0;
-			line-height: 20px;
-			color: @highlight-color-a;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-		}
-	}
-}
-
