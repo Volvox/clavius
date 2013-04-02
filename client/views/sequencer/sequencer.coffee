@@ -199,8 +199,8 @@ class Sequencer
         @state[col][row] = not @state[col][row]
 
   getCoords: (e) ->
-    x: e.pageX - @canvas.offsetLeft
-    y: e.pageY - @canvas.offsetTop
+    x: e.pageX - $(@canvas).offset().left
+    y: e.pageY - $(@canvas).offset().top
 
   export: () ->
     notes = []

@@ -1,23 +1,29 @@
 <template name="sequencer">
-  {{> clip_list }}
-<div class="container">
-  <div class="row sequencer">
-    <div class="span12 sequencer">
-      {{> canvas}}
-    </div>
-  </div>
-  <div id="note-display">
-    <span data-note="1.0">1/4</span>
-    <span data-note="0.5">1/8</span>
-    <span data-note="0.25">1/16</span>
-    <span data-note="0.125">1/32</span>
-    {{> note_picker}}
-  </div>
-  <div id="controls">
-    <div id="save">Add to Library</div>
-    <div class="button" id="clear">clear</div>
-    <div class="hold">hold</div>
-    <div id="note">space bar</div>
-  </div>
+{{> clip_list }}
+{{> sequencer_canvas}}
+{{> sequencer_controls}}
+</template>
+
+<template name="sequencer_canvas">
+<div id="sequencer_canvas">
+	{{#constant}}
+	<canvas></canvas>
+	{{/constant}}
+</div>
+</template>
+
+<template name="sequencer_controls">
+<div id="note-display">
+	<span data-note="1.0">1/4</span>
+	<span data-note="0.5">1/8</span>
+	<span data-note="0.25">1/16</span>
+	<span data-note="0.125">1/32</span>
+	{{> note_picker}}
+</div>
+<div id="controls">
+	<div id="save">Add to Library</div>
+	<div class="button" id="clear">clear</div>
+	<div class="hold">hold</div>
+	<div id="note">space bar</div>
 </div>
 </template>
