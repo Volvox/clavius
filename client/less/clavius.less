@@ -1,6 +1,10 @@
 @import "base.lessimport";
 @import "variables.lessimport";
 
+a:link, a:hover {
+	text-decoration: none;
+}
+
 ul {
 	list-style: none;
 }
@@ -39,11 +43,12 @@ canvas {
 	}
 }
 
+.container {
+	padding: 20px;
+}
 
 #content {
 	left: @sidebar-width + @subsidebar-width;
-	right: 20px;
-	padding: 20px;
 	background-color: @content-color;
 	border-left: 1px solid @border-color;
 }
@@ -153,8 +158,9 @@ canvas {
 }
 
 #note-display {
+	display: inline-block;
   width: 102px;
-  margin: 60px 20px;
+  margin: 20px 30px 0 30px;
 }
 #note-display span {
   width: 50px;
@@ -173,7 +179,7 @@ canvas {
 	opacity: 1;
 }
 
-#clips{
+#clips {
 	li{
 		height: 100px;
 		width: 100px;
@@ -187,3 +193,95 @@ canvas {
 		}
 	}
 }
+
+ul.controls {
+	display:inline-block;
+	margin-bottom: 50px;
+	li {
+		float: left;
+		width: 70px;
+		height: 52px;
+		margin: 0px;
+
+		a {
+			float: left;
+			width: 70px;
+			font-size: 16px;
+		}
+	}
+}
+
+ul.controls li a.box {
+	background-color: @sidebar-color;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 11px;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	cursor: pointer;
+	-webkit-transition: all 0.12s ease-out;
+  -moz-transition: all 0.12s ease-out;
+  -o-transition: all 0.12s ease-out;
+  text-shadow: 0 -1px @color-c;
+  border: 1px solid @color-d;
+}
+
+ul.controls li a.box:hover {
+	-webkit-box-shadow: 1px 1px @color-c, 2px 2px @color-c, 3px 3px @color-c, 4px 4px @color-c, 5px 5px @color-c;
+	-moz-box-shadow: 1px 1px @color-c, 2px 2px @color-c, 3px 3px @color-c, 4px 4px @color-c, 5px 5px @color-c;
+	margin-top: -5px;
+	margin-left: -5px;
+}
+
+ul.controls li a.box:active {
+	background-color: #000;
+}
+
+ul.controls a div {
+	font-size: 16px;
+	padding:2px 0 4px 0;
+	display: block;
+	margin: 0 auto;
+}
+
+.icon-hold {
+	color: @color-a;
+}
+.icon-save {
+	color: @color-e;
+}
+.icon-clear {
+	color: @color-f;
+}
+
+.icon-tape {
+	padding-right:10px;
+	margin-top: -2px;
+	font-size: 25px;
+	color: @color-e;
+}
+
+#shortcuts {
+	border-top:1px solid @border-color;
+	font-size: 12px;
+
+	li {
+		float:left;
+		margin-right: 40px;
+
+		h3 {
+			font-weight:normal;
+			font-size: 12px;
+			padding:0;
+			margin:20px 0 0 0;
+			line-height: 20px;
+			color: @highlight-color-a;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+	}
+}
+

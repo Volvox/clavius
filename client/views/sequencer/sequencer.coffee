@@ -282,7 +282,7 @@ Template.sequencer.events
     $("#note-picker path").css "opacity", "0.5"
     $(e.srcElement).css "opacity", "1"
     Session.set "note", Number(note)
-  'click .hold': (e) ->
+  'click #hold': (e) ->
     sequencer.toggle()
   'click #save': (e) ->
     e.preventDefault()
