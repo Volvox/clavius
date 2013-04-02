@@ -69,9 +69,11 @@ class Sequencer
 
     @keyboard = new VirtualKeyboard
       noteOn: (note) =>
-        @instrument.noteOn note, 0
+        console.log 'ON', note
+        @instrument.noteOn note, audioContext.currentTime
       noteOff: (note) =>
-        @instrument.noteOff note, 0
+        console.log 'OFF', note
+        @instrument.noteOff note, audioContext.currentTime
 
   clear: ->
     ctx = @canvas.getContext '2d'
@@ -273,11 +275,11 @@ Template.sequencer.events
     val = $(e.srcElement).val()
     switch val
       when 'additive'
-        instrument = new Polyphonic(AdditiveSynthesizer)
+        instrument = new AdditiveSynthesizer
       when 'subtractive'
-        instrument = new Polyphonic(SubtractiveSynthesizer)
+        instrument = new SubtractiveSynthesizer
       when 'fm'
-        instrument = new Polyphonic(FMSynthesizer)
+        instrument = new FMSynthesizer
       when 'drumkit'
         instrument = new FreesoundSampler(7417)
     sequencer.setInstrument instrument
