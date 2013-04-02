@@ -5,6 +5,7 @@ class Sequencer
     @hold = false
     @transpose_sequence = false
     @octave = 1
+    @gridSize = 20
     @letters = "awsedrfgyhujkolp;['".split ''
     @noteMin = 35 # B-3
     @noteMax = 71 # B0
@@ -25,17 +26,13 @@ class Sequencer
 
   resizeGrid: ->
     @current = 0
-    @numColumns = Session.get('columns')
-    @tile_height = Math.floor(@canvas.height / @numRows())
-    @tile_width = Math.floor(@canvas.width / (@numColumns + 1))
+    @numRows = Math.floor(@canvas.height / @gridSize) - 1
+    @numColumns = Math.floor(@canvas.width / @gridSize)
     @state = []
     for col in [0...@numColumns]
       @state[col] = []
-      for row in [0...@numRows()]
+      for row in [0...@numRows]
         @state[col][row] = false
-
-  numRows: ->
-    @noteMax - @noteMin
 
   bindKeys: () ->
     Mousetrap.reset()
@@ -66,7 +63,7 @@ class Sequencer
 
     for letter, i in @letters
       do (letter, i) =>
-        row = @numRows() - 1 - i
+        row = @numRows - 1 - i
         Mousetrap.bind "shift+#{letter}", =>
           @state[@cursor][row] = not @state[@cursor][row]
 
@@ -85,28 +82,41 @@ class Sequencer
 
     @clear()
     @drawGrid()
+    @drawBorder()
     @drawNotes()
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
 
     @highlightColumn (@current + @numColumns - 1) % @numColumns
 
+  drawBorder: ->
+    ctx = @canvas.getContext '2d'
+    ctx.strokeStyle = 'rgb(89,66,266)';
+    ctx.lineWidth = 4
+
+    for y in [0, @canvas.height]
+      ctx.beginPath()
+      ctx.moveTo 0, y
+      ctx.lineTo @canvas.width, y
+      ctx.stroke()
+
   drawGrid: ->
     ctx = @canvas.getContext '2d'
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'
 
-    for row in [0...@numRows()]
-      offset =  (1 + row) * @tile_height
+    for row in [0...@numRows]
+      offset =  (1 + row) * @gridSize
       ctx.beginPath()
       ctx.moveTo 0, offset
       ctx.lineTo @canvas.width, offset
+      ctx.lineWidth = 1
       ctx.stroke()
 
     for col in [0...@numColumns]
-      offset =  (1 + col) * @tile_width
+      offset =  (1 + col) * @gridSize
       ctx.beginPath()
       ctx.moveTo offset, 0
       ctx.lineTo offset, @canvas.height
-      ctx.lineWidth = if col % 4 is 0 then 5 else 1
+      ctx.lineWidth = if col % 4 is 0 then 2 else 1
       ctx.stroke()
 
   drawNotes: ->
@@ -121,8 +131,8 @@ class Sequencer
       ctx.fillStyle = '#fa435f'
     else
       ctx.fillStyle = 'rgb(255, 255, 255)'
-    x = col * @tile_width + @tile_width
-    y = row * @tile_height + @tile_height
+    x = col * @gridSize + @gridSize
+    y = row * @gridSize + @gridSize
     radius = 3
     ctx.beginPath()
     ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
@@ -131,8 +141,8 @@ class Sequencer
   highlightColumn: (col, color) ->
     ctx = @canvas.getContext '2d'
     ctx.fillStyle = color or 'rgba(0, 0, 255, 0.4)'
-    x = col * @tile_width + @tile_width
-    ctx.fillRect x, 0, 5, @canvas.height
+    x = col * @gridSize + @gridSize
+    ctx.fillRect x, 0, 2, @canvas.height
 
   setInstrument: (instrument) ->
     if @instrument?
@@ -190,9 +200,9 @@ class Sequencer
 
   click: (e, force) ->
     coords = @getCoords e
-    row = Math.round(coords.y / @tile_height) - 1
-    col = Math.round(coords.x / @tile_width) - 1
-    if 0 <= row < @numRows() and 0 <= col < @numColumns
+    row = Math.round(coords.y / @gridSize) - 1
+    col = Math.round(coords.x / @gridSize) - 1
+    if 0 <= row < @numRows and 0 <= col < @numColumns
       if force?
         @state[col][row] = force
       else
@@ -222,7 +232,7 @@ class Sequencer
   reset: ->
     for col in [0...@numColumns]
       @state[col] = []
-      for row in [0...@numRows()]
+      for row in [0...@numRows]
         @state[col][row] = false
 
   import: (clip) ->

@@ -2,6 +2,7 @@
 @subsidebar-width: 120px;
 @header-height: 50px;
 @tab-height: 45px;
+@sequencer-height: 300px;
 
 @sidebar-color: #100819;
 @subsidebar-color: #0A0A0A;
