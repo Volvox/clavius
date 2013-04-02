@@ -3,6 +3,7 @@
 @header-height: 50px;
 @tab-height: 45px;
 @sequencer-height: 300px;
+@button-width: 100px;
 
 @sidebar-color: #100819;
 @subsidebar-color: #0A0A0A;
@@ -11,6 +12,9 @@
 @subheader-color: #191919;
 @highlight-color-a: #FFFFFF;
 @highlight-color-b: rgb(254, 239, 136);
+@highlight-color-c: #C3C3C3;
 @subdued-color: rgb(102, 70, 126);
 @color-a: #fa435f;
 @color-b: #676767;
+@color-c: #00BE82;
+@color-d: rgb(89, 66, 266);

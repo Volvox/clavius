@@ -13,17 +13,16 @@
 </template>
 
 <template name="sequencer_controls">
-<div id="note-display">
+<ul id="sequencer_controls">
+	<li id="save"><span class="icon-save"></span> Save</li>
+	<li id="clear"><span class="icon-clear"></span> Clear</li>
+	<li class="hold"><span class="icon-hold"></span> Hold</li>
+</ul>
+<div id="note_display">
 	<span data-note="1.0">1/4</span>
 	<span data-note="0.5">1/8</span>
 	<span data-note="0.25">1/16</span>
 	<span data-note="0.125">1/32</span>
 	{{> note_picker}}
-</div>
-<div id="controls">
-	<div id="save">Add to Library</div>
-	<div class="button" id="clear">clear</div>
-	<div class="hold">hold</div>
-	<div id="note">space bar</div>
 </div>
 </template>

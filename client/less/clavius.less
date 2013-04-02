@@ -152,21 +152,22 @@ canvas {
   opacity: 0.75;
 }
 
-#note-display {
+#note_display {
   width: 102px;
   margin: 60px 20px;
 }
-#note-display span {
+#note_display span {
   width: 50px;
   display: none;
   position: relative;
   text-align: center;
-  margin: 10px auto;
+  margin: 0 auto;
+  margin-bottom: 10px;
   border: 2px solid #fa435f;
   color: white;
   border-radius: 20px;
 }
-#note-display span:nth-child(2) {
+#note_display span:nth-child(2) {
   display:block;
 }
 #note-picker path:nth-child(3) {
@@ -197,4 +198,54 @@ canvas {
 #sequencer_canvas {
   height: @sequencer-height;
   clear: both;
+  margin-bottom: 20px;
+}
+
+#sequencer_controls {
+  list-style: none;
+  float: left;
+  width: @button-width;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid @border-color;
+    color: @highlight-color-c;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      color: @highlight-color-a;
+      border: 1px solid @highlight-color-c;
+    }
+
+    span {
+      font-weight: normal;
+      font-size: 1.2em;
+      margin-right: 0.7em;
+
+      &.icon-save {
+        color: @color-c;
+      }
+
+      &.icon-clear {
+        color: @color-d;
+      }
+
+      &.icon-hold {
+        color: @color-a;
+      }
+    }
+  }
+}
+
+#note_display {
+  float: left;
+  margin: 0;
+  margin-left: 40px;
+  padding: 0;
 }

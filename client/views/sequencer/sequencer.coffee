@@ -284,7 +284,7 @@ Template.sequencer.events
     e.srcElement.blur()
   'click #note-picker path': (e) ->
     note = $(e.srcElement).data("note")
-    $.each $("#note-display span"), ->
+    $.each $("#note_display span"), ->
       if $(@).data("note") is note
         $(@).css "display", "block"
       else
