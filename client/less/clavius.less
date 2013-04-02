@@ -1,6 +1,10 @@
 @import "base.lessimport";
 @import "variables.lessimport";
 
+body {
+  overflow: hidden;
+}
+
 ul {
   list-style: none;
 }
@@ -42,10 +46,23 @@ canvas {
 
 #content {
   left: @sidebar-width + @subsidebar-width;
-  right: 20px;
-  padding: 20px;
+  right: 0px;
   background-color: @content-color;
   border-left: 1px solid @border-color;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  hr {
+    clear: both;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid @border-color;
+  }
+
+  .padded {
+    padding: 20px;
+    clear: both;
+  }
 }
 
 #header, #subheader {
@@ -136,6 +153,7 @@ canvas {
 
 #note-picker {
   margin:0 auto;
+  margin-bottom: -20px;
 }
 
 #note-picker path{
@@ -153,9 +171,10 @@ canvas {
 }
 
 #note_display {
-  width: 102px;
-  margin: 60px 20px;
+  overflow: hidden;
+  width: 108px;
 }
+
 #note_display span {
   width: 50px;
   display: none;
@@ -202,42 +221,51 @@ canvas {
 }
 
 #sequencer_controls {
-  list-style: none;
-  float: left;
-  width: @button-width;
-  margin: 0;
-  padding: 0;
+  overflow: auto;
+  width: 100%;
 
-  li {
+  ul {
+    list-style: none;
+    float: left;
+    width: @button-width;
     margin: 0;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid @border-color;
-    color: @highlight-color-c;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
+    padding: 0;
 
-    &:hover {
-      color: @highlight-color-a;
-      border: 1px solid @highlight-color-c;
-    }
+    li {
+      margin: 0;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid @border-color;
+      color: @highlight-color-c;
+      text-transform: uppercase;
+      font-weight: bold;
+      cursor: pointer;
 
-    span {
-      font-weight: normal;
-      font-size: 1.2em;
-      margin-right: 0.7em;
-
-      &.icon-save {
-        color: @color-c;
+      &:last-child {
+        margin-bottom: 0;
       }
 
-      &.icon-clear {
-        color: @color-d;
+      &:hover {
+        color: @highlight-color-a;
+        border: 1px solid @highlight-color-c;
       }
 
-      &.icon-hold {
-        color: @color-a;
+      span {
+        font-weight: normal;
+        font-size: 1.2em;
+        margin-right: 0.7em;
+
+        &.icon-save {
+          color: @color-c;
+        }
+
+        &.icon-clear {
+          color: @color-d;
+        }
+
+        &.icon-hold {
+          color: @color-a;
+        }
       }
     }
   }
@@ -248,4 +276,26 @@ canvas {
   margin: 0;
   margin-left: 40px;
   padding: 0;
+}
+
+#sequencer_instructions {
+  div {
+    float: left;
+    margin-right: 40px;
+
+    span {
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: @highlight-color-a;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      text-transform: lowercase;
+      color: @color-b;
+    }
+  }
 }
