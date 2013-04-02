@@ -7,8 +7,8 @@ class Sequencer
     @octave = 1
     @gridSize = 20
     @letters = "awsedrfgyhujkolp;['".split ''
-    @noteMin = 35 # B-3
-    @noteMax = 71 # B0
+    @noteMin = 60 # B-3
+    @noteMax = 81 # B0
     Session.set('bpm', 120)
     Session.set('note', 0.25)
     Session.set('columns', 32)
@@ -176,7 +176,8 @@ class Sequencer
   playNote: (note, time) ->
     time ?= audioContext.currentTime
     @instrument.noteOn note, time
-    @instrument.noteOff note, time + @tickLength()
+    #@instrument.noteOff note, time + @tickLength()
+    @instrument.noteOff note, time + (60.0 / Session.get('bpm'))
 
   getNote: (row) ->
     @noteMax - row
