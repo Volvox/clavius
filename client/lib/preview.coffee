@@ -25,27 +25,26 @@ class ClipPreview
     noteMin = Math.min(pitches...)
     noteMax = Math.max(pitches...)
     tickWidth = canvas.width / length
-    noteHeight = canvas.height / (noteMax - noteMin)
+    noteHeight = canvas.height / 16
     ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
 
     #mini dotted pattern on sequencer page (pattern_preview)
     if dotted?
-      radius = noteHeight / 2.0
-      for i in [0...(noteMax - noteMin)]
-        for j in [0...(noteMax - noteMin)]
+      radius = noteHeight / 3.0
+      for i in [0..16]
+        for j in [0..16]
           ctx.fillStyle = 'rgba(255, 255, 255, 0.2)'
           ctx.beginPath()
-          ctx.arc(j*3, i*3, radius, 0, 2 * Math.PI, false)
+          ctx.arc(i*noteHeight, j*noteHeight, radius, 0, 2 * Math.PI, false)
           ctx.fill()
       for note in @clip.notes
         tickLength = note.stop - note.start
-        col = note.start / tickLength
-        row = sequencer.getRow note.sound
-        if sequencer.state[col]? and sequencer.state[col][row]?
-          ctx.fillStyle = '#fa435f'
-          ctx.beginPath()
-          ctx.arc(col*3, row*3, radius, 0, 2 * Math.PI, false)
-          ctx.fill()
+        x = (note.start / length) * canvas.width
+        y = ((sequencer.getRow note.sound) % 16) * (canvas.height / 16)
+        ctx.fillStyle = '#fa435f'
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+        ctx.fill()
 
     #rectangular horizontal pattern on mixer page
     else
