@@ -218,11 +218,13 @@ canvas {
 #sequencer_canvas {
   height: @sequencer-height;
   clear: both;
+  position: relative;
   margin-bottom: 20px;
 }
 
 #sequencer_controls {
   overflow: auto;
+  margin-top: 20px;
   width: 100%;
 
   ul {
@@ -299,4 +301,31 @@ canvas {
       color: @color-b;
     }
   }
+}
+
+#resizable {
+   position: absolute;
+   width: 839px;
+
+  .handle {
+    border-left: 2px solid yellow;
+    height: @sequencer-height;
+    cursor: w-resize;//crosshair|move|e-resize|ne-resize|-resize|n-resize|se-resize|sw-resize|s-resize|w-resize|text|wait|help|progress;
+    position: absolute;
+    &#left {
+    }
+
+    &#right {
+      left: @cell-width*15.9;
+    }
+  }
+}
+
+
+#overlay {
+  float: right;
+  width: @cell-width*16;
+  background-color: white;
+  opacity: 0.2;
+  height: @sequencer-height;
 }

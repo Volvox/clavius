@@ -18,7 +18,10 @@ class Sequencer
     @draw()
     @play()
 
+
   initializeCanvas: (canvas) ->
+    # paper.install window
+    # paper.setup canvas
     @canvas = canvas
     @canvas.height = $(canvas).parent().height()
     @canvas.width = $(canvas).parent().width()
@@ -86,9 +89,20 @@ class Sequencer
     @drawGrid()
     @drawBorder()
     @drawNotes()
+    # @drawResizable()
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
 
     @highlightColumn (@current + @numColumns - 1) % @numColumns
+
+
+  drawResizable: ->
+    path = new Path()
+    path.strokeColor = 'green'
+    start = new Point(100, 100)
+    path.moveTo(start)
+    path.lineTo(start.add([ 200, 0 ]))
+
+    view.draw()
 
   drawBorder: ->
     ctx = @canvas.getContext '2d'

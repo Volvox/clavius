@@ -1,68 +1,65 @@
 <template name="sequencer">
 <div class="padded">
-	{{> clip_list }}
-	{{> sequencer_canvas}}
-	{{> sequencer_controls}}
+    {{> clip_list }}
+    {{> handles }}
+    {{> sequencer_canvas}}
+    {{> sequencer_controls}}
 </div>
 <hr />
 <div class="padded">
-	{{> sequencer_instructions}}
+    {{> sequencer_instructions}}
 </div>
 </template>
 
+<template name="handles">
+</template>
 <template name="sequencer_canvas">
-<div id="sequencer_canvas">
-  {{#constant}}
-  <canvas></canvas>
-  {{/constant}}
-</div>
+  <div id="sequencer_canvas">
+    <div id="resizable">
+      <div class="handle" id="left"></div>
+      <div class="handle" id="right"></div>
+      <div id="overlay"></div>
+    </div>
+      {{#constant}}
+      <canvas></canvas>
+      {{/constant}}
+   </div>
 </template>
 
 <template name="sequencer_controls">
-<<<<<<< HEAD
-<ul id="sequencer_controls">
-  <li id="save"><span class="icon-save"></span> Save</li>
-  <li id="clear"><span class="icon-clear"></span> Clear</li>
-  <li class="hold"><span class="icon-hold"></span> Hold</li>
-=======
 <div id="sequencer_controls">
 <ul>
-	<li id="save"><span class="icon-save"></span> Save</li>
-	<li id="clear"><span class="icon-clear"></span> Clear</li>
-	<li class="hold"><span class="icon-hold"></span> Hold</li>
->>>>>>> c6efd8eff7edbf52c75df07fcfa262d72536099e
+    <li id="save"><span class="icon-save"></span> Save</li>
+    <li id="clear"><span class="icon-clear"></span> Clear</li>
+    <li class="hold"><span class="icon-hold"></span> Hold</li>
 </ul>
 <div id="note_display">
-  <span data-note="1.0">1/4</span>
-  <span data-note="0.5">1/8</span>
-  <span data-note="0.25">1/16</span>
-  <span data-note="0.125">1/32</span>
-  {{> note_picker}}
+    <span data-note="1.0">1/4</span>
+    <span data-note="0.5">1/8</span>
+    <span data-note="0.25">1/16</span>
+    <span data-note="0.125">1/32</span>
+    {{> note_picker}}
 </div>
-<<<<<<< HEAD
-</template>
-=======
 </div>
 </template>
 
 <template name="sequencer_instructions">
 <div id="sequencer_instructions">
-	<div>
-		<span>Hold</span>
-		<p>Space Bar</p>
-	</div>
-	<div>
-		<span>Insert</span>
-		<p>Shift + any key</p>
-	</div>
-	<div>
-		<span>Move Cursor</span>
-		<p>Left/right arrow keys</p>
-	</div>
-	<div>
-		<span>+ / - Octave</span>
-		<p>Z / X</p>
-	</div>
+    <div>
+        <span>Hold</span>
+        <p>Space Bar</p>
+    </div>
+    <div>
+        <span>Insert</span>
+        <p>Shift + any key</p>
+    </div>
+    <div>
+        <span>Move Cursor</span>
+        <p>Left/right arrow keys</p>
+    </div>
+    <div>
+        <span>+ / - Octave</span>
+        <p>Z / X</p>
+    </div>
 </div>
 </template>
->>>>>>> c6efd8eff7edbf52c75df07fcfa262d72536099e
