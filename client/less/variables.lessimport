@@ -15,6 +15,7 @@
 @highlight-color-b: rgb(254, 239, 136);
 @highlight-color-c: #C3C3C3;
 @subdued-color: rgb(102, 70, 126);
+@overlay-color: rgba(255, 255, 255, 0.2);
 @color-a: #fa435f;
 @color-b: #676767;
 @color-c: #0A363F;

@@ -311,6 +311,7 @@ canvas {
   .partition {
     height: @sequencer-height;
     position: absolute;
+    z-index: 1000;
     border-right: 2px solid @highlight-color-b;
 
   .ui-resizable-e {
@@ -329,16 +330,13 @@ canvas {
     }
     &#left {
       width: 0;
+      background-color: @overlay-color;
       float: left;
     }
   }
 }
 
 #overlay {
-  float: right;
-  width: @cell-width*16;
-  background-color: white;
-  opacity: 0.2;
   height: @sequencer-height;
 }
 

@@ -30,7 +30,7 @@ class Sequencer
     @cursor = @current
     numColumns = Math.floor(($("#right").width()/@gridSize) - @current)
     @numRows = Math.floor(@canvas.height / @gridSize) - 1
-    @numColumns = Math.floor($("#right").width() / @gridSize)
+    @numColumns = Math.floor(@canvas.width / @gridSize)
     @state = []
     for col in [0...@numColumns]
       @state[col] = []
@@ -168,7 +168,8 @@ class Sequencer
 
   highlightColumn: (col, color) ->
     ctx = @canvas.getContext '2d'
-    ctx.fillStyle = color or 'rgba(0, 0, 255, 0.4)'
+    ctx.fillStyle = color or 'rgba(0, 0, 255, 0.8)'
+    ctx.lineWidth = 4
     x = col * @gridSize + @gridSize
     ctx.fillRect x, 0, 2, @canvas.height
 
@@ -194,8 +195,8 @@ class Sequencer
 
   advanceNote: ->
     @current += 1
-    if @current == @numColumns
-      @current = 0
+    if @current == Math.floor($("#right").width() / @gridSize)
+      @current = Math.floor($("#left").width()/@gridSize)
 
     @noteTime += @tickLength()
 
