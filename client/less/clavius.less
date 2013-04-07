@@ -305,15 +305,24 @@ canvas {
 
 
 #resizable {
-   position: absolute;
-   width: 839px;
+  position: absolute;
+  width: 839px;
 
+  .partition {
+    height: @sequencer-height;
+    position: absolute;
+    border-right: 2px solid @highlight-color-b;
 
-   .partition {
-      cursor: w-resize;//move|e-resize|ne-resize|-resize|n-resize|se-resize|sw-resize|s-resize|;
-      height: @sequencer-height;
-      position: absolute;
-      border-right: 2px solid @highlight-color-b;
+  .ui-resizable-e {
+    margin: -9px auto;
+    width: 10px;
+    height: 10px;
+    background-color: @highlight-color-b;
+
+    &:active{
+      background-color: @color-g;
+    }
+  }
 
     &#right {
       width: @cell-width*16;
@@ -322,8 +331,8 @@ canvas {
       width: 0;
       float: left;
     }
-   }
- }
+  }
+}
 
 #overlay {
   float: right;
@@ -333,13 +342,3 @@ canvas {
   height: @sequencer-height;
 }
 
-.partition .ui-resizable-e {
-  margin: -9px auto;
-  width: 10px;
-  height: 10px;
-  background-color: @highlight-color-b;
-
-  &:active{
-    background-color: @color-g;
-  }
-}

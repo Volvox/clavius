@@ -26,9 +26,11 @@ class Sequencer
     @resizeGrid()
 
   resizeGrid: ->
-    @current = 0
+    @current = Math.floor($("#left").width() / @gridSize)
+    @cursor = @current
+    numColumns = Math.floor(($("#right").width()/@gridSize) - @current)
     @numRows = Math.floor(@canvas.height / @gridSize) - 1
-    @numColumns = Math.floor(@canvas.width / @gridSize)
+    @numColumns = Math.floor($("#right").width() / @gridSize)
     @state = []
     for col in [0...@numColumns]
       @state[col] = []
@@ -90,26 +92,29 @@ class Sequencer
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
     @highlightColumn (@current + @numColumns - 1) % @numColumns
 
-
   drawResizable: ->
-    $( ".partition#right" ).resizable
+    $( "#right" ).resizable
       containment: "parent"
-      minWidth: $("#left").outerWidth() + 40
-      grid: [ 20, 0 ]
+      minWidth: $("#left").width() + (@gridSize * 2)
+      grid: [ @gridSize, 0 ]
       handles: "w, e"
       resize: =>
         @drawResizable()
         Session.set('mousedown', false)
       # alsoResize: "#overlay"
+      stop: =>
+        @resizeGrid()
 
-    $( ".partition#left" ).resizable
+    $( "#left" ).resizable
       containment: "parent"
-      maxWidth: $("#right").outerWidth() - 40
-      grid: [ 20, 0 ]
+      maxWidth: $("#right").width() - (@gridSize * 2)
+      grid: [ @gridSize, 0 ]
       handles: "w, e"
       resize: =>
         @drawResizable()
         Session.set('mousedown', false)
+      stop: =>
+        @resizeGrid()
 
   drawBorder: ->
     ctx = @canvas.getContext '2d'
@@ -171,7 +176,7 @@ class Sequencer
     if @instrument?
       @instrument.disconnect()
     @instrument = instrument
-    @instrument.connect masterGainNode
+    # @instrument.connect masterGainNode
 
   schedule: =>
     currentTime = audioContext.currentTime
