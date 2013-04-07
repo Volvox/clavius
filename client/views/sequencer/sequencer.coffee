@@ -96,7 +96,7 @@ class Sequencer
       containment: "parent"
       minWidth: $("#left").outerWidth() + 20
       grid: [ 20, 0 ]
-      handles: {'n': '#handle'}
+      # handles: {'n': '#handle'}
       resize: =>
         @drawResizable()
       # alsoResize: "#overlay"
