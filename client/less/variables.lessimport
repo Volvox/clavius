@@ -21,3 +21,4 @@
 @color-d: rgb(26, 142, 149);
 @color-e: #2BBF7F;
 @color-f: #5743E7;
+@color-g: rgb(55, 255, 172);

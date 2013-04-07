@@ -309,11 +309,11 @@ canvas {
    width: 839px;
 
 
-   .handle {
+   .partition {
       cursor: w-resize;//move|e-resize|ne-resize|-resize|n-resize|se-resize|sw-resize|s-resize|;
       height: @sequencer-height;
       position: absolute;
-      border-right: 2px solid yellow;
+      border-right: 2px solid @highlight-color-b;
 
     &#right {
       width: @cell-width*16;
@@ -333,9 +333,13 @@ canvas {
   height: @sequencer-height;
 }
 
-#handle {
-  width: @cell-width;
-  height: @cell-width;
-  background: "red";
-  border-radius: 10px;
+.partition .ui-resizable-e {
+  margin: -9px auto;
+  width: 10px;
+  height: 10px;
+  background-color: @highlight-color-b;
+
+  &:active{
+    background-color: @color-g;
+  }
 }

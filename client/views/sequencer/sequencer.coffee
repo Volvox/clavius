@@ -92,22 +92,24 @@ class Sequencer
 
 
   drawResizable: ->
-    $( ".handle#right" ).resizable
+    $( ".partition#right" ).resizable
       containment: "parent"
-      minWidth: $("#left").outerWidth() + 20
+      minWidth: $("#left").outerWidth() + 40
       grid: [ 20, 0 ]
-      # handles: {'n': '#handle'}
+      handles: "w, e"
       resize: =>
         @drawResizable()
+        Session.set('mousedown', false)
       # alsoResize: "#overlay"
-    $( ".handle#left" ).resizable
+
+    $( ".partition#left" ).resizable
       containment: "parent"
-      maxWidth: $("#right").outerWidth() - 20
+      maxWidth: $("#right").outerWidth() - 40
       grid: [ 20, 0 ]
-      handles: "n, e, s, w"
+      handles: "w, e"
       resize: =>
         @drawResizable()
-
+        Session.set('mousedown', false)
 
   drawBorder: ->
     ctx = @canvas.getContext '2d'
