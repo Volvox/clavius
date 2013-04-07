@@ -303,24 +303,27 @@ canvas {
   }
 }
 
+
 #resizable {
    position: absolute;
    width: 839px;
 
-  .handle {
-    border-left: 2px solid yellow;
-    height: @sequencer-height;
-    cursor: w-resize;//crosshair|move|e-resize|ne-resize|-resize|n-resize|se-resize|sw-resize|s-resize|w-resize|text|wait|help|progress;
-    position: absolute;
-    &#left {
-    }
+
+   .handle {
+      cursor: w-resize;//move|e-resize|ne-resize|-resize|n-resize|se-resize|sw-resize|s-resize|;
+      height: @sequencer-height;
+      position: absolute;
+      border-right: 2px solid yellow;
 
     &#right {
-      left: @cell-width*15.9;
+      width: @cell-width*16;
     }
-  }
-}
-
+    &#left {
+      width: 0;
+      float: left;
+    }
+   }
+ }
 
 #overlay {
   float: right;
@@ -328,4 +331,11 @@ canvas {
   background-color: white;
   opacity: 0.2;
   height: @sequencer-height;
+}
+
+#handle {
+  width: @cell-width;
+  height: @cell-width;
+  background: "red";
+  border-radius: 10px;
 }

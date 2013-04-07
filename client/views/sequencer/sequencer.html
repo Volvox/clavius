@@ -1,7 +1,6 @@
 <template name="sequencer">
 <div class="padded">
     {{> clip_list }}
-    {{> handles }}
     {{> sequencer_canvas}}
     {{> sequencer_controls}}
 </div>
@@ -11,11 +10,10 @@
 </div>
 </template>
 
-<template name="handles">
-</template>
 <template name="sequencer_canvas">
   <div id="sequencer_canvas">
     <div id="resizable">
+    <div id="handle"  class="ui-resizable-handle ui-resizable-n"></div>
       <div class="handle" id="left"></div>
       <div class="handle" id="right"></div>
       <div id="overlay"></div>

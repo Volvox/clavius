@@ -12,16 +12,14 @@ class Sequencer
     Session.set('bpm', 120)
     Session.set('note', 0.25)
     Session.set('columns', 32)
-
     @initializeCanvas canvas
     @bindKeys()
     @draw()
+    @drawResizable()
     @play()
 
 
   initializeCanvas: (canvas) ->
-    # paper.install window
-    # paper.setup canvas
     @canvas = canvas
     @canvas.height = $(canvas).parent().height()
     @canvas.width = $(canvas).parent().width()
@@ -89,20 +87,27 @@ class Sequencer
     @drawGrid()
     @drawBorder()
     @drawNotes()
-    # @drawResizable()
     @highlightColumn @cursor, 'rgba(55, 255, 172, 0.8)'
-
     @highlightColumn (@current + @numColumns - 1) % @numColumns
 
 
   drawResizable: ->
-    path = new Path()
-    path.strokeColor = 'green'
-    start = new Point(100, 100)
-    path.moveTo(start)
-    path.lineTo(start.add([ 200, 0 ]))
+    $( ".handle#right" ).resizable
+      containment: "parent"
+      minWidth: $("#left").outerWidth() + 20
+      grid: [ 20, 0 ]
+      handles: {'n': '#handle'}
+      resize: =>
+        @drawResizable()
+      # alsoResize: "#overlay"
+    $( ".handle#left" ).resizable
+      containment: "parent"
+      maxWidth: $("#right").outerWidth() - 20
+      grid: [ 20, 0 ]
+      handles: "n, e, s, w"
+      resize: =>
+        @drawResizable()
 
-    view.draw()
 
   drawBorder: ->
     ctx = @canvas.getContext '2d'
@@ -324,3 +329,5 @@ Template.sequencer.events
     sequencer.bindKeys()
   'hover #note-picker path': ->
     $(@).css "opacity", "0.75"
+
+
