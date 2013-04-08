@@ -95,19 +95,18 @@ class Sequencer
   drawResizable: ->
     $( "#right" ).resizable
       containment: "parent"
-      minWidth: $("#left").width() + (@gridSize * 2)
+      maxWidth: (@canvas.width - $("#left").width()) - (@gridSize * 4)
       grid: [ @gridSize, 0 ]
-      handles: "w, e"
+      handles: "w"
       resize: =>
         @drawResizable()
         Session.set('mousedown', false)
-      # alsoResize: "#overlay"
       stop: =>
         @resizeGrid()
 
     $( "#left" ).resizable
       containment: "parent"
-      maxWidth: $("#right").width() - (@gridSize * 2)
+      maxWidth: $("#right").position().left - (@gridSize * 4)
       grid: [ @gridSize, 0 ]
       handles: "w, e"
       resize: =>
@@ -177,7 +176,7 @@ class Sequencer
     if @instrument?
       @instrument.disconnect()
     @instrument = instrument
-    # @instrument.connect masterGainNode
+    @instrument.connect masterGainNode
 
   schedule: =>
     currentTime = audioContext.currentTime
@@ -194,8 +193,9 @@ class Sequencer
     @ticker = Meteor.setTimeout @schedule, 0
 
   advanceNote: ->
+    position = $("#right").position()
     @current += 1
-    if @current == Math.floor($("#right").width() / @gridSize)
+    if @current == Math.floor(position.left / @gridSize) + 1
       @current = Math.floor($("#left").width()/@gridSize)
 
     @noteTime += @tickLength()

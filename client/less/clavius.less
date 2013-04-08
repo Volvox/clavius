@@ -311,24 +311,38 @@ canvas {
   .partition {
     height: @sequencer-height;
     position: absolute;
-    z-index: 1000;
-    border-right: 2px solid @highlight-color-b;
 
-  .ui-resizable-e {
-    margin: -9px auto;
-    width: 10px;
-    height: 10px;
-    background-color: @highlight-color-b;
+    .ui-resizable-e {
+      margin: -9px auto;
+      width: 10px;
+      height: 10px;
+      background-color: @highlight-color-b;
 
-    &:active{
-      background-color: @color-g;
+      &:active{
+        background-color: @color-g;
+      }
     }
-  }
 
     &#right {
       width: @cell-width*16;
+      background-color: @overlay-color;
+      float: right;
+      right: 0;
+      border-left: 2px solid @highlight-color-b;
+
+      .ui-resizable-w {
+        width: 10px;
+        height: 10px;
+        background-color: @highlight-color-b;
+        margin: -9px auto;
+
+        &:active {
+          background-color: @color-g;
+        }
+      }
     }
     &#left {
+      border-right: 2px solid @highlight-color-b;
       width: 0;
       background-color: @overlay-color;
       float: left;
