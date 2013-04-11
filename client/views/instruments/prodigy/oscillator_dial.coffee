@@ -1,8 +1,8 @@
 class OscillatorDial
   constructor: (@canvas) ->
-    @radius = Math.min(@canvas.height, @canvas.width) * 0.4
-    @thickness = 2
-    @dotSpacing = [3]
+    @radius = Math.min(@canvas.height, @canvas.width) * 0.45
+    @thickness = 1.5
+    @dotSpacing = [1, 3.5]
     @colorA = 'rgb(1, 140, 142)'
     @colorB = 'rgb(254, 239, 138)'
     @clicked = false
@@ -82,7 +82,7 @@ class OscillatorDial
     dx *= @waves[0].radius
     dy *= @waves[0].radius
 
-    @ctx.setLineDash @dotSpacing
+    @ctx.setLineDash [1, 4]
     @ctx.beginPath()
     @ctx.moveTo @carrier.originX + dx, @carrier.originY + dy
     @ctx.lineTo x - dx, y - dy
@@ -134,7 +134,7 @@ class OscillatorDialWave
   constructor: (@ctx, @wave, @colorA, @colorB, @originX, @originY, @scaleX, @scaleY) ->
     @hovering = false
     @selected = false
-    @radius = 1.2 * Math.max(@scaleX, @scaleY)
+    @radius = 1.1 * Math.max(@scaleX, @scaleY)
 
     if @wave is 0
       @fn = Math.sin
@@ -150,6 +150,8 @@ class OscillatorDialWave
 
   drawWave: ->
     @ctx.setLineDash []
+    @ctx.lineCap = 'round'
+    @ctx.lineWidth = 3
     @ctx.strokeStyle = @colorA
     @ctx.beginPath()
     if @hovering
@@ -168,10 +170,10 @@ class OscillatorDialWave
     number && number / Math.abs(number)
 
   saw: (x) ->
-    2 * (x / (2 * Math.PI) - Math.floor(0.5 + x / (2 * Math.PI)))
+    2.5 * (x / (2 * Math.PI) - Math.floor(0.5 + x / (2 * Math.PI)))
 
   triangle: (x) =>
-    -1 + 2.0 * Math.abs @saw(x)
+    -2 + 2.0 * Math.abs @saw(x)
 
   contains: (x, y) ->
     Math.sqrt(Math.pow((x - @originX), 2) + Math.pow((y - @originY), 2)) < @radius

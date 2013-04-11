@@ -28,7 +28,6 @@ class Sequencer
   resizeGrid: ->
     @current = Math.floor($("#left").width() / @gridSize)
     @cursor = @current
-    numColumns = Math.floor(($("#right").width()/@gridSize) - @current)
     @numRows = Math.floor(@canvas.height / @gridSize) - 1
     @numColumns = Math.floor(@canvas.width / @gridSize)
     @state = []

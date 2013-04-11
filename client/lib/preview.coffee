@@ -29,6 +29,9 @@ class ClipPreview
     ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
 
     #mini dotted pattern on sequencer page (pattern_preview)
+    ctx.font = 'pylons'
+    ctx.textBaseline = 'top'
+    ctx.fillStyle = 'white'
     if dotted?
       radius = noteHeight / 3.0
       for i in [0..16]
