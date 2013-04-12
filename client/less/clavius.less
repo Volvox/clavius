@@ -140,8 +140,14 @@ canvas {
 #tab-content nav ul li{
   cursor: pointer;
   line-height: 40px;
+  color: @color-b;
+
   &.active, &:hover {
     color: @highlight-color-b;
+
+    span {
+      color: @color-d;
+    }
   }
 }
 
