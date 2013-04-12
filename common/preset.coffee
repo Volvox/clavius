@@ -1,6 +1,6 @@
 Presets = new Meteor.Collection('presets')
 
-validInstruments = ['drumkit']
+validInstruments = ['drumkit', 'prodigy']
 
 Meteor.methods
   createPreset: (data) ->

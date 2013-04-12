@@ -1,12 +1,12 @@
 # based on https://github.com/cwilso/midi-synth/blob/master/js/synth.js
 
 class ProdigySynthesizer extends Instrument
-  constructor: ->
+  constructor: (@params) ->
     @output = audioContext.createGainNode()
     @voices = []
 
     # This is the "initial patch"
-    @params =
+    @params ?=
       modWaveform: 0 # SINE
       modFrequency: 21 # Hz * 10 = 2.1
       modOscFreqMultiplier: 1

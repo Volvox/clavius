@@ -71,10 +71,8 @@ class Sequencer
 
     @keyboard = new VirtualKeyboard
       noteOn: (note) =>
-        console.log 'ON', note
         @instrument.noteOn note, audioContext.currentTime
       noteOff: (note) =>
-        console.log 'OFF', note
         @instrument.noteOff note, audioContext.currentTime
 
   clear: ->

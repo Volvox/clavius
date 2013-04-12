@@ -52,5 +52,6 @@ filterFrequencyFromCutoff = (pitch, cutoff) ->
 restorePreset = (preset) ->
   instruments =
     'drumkit': Drumkit
+    'prodigy': ProdigySynthesizer
   new instruments[preset.instrument](preset.params)
 
