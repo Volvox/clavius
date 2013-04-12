@@ -358,3 +358,94 @@ canvas {
   height: 300px;
   width: @sidebar-width;
 }
+
+#extra-tabs {
+  border-bottom: 1px solid @border-color;
+  margin: 0 20px;
+  margin-top: 20px;
+
+  ul {
+    display: table;
+    margin: 0 auto;
+
+    li {
+      display: table-cell;
+      text-align: center;
+      border-left: 1px solid @border-color;
+      border-top: 1px solid @border-color;
+      padding: 10px 20px;
+      width: 60px;
+      color: @highlight-color-b;
+      text-transform: uppercase;
+      font-size: 1.1em;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+
+      &:last-child {
+        border-right: 1px solid @border-color;
+      }
+
+      &:hover, &.active {
+        color: @highlight-color-a;
+      }
+    }
+  }
+}
+
+#extra-tab-content {
+  margin: 0 20px;
+}
+
+#effects {
+  margin-top: 20px;
+
+  .effect {
+    margin-bottom: 6px;
+
+    .name {
+      display: inline-block;
+      font-size: 1.1em;
+      letter-spacing: 0.1em;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    
+    .amount {
+      display: inline-block;
+      float: right;
+      margin-right: 5px;
+
+      .tick {
+        width: 7px;
+        margin-right: -2px;
+        height: 1.1em;
+        line-height: 0.9em;
+        display: inline-block;
+        -webkit-transform: skew(35deg);
+        -moz-transform: skew(35deg);
+        -ms-transform: skew(35deg);
+        -o-transform: skew(35deg);
+        transform: skew(35deg);
+      }
+    }
+  }
+
+  .wahwah { color: @color-a; }
+  .wahwah .tick { background-color: @color-a; }
+
+  .delay { color: @color-f; }
+  .delay .tick { background-color: @color-f; }
+  
+  .phaser { color: @color-e; }
+  .phaser .tick { background-color: @color-e; }
+
+  .overdrive { color: @highlight-color-b; }
+  .overdrive .tick { background-color: @highlight-color-b; }
+
+  .chorus { color: @color-d; }
+  .chorus .tick { background-color: @color-d; }
+
+  .compressor { color: @subdued-color; }
+  .compressor .tick { background-color: @subdued-color; }
+}
