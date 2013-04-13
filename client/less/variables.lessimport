@@ -1,10 +1,23 @@
+@import "fontface.lessimport";
+
+
+// Typography
+// -------------------------
+@font: 'MaisonMonoTRIAL-Regular';
+@bold: 'MaisonMonoTRIAL-Bold';
+@base-font-size: 14px;
+@font-size-large: @base-font-size * 1.5;
+@font-size-small: @base-font-size * 0.85;
+@font-size-mini:  @base-font-size * 0.75;
+
+
 @sidebar-width: 390px;
-@subsidebar-width: 120px;
+@subsidebar-width: 124px;
 @header-height: 50px;
 @tab-height: 45px;
 @cell-width: 26.2px;
 @sequencer-height: 300px;
-@button-width: 100px;
+@button-width: 120px;
 @sequencer-height: 300px;
 @sidebar-color: #100819;
 @subsidebar-color: #0A0A0A;

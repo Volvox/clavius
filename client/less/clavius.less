@@ -3,6 +3,9 @@
 
 body {
   overflow: hidden;
+  font-family: @font;
+  font-size: @base-font-size;
+  letter-spacing: 1pt;
 }
 
 ul {
@@ -35,7 +38,7 @@ canvas {
   cursor: pointer;
   text-transform: uppercase;
   color: @color-b;
-  font-size: 12px;
+  font-size: @base-font-size;
   letter-spacing: 2pt;
   margin-top: 20px;
   &.active, &:hover {
@@ -137,10 +140,19 @@ canvas {
   color: @subdued-color;
   margin-top: 20px;
 }
+
 #tab-content nav ul li{
   cursor: pointer;
+  text-transform: uppercase;
+  font-size: @font-size-small;
+  letter-spacing: 2pt;
   line-height: 40px;
   color: @color-b;
+
+  div {
+    font-size: @font-size-large;
+    margin-right: 20px;
+  }
 
   &.active, &:hover {
     color: @highlight-color-b;
@@ -151,11 +163,6 @@ canvas {
   }
 }
 
-// font icons
-#tab-content nav ul li div{
-  margin-right: 15px;
-  font-size: 150%;
-}
 
 #note-picker {
   margin:0 auto;
@@ -184,10 +191,12 @@ canvas {
 #note_display span {
   width: 50px;
   display: none;
+  font-size: @font-size-small;
+  padding-top: 2px;
   position: relative;
   text-align: center;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   border: 2px solid #fa435f;
   color: white;
   border-radius: 20px;
@@ -247,7 +256,6 @@ canvas {
       border: 1px solid @border-color;
       color: @highlight-color-c;
       text-transform: uppercase;
-      font-weight: bold;
       cursor: pointer;
 
       &:last-child {
@@ -261,7 +269,7 @@ canvas {
 
       span {
         font-weight: normal;
-        font-size: 1.2em;
+        font-size: @font-size-large;
         margin-right: 0.7em;
 
         &.icon-save {
@@ -295,7 +303,6 @@ canvas {
     span {
       margin: 0;
       padding: 0;
-      font-weight: bold;
       text-transform: uppercase;
       color: @highlight-color-a;
     }
@@ -383,7 +390,6 @@ canvas {
       width: 60px;
       color: @highlight-color-b;
       text-transform: uppercase;
-      font-size: 1.1em;
       letter-spacing: 0.2em;
       cursor: pointer;
 
@@ -412,11 +418,10 @@ canvas {
       display: inline-block;
       font-size: 1.1em;
       letter-spacing: 0.1em;
-      font-weight: bold;
       cursor: pointer;
       text-transform: uppercase;
     }
-    
+
     .amount {
       display: inline-block;
       float: right;
@@ -442,7 +447,7 @@ canvas {
 
   .delay { color: @color-f; }
   .delay .tick { background-color: @color-f; }
-  
+
   .phaser { color: @color-e; }
   .phaser .tick { background-color: @color-e; }
 
