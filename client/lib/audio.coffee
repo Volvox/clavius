@@ -14,6 +14,7 @@ playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
 Meteor.startup ->
   window.audioContext = new webkitAudioContext()
   window.tuna = new Tuna(audioContext)
+  window.effectsPipeline = new EffectsPipeline()
 
   # support deprecated noteOn(), noteOff() methods
   for source in [audioContext.createBufferSource(), audioContext.createOscillator()]
@@ -26,5 +27,6 @@ Meteor.startup ->
   finalMixNode = audioContext.destination
   window.masterGainNode = audioContext.createGainNode() # master volume
   masterGainNode.gain.value = 0.7 # reduce overall volume to avoid clipping
-  masterGainNode.connect(finalMixNode)
+  masterGainNode.connect(effectsPipeline.input)
+  effectsPipeline.connect(finalMixNode)
 
