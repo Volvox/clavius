@@ -411,6 +411,15 @@ canvas {
   margin: 0 20px;
 }
 
+.effect (@color, @shadow: #333) {
+  color: @shadow;
+  .tick { background-color: @shadow; }
+  &.active {
+    color: @color;
+    .tick.active { background-color: @color; }
+  }
+}
+
 #effects {
   margin-top: 20px;
 
@@ -428,11 +437,11 @@ canvas {
     .amount {
       display: inline-block;
       float: right;
-      margin-right: 5px;
 
       .tick {
+        cursor: pointer;
         width: 7px;
-        margin-right: -2px;
+        margin-right: -8px;
         height: 1.1em;
         line-height: 0.9em;
         display: inline-block;
@@ -445,23 +454,12 @@ canvas {
     }
   }
 
-  .wahwah { color: @color-a; }
-  .wahwah .tick { background-color: @color-a; }
-
-  .delay { color: @color-f; }
-  .delay .tick { background-color: @color-f; }
-
-  .phaser { color: @color-e; }
-  .phaser .tick { background-color: @color-e; }
-
-  .overdrive { color: @highlight-color-b; }
-  .overdrive .tick { background-color: @highlight-color-b; }
-
-  .chorus { color: @color-d; }
-  .chorus .tick { background-color: @color-d; }
-
-  .compressor { color: @subdued-color; }
-  .compressor .tick { background-color: @subdued-color; }
+  .wahwah { .effect(@color-a); }
+  .delay { .effect(@color-f); }
+  .phaser { .effect(@color-e); }
+  .overdrive { .effect(@highlight-color-b); }
+  .chorus { .effect(@color-d); }
+  .reverb { .effect(@subdued-color); }
 }
 
 #keybox {
