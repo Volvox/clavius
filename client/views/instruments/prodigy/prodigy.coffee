@@ -1,4 +1,6 @@
 Template.prodigy.rendered = ->
+  setInstrument(new ProdigySynthesizer())
+
   $(".knob").knob
     draw: ->
       # "tron" case
@@ -31,8 +33,79 @@ Template.prodigy.rendered = ->
         false
 
   $('.osc canvas').each (i, canvas) ->
-    button = new OscillatorButton(canvas, 2, 'rgb(24, 207, 255)')
+    switch i
+      when 0 then wave = App.instrument.params.osc1Waveform
+      when 1 then wave = App.instrument.params.osc2Waveform
+      when 2 then wave = App.instrument.params.modWaveform
+    button = new OscillatorButton(canvas, wave, 'rgb(24, 207, 255)')
     $(canvas).click ->
       button.wave += 1
       button.wave %= 4
       button.draw()
+      switch i
+        when 0 then App.instrument.params.osc1Waveform = button.wave
+        when 1 then App.instrument.params.osc2Waveform = button.wave
+        when 2 then App.instrument.params.modWaveform = button.wave
+
+  # osc 1 #
+  $('.osc1 .knobs .mix').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.osc1Mix = v
+  $('.osc1 .knobs .mix').val(App.instrument.params.osc1Mix).trigger('change')
+
+  $('.osc1 .knobs .detune').trigger 'configure',
+    min: -100
+    max: 100
+    change: (v) ->
+      App.instrument.params.osc1Detune = v
+  $('.osc1 .knobs .detune').val(App.instrument.params.osc1Detune).trigger('change')
+
+  $('.osc1 .knobs .octave').trigger 'configure',
+    min: 0
+    max: 3
+    change: (v) ->
+      App.instrument.params.osc1Octave = v
+  $('.osc1 .knobs .octave').val(App.instrument.params.osc1Octave).trigger('change')
+
+  $('.osc1 .knobs .mod').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.modOsc1 = v
+  $('.osc1 .knobs .mod').val(App.instrument.params.modOsc1).trigger('change')
+
+  # osc 2 #
+  $('.osc2 .knobs .mix').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.osc2Mix = v
+  $('.osc2 .knobs .mix').val(App.instrument.params.osc2Mix).trigger('change')
+
+  $('.osc2 .knobs .detune').trigger 'configure',
+    min: -100
+    max: 100
+    change: (v) ->
+      App.instrument.params.osc2Detune = v
+  $('.osc2 .knobs .detune').val(App.instrument.params.osc2Detune).trigger('change')
+
+  $('.osc2 .knobs .octave').trigger 'configure',
+    min: 0
+    max: 3
+    change: (v) ->
+      App.instrument.params.osc2Octave = v
+  $('.osc2 .knobs .octave').val(App.instrument.params.osc2Octave).trigger('change')
+
+  $('.osc2 .knobs .mod').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.modOsc2 = v
+  $('.osc2 .knobs .mod').val(App.instrument.params.modOsc2).trigger('change')
+
+  # mod osc #
+  $('.modOsc .knobs .frequency').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.modFrequency = v
+  $('.modOsc .knobs .frequency').val(App.instrument.params.modFrequency).trigger('change')
+
+  $('.modOsc .knobs .multiplier').trigger 'configure',
+    min: 1
+    change: (v) ->
+      App.instrument.params.modOscFreqMultiplier = v
+  $('.modOsc .knobs .multiplier').val(App.instrument.params.modOscFreqMultiplier).trigger('change')
+

@@ -1,15 +1,15 @@
 addEffect = (e) ->
   effects =
-    wahwah: new tuna.WahWah(automode: false)
-    delay: new tuna.Delay()
-    overdrive: new tuna.Overdrive()
-    chorus: new tuna.Chorus()
-    reverb: new tuna.Convolver(impulse: "/impulses/impulse_rev.wav")
-    phaser: new tuna.Phaser(rate: 3.5)
+    wahwah: new App.tuna.WahWah(automode: false)
+    delay: new App.tuna.Delay()
+    overdrive: new App.tuna.Overdrive()
+    chorus: new App.tuna.Chorus()
+    reverb: new App.tuna.Convolver(impulse: "/impulses/impulse_rev.wav")
+    phaser: new App.tuna.Phaser(rate: 3.5)
 
   for klass, effect of effects
     if e.hasClass klass
-      effectsPipeline.addEffect effect
+      App.effectsPipeline.addEffect effect
 
 Template.effects.rendered = ->
   $('.amount .tick').addClass('active')
@@ -22,7 +22,7 @@ Template.effects.events
     if $e.hasClass 'active'
       addEffect $e
     else
-      effectsPipeline.reset()
+      App.effectsPipeline.reset()
       for e in $e.siblings()
         if $(e).hasClass 'active'
           addEffect $(e)

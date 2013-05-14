@@ -71,9 +71,9 @@ class Sequencer
 
     @keyboard = new VirtualKeyboard
       noteOn: (note) =>
-        @instrument.noteOn note, audioContext.currentTime
+        App.instrument.noteOn note, App.audioContext.currentTime
       noteOff: (note) =>
-        @instrument.noteOff note, audioContext.currentTime
+        App.instrument.noteOff note, App.audioContext.currentTime
 
   clear: ->
     ctx = @canvas.getContext '2d'
@@ -169,14 +169,8 @@ class Sequencer
     x = col * @gridSize + @gridSize
     ctx.fillRect x, 0, 2, @canvas.height
 
-  setInstrument: (instrument) ->
-    if @instrument?
-      @instrument.disconnect()
-    @instrument = instrument
-    @instrument.connect masterGainNode
-
   schedule: =>
-    currentTime = audioContext.currentTime
+    currentTime = App.audioContext.currentTime
     currentTime -= @startTime # normalize to 0
 
     while @noteTime < currentTime + 0.040
@@ -198,10 +192,9 @@ class Sequencer
     @noteTime += @tickLength()
 
   playNote: (note, time) ->
-    time ?= audioContext.currentTime
-    @instrument.noteOn note, time
-    #@instrument.noteOff note, time + @tickLength()
-    @instrument.noteOff note, time + (60.0 / Session.get('bpm'))
+    time ?= App.audioContext.currentTime
+    App.instrument.noteOn note, time
+    App.instrument.noteOff note, time + (60.0 / Session.get('bpm'))
 
   getNote: (row) ->
     @noteMax - row
@@ -211,7 +204,7 @@ class Sequencer
 
   play: ->
     @noteTime = 0.0
-    @startTime = audioContext.currentTime + 0.005
+    @startTime = App.audioContext.currentTime + 0.005
     @schedule()
 
   stop: ->
@@ -300,14 +293,13 @@ Template.sequencer.events
     val = $(e.srcElement).val()
     switch val
       when 'additive'
-        instrument = new AdditiveSynthesizer
+        setInstrument new AdditiveSynthesizer
       when 'subtractive'
-        instrument = new SubtractiveSynthesizer
+        setInstrument new SubtractiveSynthesizer
       when 'fm'
-        instrument = new FMSynthesizer
+        setInstrument new FMSynthesizer
       when 'drumkit'
-        instrument = new FreesoundSampler(7417)
-    sequencer.setInstrument instrument
+        setInstrument new FreesoundSampler(7417)
     e.srcElement.blur()
   'click #note-picker path': (e) ->
     note = $(e.srcElement).data("note")

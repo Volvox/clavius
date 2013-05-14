@@ -1,17 +1,17 @@
 class Instrument
   constructor: ->
-    @output = audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
     @voices = []
 
   noteOn: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     unless @voices[note]?
       @voices[note] = new Voice(note)
       @voices[note].connect @output
       @voices[note].start time
 
   noteOff: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     if @voices[note]?
       @voices[note].stop time
       @voices[note] = null
@@ -28,7 +28,7 @@ class Instrument
     @output.disconnect()
 
   playNotes: (notes) ->
-    startTime = audioContext.currentTime + 0.005
+    startTime = App.audioContext.currentTime + 0.005
     for note in notes
       @noteOn note.sound, startTime + note.start
       @noteOff note.sound, startTime + note.stop
@@ -43,7 +43,7 @@ frequencyToNote = (frequency) ->
   12 * (Math.log(frequency / 440.0) / Math.log(2)) + 69
 
 filterFrequencyFromCutoff = (pitch, cutoff) ->
-  nyquist = 0.5 * audioContext.sampleRate
+  nyquist = 0.5 * App.audioContext.sampleRate
   filterFrequency = Math.pow(2, (9 * cutoff) - 1) * pitch
   if filterFrequency > nyquist
     filterFrequency = nyquist
