@@ -1,10 +1,9 @@
-@import "base.lessimport";
+@import "bootstrap/bootstrap.lessimport";
+@import "fontface.lessimport";
 @import "variables.lessimport";
 
 body {
   overflow: hidden;
-  font-family: @font;
-  font-size: @base-font-size;
   letter-spacing: 1pt;
 }
 
@@ -23,35 +22,35 @@ canvas {
 }
 
 #sidebar {
-  width: @sidebar-width;
-  background-color: @sidebar-color;
+  width: @sidebarWidth;
+  background-color: @sidebarColor;
 }
 
 #subsidebar {
-  left: @sidebar-width;
-  width: @subsidebar-width;
-  background-color: @subsidebar-color;
-  border-left: 1px solid @border-color;
+  left: @sidebarWidth;
+  width: @subsidebarWidth;
+  background-color: @subsidebarColor;
+  border-left: 1px solid @borderColor;
 }
 
 #subsidebar li{
   cursor: pointer;
   text-transform: uppercase;
-  color: @color-b;
-  font-size: @base-font-size;
+  color: @grayLight;
+  font-size: @baseFontSize;
   letter-spacing: 2pt;
   margin-top: 20px;
   &.active, &:hover {
-    color: @highlight-color-a;
+    color: @white;
   }
 }
 
 
 #content {
-  left: @sidebar-width + @subsidebar-width;
+  left: @sidebarWidth + @subsidebarWidth;
   right: 0px;
-  background-color: @content-color;
-  border-left: 1px solid @border-color;
+  background-color: @contentColor;
+  border-left: 1px solid @borderColor;
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -59,7 +58,7 @@ canvas {
     clear: both;
     margin: 0;
     border: 0;
-    border-bottom: 1px solid @border-color;
+    border-bottom: 1px solid @borderColor;
   }
 
   .padded {
@@ -69,49 +68,49 @@ canvas {
 }
 
 #header, #subheader {
-  height: @header-height;
-  border-bottom: 1px solid @border-color;
-  line-height: @header-height;
-  font-size: 0.25 * @header-height;
+  height: @headerHeight;
+  border-bottom: 1px solid @borderColor;
+  line-height: @headerHeight;
+  font-size: 0.25 * @headerHeight;
 }
 
 #header {
-  background-color: @content-color;
+  background-color: @contentColor;
 }
 
 #subheader {
-  background-color: @subheader-color;
+  background-color: @subheaderColor;
   text-transform: uppercase;
   text-align: center;
-  color: @color-b;
+  color: @grayLight;
 }
 
 #toolbar {
-  color: @highlight-color-a;
+  color: @white;
   margin: 0;
   padding: 0;
 }
 
 #toolbar li {
-  border-left: 1px solid @border-color;
+  border-left: 1px solid @borderColor;
   float: left;
-  height: @header-height;
-  line-height: @header-height;
+  height: @headerHeight;
+  line-height: @headerHeight;
   text-transform: uppercase;
   margin: 0;
   padding: 0 10px;
 }
 
 #logo {
-  line-height: @header-height;
-  font-size: 0.25 * @header-height;
+  line-height: @headerHeight;
+  font-size: 0.25 * @headerHeight;
   font-weight: inherit;
   margin: 0;
   padding: 0;
 }
 
 #tabs {
-  border-bottom: 1px solid @subdued-color;
+  border-bottom: 1px solid @purple;
 }
 
 #tabs ul {
@@ -123,42 +122,42 @@ canvas {
 #tabs ul li {
   cursor: pointer;
   float: left;
-  height: @tab-height;
-  line-height: @tab-height;
+  height: @tabHeight;
+  line-height: @tabHeight;
   text-transform: uppercase;
-  font-size: 0.3 * @tab-height;
+  font-size: 0.3 * @tabHeight;
   margin: 0;
   padding: 0px 10px;
-  color: @subdued-color;
+  color: @purple;
 
   &.active, &:hover {
-    color: @highlight-color-a;
+    color: @white;
   }
 }
 
 #tab-content ul{
-  color: @subdued-color;
+  color: @purple;
   margin-top: 20px;
 }
 
 #tab-content nav ul li{
   cursor: pointer;
   text-transform: uppercase;
-  font-size: @font-size-small;
+  font-size: @fontSizeSmall;
   letter-spacing: 2pt;
   line-height: 40px;
-  color: @color-b;
+  color: @grayLight;
 
   div {
-    font-size: @font-size-large;
+    font-size: @fontSizeLarge;
     margin-right: 20px;
   }
 
   &.active, &:hover {
-    color: @highlight-color-b;
+    color: @yellow;
 
     span {
-      color: @color-d;
+      color: @teal;
     }
   }
 }
@@ -191,7 +190,7 @@ canvas {
 #note_display span {
   width: 50px;
   display: none;
-  font-size: @font-size-small;
+  font-size: @fontSizeSmall;
   padding-top: 2px;
   position: relative;
   text-align: center;
@@ -214,24 +213,24 @@ canvas {
   margin: 0;
   padding: 0;
   margin-bottom: 20px;
-  border-top: 1px solid @border-color;
-  border-bottom: 1px solid @border-color;
+  border-top: 1px solid @borderColor;
+  border-bottom: 1px solid @borderColor;
 
   li {
     margin: 0;
     padding: 10px;
-    border-left: 1px solid @subheader-color;
+    border-left: 1px solid @subheaderColor;
     float: left;
     height: 60px;
 
     &:last-child {
-      border-right: 1px solid @subheader-color;
+      border-right: 1px solid @subheaderColor;
     }
   }
 }
 
 #sequencer_canvas {
-  height: @sequencer-height;
+  height: @sequencerHeight;
   clear: both;
   position: relative;
   margin-bottom: 20px;
@@ -245,7 +244,7 @@ canvas {
   ul {
     list-style: none;
     float: left;
-    width: @button-width;
+    width: @buttonWidth;
     margin: 0;
     padding: 0;
 
@@ -253,8 +252,8 @@ canvas {
       margin: 0;
       margin-bottom: 10px;
       padding: 10px;
-      border: 1px solid @border-color;
-      color: @highlight-color-c;
+      border: 1px solid @borderColor;
+      color: @grayLighter;
       text-transform: uppercase;
       cursor: pointer;
 
@@ -263,25 +262,25 @@ canvas {
       }
 
       &:hover {
-        color: @highlight-color-a;
-        border: 1px solid @highlight-color-c;
+        color: @white;
+        border: 1px solid @grayLighter;
       }
 
       span {
         font-weight: normal;
-        font-size: @font-size-large;
+        font-size: @fontSizeLarge;
         margin-right: 0.7em;
 
         &.icon-save {
-          color: @color-c;
+          color: darken(@teal, 20%);
         }
 
         &.icon-clear {
-          color: @color-d;
+          color: @teal;
         }
 
         &.icon-hold {
-          color: @color-a;
+          color: @red;
         }
       }
     }
@@ -304,14 +303,14 @@ canvas {
       margin: 0;
       padding: 0;
       text-transform: uppercase;
-      color: @highlight-color-a;
+      color: @white;
     }
 
     p {
       margin: 0;
       padding: 0;
       text-transform: lowercase;
-      color: @color-b;
+      color: @grayLight;
     }
   }
 }
@@ -322,58 +321,58 @@ canvas {
   width: 839px;
 
   .partition {
-    height: @sequencer-height;
+    height: @sequencerHeight;
     position: absolute;
 
     .ui-resizable-e {
       margin: -9px auto;
       width: 10px;
       height: 10px;
-      background-color: @highlight-color-b;
+      background-color: @yellow;
 
-      &:active{
-        background-color: @color-g;
+      &:active {
+		background-color: lighten(@green, 20%);
       }
     }
 
     &#right {
-      width: @cell-width*16;
-      background-color: @overlay-color;
+      width: @cellWidth*16;
+      background-color: fadeout(@white, 80%);
       float: right;
       right: 0;
-      border-left: 2px solid @highlight-color-b;
+      border-left: 2px solid @yellow;
 
       .ui-resizable-w {
         width: 10px;
         height: 10px;
-        background-color: @highlight-color-b;
+        background-color: @yellow;
         margin: -9px auto;
 
         &:active {
-          background-color: @color-g;
+          background-color: lighten(@green, 20%);
         }
       }
     }
     &#left {
-      border-right: 2px solid @highlight-color-b;
+      border-right: 2px solid @yellow;
       width: 0;
-      background-color: @overlay-color;
+      background-color: fadeout(@white, 80%);
       float: left;
     }
   }
 }
 
 #overlay {
-  height: @sequencer-height;
+  height: @sequencerHeight;
 }
 
 #prodigy_osc {
   height: 300px;
-  width: @sidebar-width;
+  width: @sidebarWidth;
 }
 
 #extra-tabs {
-  border-bottom: 1px solid @border-color;
+  border-bottom: 1px solid @borderColor;
   margin: 0 20px;
   margin-top: 20px;
 
@@ -384,21 +383,21 @@ canvas {
     li {
       display: table-cell;
       text-align: center;
-      border-left: 1px solid @border-color;
-      border-top: 1px solid @border-color;
+      border-left: 1px solid @borderColor;
+      border-top: 1px solid @borderColor;
       padding: 10px 20px;
       width: 60px;
-      color: @highlight-color-b;
+      color: @yellow;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       cursor: pointer;
 
       &:last-child {
-        border-right: 1px solid @border-color;
+        border-right: 1px solid @borderColor;
       }
 
       &:hover, &.active {
-        color: @highlight-color-a;
+        color: @white;
       }
     }
   }
@@ -451,10 +450,10 @@ canvas {
     }
   }
 
-  .wahwah { .effect(@color-a); }
-  .delay { .effect(@color-f); }
-  .phaser { .effect(@color-e); }
-  .overdrive { .effect(@highlight-color-b); }
-  .chorus { .effect(@color-d); }
-  .reverb { .effect(@subdued-color); }
+  .wahwah { .effect(@red); }
+  .delay { .effect(@blue); }
+  .phaser { .effect(@green); }
+  .overdrive { .effect(@yellow); }
+  .chorus { .effect(@teal); }
+  .reverb { .effect(@purple); }
 }

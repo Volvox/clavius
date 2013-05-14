@@ -7,7 +7,8 @@ insecure
 preserve-inputs
 jquery
 coffeescript
-bootstrap
 less
 backbone
 router
+underscore
+appcache
