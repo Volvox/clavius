@@ -573,3 +573,37 @@ canvas {
 	.clearfix;
 	border-bottom: 1px solid @blue;
 }
+
+#instrument {
+	.control-row {
+		height: 60px;
+		border-bottom: 1px solid @gray;
+		padding: 10px 0;
+
+		.osc {
+			float: left;
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			margin-top: 5px;
+			border: 1px solid @gray;
+			.border-radius(3px);
+		}
+
+		.knobs {
+			display: inline-block;
+			margin-left: 20px;
+			float: left;
+			height: 60px;
+		}
+
+		i {
+			color: @blue;
+			float: left;
+			margin-left: 20px;
+			display: inline-block;
+			font-size: 32px;
+			line-height: 60px;
+		}
+	}
+}
