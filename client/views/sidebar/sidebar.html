@@ -1,39 +1,65 @@
 <template name="sidebar">
 <div id="sidebar">
-  {{> header}}
-  <div id="tabs">
-    <ul>
-      <li class="active">Synthesis</li>
-      <li>Drum</li>
-      <li>Sampler</li>
-      <li>FX</li>
-      <li>LFO</li>
-    </ul>
-  </div>
-  <div id="tab-content">
-    <nav>
-    <ul>
-      <li class="active">
-      <div class="icon-fm3"></div>FM
-      </li>
-      <li>
-      <div class="icon-pulsewidth"></div>Additive
-      </li>
-      <li>
-      <div class="icon-triangle2"></div>Subtractive
-      </li>
-    </ul>
-    </nav>
-    {{> instrument}}
-    <div id="extra-tabs">
-      <ul>
-        <li class="active">Effects</li>
-        <li>LFO</li>
-      </ul>
-    </div>
-    <div id="extra-tab-content">
-      {{> effects}}
-    </div>
-  </div>
+	{{> header}}
+	<div id="tabs">
+		<ul>
+			<li class="active">Synthesis</li>
+			<li>Sampler</li>
+			<li>Drumkit</li>
+		</ul>
+	</div>
+	<div id="tab-content">
+		<div class="tab-nav">
+			<ul class="synth-select">
+				<li class="active">
+				<i class="icon-bullseye"></i>
+				<div class="name"><span>FM</span></div>
+				</li>
+				<li>
+				<i class="icon-bullseye"></i>
+				<div class="name"><span>Additive</span></div>
+				</li>
+				<li>
+				<i class="icon-bullseye"></i>
+				<div class="name"><span>Wavetable</span></div>
+				</li>
+				<li>
+				<i class="icon-bullseye"></i>
+				<div class="name"><span>Subtractive</span></div>
+				</li>
+			</ul>
+			<div class="presets">
+				<ul>
+					<li>Bell</li>
+					<li>Chords</li>
+					<li class="active">Click Bass</li>
+					<li>Dice</li>
+					<li>Dist Bass</li>
+					<li>Drops</li>
+					<li>FM Bass</li>
+					<li>ETape</li>
+					<li>Organ</li>
+					<li>Trance Lead</li>
+					<li>Saw Bass</li>
+					<li>Space Pad</li>
+					<li>Sub Bass</li>
+				</ul>
+				<button class="save">
+					<i class="icon-save"></i>
+					<span>Save Preset</span>
+				</button>
+			</div>
+		</div>
+		{{> instrument}}
+		<div id="extra-tabs">
+			<ul>
+				<li class="active">Effects</li>
+				<li>LFO</li>
+			</ul>
+		</div>
+		<div id="extra-tab-content">
+			{{> effects}}
+		</div>
+	</div>
 </div>
 </template>

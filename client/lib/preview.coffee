@@ -2,10 +2,10 @@ class ClipPreview
   constructor: (clip) ->
     @clip = clip
     @instrument = new SubtractiveSynthesizer()
-    @instrument.connect masterGainNode
+    @instrument.connect App.masterGainNode
 
   play: ->
-    startTime = audioContext.currentTime
+    startTime = App.audioContext.currentTime
     for note in @clip.notes
       noteStart = startTime + note.start
       noteStop = startTime + note.stop
@@ -43,7 +43,7 @@ class ClipPreview
       for note in @clip.notes
         tickLength = note.stop - note.start
         x = (note.start / length) * canvas.width
-        y = ((sequencer.getRow note.sound) % 16) * (canvas.height / 16)
+        y = ((App.sequencer.getRow note.sound) % 16) * (canvas.height / 16)
         ctx.fillStyle = '#fa435f'
         ctx.beginPath()
         ctx.arc(x, y, radius, 0, 2 * Math.PI, false)

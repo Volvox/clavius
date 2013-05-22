@@ -14,5 +14,4 @@ Template.pattern_preview.events
     clipObject = Clips.findOne( _id: $(e.srcElement).data('id') )
     clipPreview = new ClipPreview(clipObject)
     # Session.set "selected-pattern", @_id
-    console.log clipObject
-    sequencer.import(clipObject)
+    App.sequencer.import(clipObject)

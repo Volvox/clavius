@@ -1,38 +1,16 @@
-@import "fontface.lessimport";
+/* Layout */
+@sidebarWidth: 460px;
+@subsidebarWidth: 124px;
+@headerHeight: 50px;
+@tabHeight: 45px;
+@cellWidth: 26.2px;
+@sequencerHeight: 300px;
+@buttonWidth: 120px;
 
-
-// Typography
-// -------------------------
-@font: 'MaisonMonoTRIAL-Regular';
-@bold: 'MaisonMonoTRIAL-Bold';
-@base-font-size: 14px;
-@font-size-large: @base-font-size * 1.5;
-@font-size-small: @base-font-size * 0.85;
-@font-size-mini:  @base-font-size * 0.75;
-
-
-@sidebar-width: 390px;
-@subsidebar-width: 124px;
-@header-height: 50px;
-@tab-height: 45px;
-@cell-width: 26.2px;
-@sequencer-height: 300px;
-@button-width: 120px;
-@sequencer-height: 300px;
-@sidebar-color: #100819;
-@subsidebar-color: #0A0A0A;
-@content-color: #0A0A0A;
-@border-color: #333333;
-@subheader-color: #191919;
-@highlight-color-a: #FFFFFF;
-@highlight-color-b: rgb(254, 239, 136);
-@highlight-color-c: #C3C3C3;
-@subdued-color: rgb(102, 70, 126);
-@overlay-color: rgba(255, 255, 255, 0.2);
-@color-a: #fa435f;
-@color-b: #676767;
-@color-c: #0A363F;
-@color-d: rgb(26, 142, 149);
-@color-e: #2BBF7F;
-@color-f: #5743E7;
-@color-g: rgb(55, 255, 172);
+/* Colors */
+@headerColor: @purpleDarker;
+@sidebarColor: @blueDark;
+@subsidebarColor: @blueDark;
+@contentColor: @purpleDarker;
+@borderColor: @purpleDark;
+@subheaderColor: @purpleDarker;

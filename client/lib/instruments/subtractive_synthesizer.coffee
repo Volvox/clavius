@@ -1,10 +1,10 @@
 class SubtractiveSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
-    @output = audioContext.createGainNode()
-    @oscillator = audioContext.createOscillator()
-    @filter = audioContext.createBiquadFilter()
-    @amplifier = audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
+    @oscillator = App.audioContext.createOscillator()
+    @filter = App.audioContext.createBiquadFilter()
+    @amplifier = App.audioContext.createGainNode()
 
     @cutoff = params.cutoff ? 300
     @filterEnvelopeEnabled = params.filterEnvelopeEnabled ? false
@@ -21,7 +21,7 @@ class SubtractiveSynthesizer extends Instrument
     @oscillator.start 0
 
   noteOn: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     frequency = noteToFrequency note
     @oscillator.frequency.setValueAtTime frequency, time
     @volumeEnvelope.start time
@@ -29,7 +29,7 @@ class SubtractiveSynthesizer extends Instrument
       @filterEnvelope.start time
 
   noteOff: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     @amplifier.gain.setValueAtTime 0, time
     @volumeEnvelope.stop time
     if @filterEnvelopeEnabled

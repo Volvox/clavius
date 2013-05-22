@@ -1,7 +1,7 @@
 class EffectsPipeline
   constructor: ->
-    @input = audioContext.createGainNode()
-    @output = audioContext.createGainNode()
+    @input = App.audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
     @effects = []
     @reset()
 

@@ -2,7 +2,7 @@
 
 class ProdigySynthesizer extends Instrument
   constructor: (@params) ->
-    @output = audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
     @voices = []
 
     # This is the "initial patch"
@@ -38,59 +38,59 @@ class ProdigySynthesizer extends Instrument
       pitchWheel: 0.0
 
   noteOn: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     unless @voices[note]?
       @voices[note] = new ProdigyVoice(note, @params)
       @voices[note].connect @output
       @voices[note].start time
 
   noteOff: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     if @voices[note]?
       @voices[note].stop time
       @voices[note] = null
 
 class ProdigyVoice extends Voice
   constructor: (@note, @params, @velocity) ->
-    @output = audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
     @originalFrequency = noteToFrequency(note)
 
     # create osc 1
-    @osc1 = audioContext.createOscillator()
+    @osc1 = App.audioContext.createOscillator()
     @updateOsc1Frequency()
     @osc1.type = @params.osc1Waveform
-    @osc1Gain = audioContext.createGainNode()
+    @osc1Gain = App.audioContext.createGainNode()
     @osc1Gain.gain.value = 0.005 * @params.osc1Mix
 
     # this.gain.gain.value = 0.05 + (0.33 * velocity);
     @osc1.connect @osc1Gain
 
     # create osc 2
-    @osc2 = audioContext.createOscillator()
+    @osc2 = App.audioContext.createOscillator()
     @updateOsc2Frequency()
     @osc2.type = @params.osc2Waveform
-    @osc2Gain = audioContext.createGainNode()
+    @osc2Gain = App.audioContext.createGainNode()
     @osc2Gain.gain.value = 0.005 * @params.osc2Mix
     @osc2.connect @osc2Gain
 
     # create modulator osc
-    @modOsc = audioContext.createOscillator()
+    @modOsc = App.audioContext.createOscillator()
     @modOsc.type = @params.modWaveform
     @modOsc.frequency.value = @params.modFrequency / 10 * @params.modOscFreqMultiplier
-    @modOsc1Gain = audioContext.createGainNode()
+    @modOsc1Gain = App.audioContext.createGainNode()
     @modOsc.connect @modOsc1Gain
     @modOsc1Gain.gain.value = @params.modOsc1 / 10
     @modOsc1Gain.connect @osc1.frequency # tremolo
-    @modOsc2Gain = audioContext.createGainNode()
+    @modOsc2Gain = App.audioContext.createGainNode()
     @modOsc.connect @modOsc2Gain
     @modOsc2Gain.gain.value = @params.modOsc2 / 10
     @modOsc2Gain.connect @osc2.frequency # tremolo
 
     # create the LP filter
-    @filter1 = audioContext.createBiquadFilter()
+    @filter1 = App.audioContext.createBiquadFilter()
     @filter1.type = @filter1.LOWPASS
     @filter1.Q.value = @params.filterQ
-    @filter2 = audioContext.createBiquadFilter()
+    @filter2 = App.audioContext.createBiquadFilter()
     @filter2.type = @filter2.LOWPASS
     @filter2.Q.value = @params.filterQ
     @osc1Gain.connect @filter1
@@ -98,14 +98,14 @@ class ProdigyVoice extends Voice
     @filter1.connect @filter2
 
     # connect the modulator to the filters
-    @modFilterGain = audioContext.createGainNode()
+    @modFilterGain = App.audioContext.createGainNode()
     @modOsc.connect @modFilterGain
     @modFilterGain.gain.value = @params.filterMod * 10
     @modFilterGain.connect @filter1.detune # filter tremolo
     @modFilterGain.connect @filter2.detune # filter tremolo
 
     # create the volume envelope
-    @envelope = audioContext.createGainNode()
+    @envelope = App.audioContext.createGainNode()
     @filter2.connect @envelope
     @envelope.connect @output
 
