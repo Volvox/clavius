@@ -10,56 +10,30 @@
 	</div>
 	<div id="tab-content">
 		<div class="tab-nav">
-			<ul class="synth-select">
-				<li class="active">
-				<i class="icon-bullseye"></i>
-				<div class="name"><span>FM</span></div>
-				</li>
-				<li>
-				<i class="icon-bullseye"></i>
-				<div class="name"><span>Additive</span></div>
-				</li>
-				<li>
-				<i class="icon-bullseye"></i>
-				<div class="name"><span>Wavetable</span></div>
-				</li>
-				<li>
-				<i class="icon-bullseye"></i>
-				<div class="name"><span>Subtractive</span></div>
-				</li>
-			</ul>
 			<div class="presets">
-				<ul>
-					<li>Bell</li>
-					<li>Chords</li>
-					<li class="active">Click Bass</li>
-					<li>Dice</li>
-					<li>Dist Bass</li>
-					<li>Drops</li>
-					<li>FM Bass</li>
-					<li>ETape</li>
-					<li>Organ</li>
-					<li>Trance Lead</li>
-					<li>Saw Bass</li>
-					<li>Space Pad</li>
-					<li>Sub Bass</li>
-				</ul>
+				<div class="presets-dropdown">
+					<select>
+						<option>Bell</option>
+						<option>Chords</option>
+						<option class="active">Click Bass</option>
+						<option>Dice</option>
+						<option>Dist Bass</option>
+						<option>Drops</option>
+						<option>FM Bass</option>
+						<option>ETape</option>
+						<option>Organ</option>
+						<option>Trance Lead</option>
+						<option>Saw Bass</option>
+						<option>Space Pad</option>
+						<option>Sub Bass</option>
+					</select>
+				</div>
 				<button class="save">
 					<i class="icon-save"></i>
-					<span>Save Preset</span>
 				</button>
 			</div>
 		</div>
 		{{> instrument}}
-		<div id="extra-tabs">
-			<ul>
-				<li class="active">Effects</li>
-				<li>LFO</li>
-			</ul>
-		</div>
-		<div id="extra-tab-content">
-			{{> effects}}
-		</div>
 	</div>
 </div>
 </template>
