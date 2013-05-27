@@ -346,6 +346,9 @@
             if (this.o.cancel) this.eH = this.o.cancel;
             if (this.o.release) this.rH = this.o.release;
 
+            this.$.data('min', this.o.min);
+            this.$.data('max', this.o.max);
+
             if (this.o.displayPrevious) {
                 this.pColor = this.h2rgba(this.o.fgColor, "0.4");
                 this.fgColor = this.h2rgba(this.o.fgColor, "0.6");
@@ -542,6 +545,8 @@
             ) this.v = this.o.min;
 
             this.$.val(this.v);
+            this.$.data('min', this.o.min);
+            this.$.data('max', this.o.max);
             this.w2 = this.o.width / 2;
             this.cursorExt = this.o.cursor / 100;
             this.xy = this.w2;
