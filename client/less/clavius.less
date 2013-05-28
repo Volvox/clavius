@@ -5,7 +5,13 @@
 
 body {
   overflow: hidden;
-  letter-spacing: 1pt;
+  font-weight: bold;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 ::-webkit-scrollbar {
@@ -36,7 +42,6 @@ canvas {
   right: 0px;
   background-color: @contentColor;
   border-left: 1px solid @borderColor;
-  overflow-x: hidden;
   overflow-y: auto;
 
   hr {
@@ -510,6 +515,7 @@ canvas {
     height: 40px;
     width: 40px;
     display: inline-block;
+    float: right;
     box-sizing: border-box;
     border: 1px solid @teal;
     padding: 4px;
@@ -642,6 +648,7 @@ canvas {
     button {
       height: 40px;
       width: 40px;
+      float: right;
       display: inline-block;
       box-sizing: border-box;
       border: 1px solid @teal;
@@ -701,6 +708,67 @@ canvas {
       float: left;
       background-color: rgba(0, 0, 0, 0.3);
       z-index: 5;
+    }
+  }
+}
+
+#session {
+  min-height: 600px;
+  width: 100%;
+}
+
+.circle-clip {
+  width: 90px;
+  height: 90px;
+  margin-left: -45px;
+  margin-top: -45px;
+  border: 2px dotted @teal;
+  border-radius: 50px;
+}
+
+.session-clip {
+  width: 100px;
+  height: 100px;
+  float: left;
+
+  canvas {
+    float: left;
+  }
+
+  .play, .pause {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 32px;
+    position: relative;
+    float: left;
+    margin-left: -100px;
+    display:none;
+  }
+
+  .play {
+    color: @teal;
+    left: 1px;
+  }
+
+  .pause {
+    color: @green;
+  }
+
+  &.active {
+    .play {
+      display: block;
+    }
+  }
+
+  &.playing {
+    .pause {
+      display: block;
+    }
+
+    .play {
+      display: none;
     }
   }
 }

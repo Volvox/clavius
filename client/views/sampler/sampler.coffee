@@ -48,16 +48,32 @@ Template.sampler_result.rendered = ->
     canvas = @find('canvas')
     drawWaveform buffer, canvas
 
+    playing = false
+    source = null
     $(canvas).click ->
-      source = App.audioContext.createBufferSource()
-      source.buffer = buffer
-      source.connect App.masterGainNode
-      source.start 0
+      if playing
+        source.stop 0
+        source = null
+      else
+        source = App.audioContext.createBufferSource()
+        source.buffer = buffer
+        source.connect App.masterGainNode
+        source.start 0
+      playing = not playing
 
     $(canvas).draggable
-      helper: 'original'
-      revert: true
+      scroll: false
+      helper: (e) =>
+        $('#tab-content').css('overflow', 'visible')
+        helper = $('<div class="circle-clip"></div>')
+        helper.data 'clip', new AudioClip(buffer: buffer)
+        helper
+      cursor: 'move'
+      cursorAt:
+        top: 0
+        left: 0
       distance: 10
+      zIndex: 100
 
     $(canvas).data 'buffer', buffer
     $(canvas).data 'url', @data['preview-hq-ogg']

@@ -24,7 +24,7 @@
 @blueDark:              rgb(37, 35, 81);
 @teal:                  rgb(15, 151, 154);
 @tealDark:              rgb(15, 49, 62);
-@green:                 #2BBF7F;
+@green:                 rgb(0, 189, 129);
 @red:                   #fa435f;
 @yellow:                rgb(254, 239, 136);
 @orange:                #f89406;
@@ -48,10 +48,8 @@
 
 // Typography
 // -------------------------
-//@sansFontFamily:        "Maison Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
+@sansFontFamily:        Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
-//@monoFontFamily:        "Maison Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
 
 @baseFontSize:          14px;
