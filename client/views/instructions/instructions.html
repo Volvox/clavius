@@ -13,6 +13,17 @@
       <span>Arrange</span>
       <p>Drag and drop from sampler</p>
     </div>
+    {{#if recording}}
+    <div>
+      <span>Save</span>
+      <p>Press the green button</p>
+    </div>
+    {{else}}
+    <div>
+      <span>Record</span>
+      <p>Press the red button</p>
+    </div>
+    {{/if}}
   </div>
 </div>
 </template>
