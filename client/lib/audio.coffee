@@ -37,3 +37,5 @@ Meteor.startup ->
   App.masterGainNode.connect(App.effectsPipeline.input)
   App.effectsPipeline.connect(finalMixNode)
 
+  App.recorder = new Recorder App.effectsPipeline.output,
+    workerPath: '/recorderWorker.js'

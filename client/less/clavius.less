@@ -62,7 +62,26 @@ canvas {
   height: @headerHeight;
   border-bottom: 1px solid @borderColor;
   line-height: @headerHeight;
-  font-size: 0.25 * @headerHeight;
+  font-size: 0.45 * @headerHeight;
+  color: @white;
+
+  img {
+    max-height: 0.60 * @headerHeight;
+  }
+}
+
+#recordButton {
+  color: @red;
+  font-size: 0.5 * @headerHeight;
+
+  li {
+    position: relative;
+    top: 2px;
+  }
+
+  &.recording {
+    color: @green;
+  }
 }
 
 #header {
@@ -70,13 +89,12 @@ canvas {
 }
 
 #toolbar {
-  color: @white;
   margin: 0;
   padding: 0;
 }
 
 #toolbar li {
-  border-left: 1px solid @borderColor;
+  border-right: 1px solid @borderColor;
   float: left;
   height: @headerHeight;
   line-height: @headerHeight;
