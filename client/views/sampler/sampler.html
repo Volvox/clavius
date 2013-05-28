@@ -1,0 +1,32 @@
+<template name="sampler">
+<div id="sampler">
+  {{#constant}}
+  <div class="freesound-search">
+    <div>
+      <input type="text" placeholder="Search" />
+    </div>
+    <button>
+      <i class="icon-search"></i>
+    </button>
+  </div>
+  {{/constant}}
+  <div class="results">
+    {{#each results}}
+    {{> sampler_result}}
+    {{/each}}
+  </div>
+</div>
+</template>
+
+<template name="sampler_result">
+<div class="result">
+  <canvas width="365" height="50"></canvas>
+  <div class="name">
+    {{ original_filename }}
+  </div>
+  <div class="duration">
+    {{ duration }}
+  </div>
+  <div class="shade"></div>
+</div>
+</template>

@@ -5,10 +5,10 @@ class VirtualKeyboard extends Input
     @noteOn = params.noteOn or (note) -> console.log "noteOn: #{note}"
     @noteOff = params.noteOff or (note) -> console.log "noteOff: #{note}"
     @octaveUp = params.octaveUp or (newOctave) =>
-      _.each [@lowestNote - 12...@lowestNote], (note) =>
+      _.each [@lowestNote - 12...@lowestNote - 12 + @letters.length], (note) =>
         @noteOff note
     @octaveDown = params.octaveDown or (newOctave) =>
-      _.each [@lowestNote + 12...@lowestNote + 24], (note) =>
+      _.each [@lowestNote + 12...@lowestNote + 12 + @letters.length], (note) =>
         @noteOff note
     @letters = (params.letters or "awsedftgyhujkolp;'").split ''
     @keysPressed = {}

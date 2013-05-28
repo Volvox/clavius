@@ -48,9 +48,11 @@
 
 // Typography
 // -------------------------
-@sansFontFamily:        "Maison Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+//@sansFontFamily:        "Maison Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
-@monoFontFamily:        "Maison Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
+//@monoFontFamily:        "Maison Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
+@monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
 
 @baseFontSize:          14px;
 @baseFontFamily:        @sansFontFamily;
@@ -161,7 +163,7 @@
 
 // Input placeholder text color
 // -------------------------
-@placeholderText:         @grayLight;
+@placeholderText:         darken(@teal, 3%);
 
 
 // Hr border color

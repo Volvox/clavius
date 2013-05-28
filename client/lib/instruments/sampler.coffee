@@ -1,8 +1,8 @@
 class Sampler extends Instrument
   constructor: (params) ->
-    @output = audioContext.createGainNode()
-    @amplifier = audioContext.createGainNode()
-    @filter = audioContext.createBiquadFilter()
+    @output = App.audioContext.createGainNode()
+    @amplifier = App.audioContext.createGainNode()
+    @filter = App.audioContext.createBiquadFilter()
     @volumeEnvelope = new ADSREnvelope(@amplifier.gain)
 
     params ?= {}
@@ -27,10 +27,10 @@ class Sampler extends Instrument
     @loadSample params.buffer ? params.url
 
   noteOn: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     if @sample?
       if not @loop or not @source?
-        @source = audioContext.createBufferSource()
+        @source = App.audioContext.createBufferSource()
         @source.connect @finalNode
         @source.buffer = @sample
         @source.loop = @loop
@@ -40,16 +40,16 @@ class Sampler extends Instrument
         @filterEnvelope.start time
 
   noteOff: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     @volumeEnvelope.stop time
     if @filterEnvelopeEnabled
       @filterEnvelope.stop time
 
   loadSample: (bufferOrUrl) ->
     if bufferOrUrl instanceof ArrayBuffer
-      @sample = audioContext.createBuffer bufferOrUrl
+      @sample = App.audioContext.createBuffer bufferOrUrl
     else
-      loader = new BufferLoader audioContext, [bufferOrUrl], (bufferList) =>
+      loader = new BufferLoader App.audioContext, [bufferOrUrl], (bufferList) =>
         @sample = bufferList[0]
         @duration = @sample.duration - @offset unless @duration?
       loader.load()
@@ -76,7 +76,7 @@ samplerDemo = ->
   sampler.filterEnvelope.max = 550
   sampler.filterEnvelope.min = 240
   sampler.filter.Q.value = 15
-  sampler.connect masterGainNode
+  sampler.connect App.masterGainNode
 
   keyboard = new VirtualKeyboard
     noteOn: ->
