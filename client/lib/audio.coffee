@@ -21,6 +21,7 @@ Meteor.startup ->
   App.audioContext = new webkitAudioContext()
   App.tuna = new Tuna(App.audioContext)
   App.effectsPipeline = new EffectsPipeline()
+  App.metronome = new Metronome()
 
   # support deprecated noteOn(), noteOff() methods
   for source in [App.audioContext.createBufferSource(), App.audioContext.createOscillator()]

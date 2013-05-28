@@ -21,9 +21,11 @@ class AudioClip
     @buffer = params.buffer
     @bpm = params.bpm ? Session.get 'bpm'
     @source = null
+    @nextTime = null
 
   start: (time, loopPlayback=false) ->
     time ?= App.audioContext.currentTime
+    @nextTime = time
     @source = App.audioContext.createBufferSource()
     @source.buffer = @buffer
     @source.loop = loopPlayback
@@ -32,6 +34,7 @@ class AudioClip
 
   stop: (time) ->
     time ?= App.audioContext.currentTime
+    @nextTime = time
     @source.stop time
     @source = null
 

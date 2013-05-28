@@ -35,10 +35,10 @@ class SessionManager # TODO: come up with a reasonable name for this
     @clips[row * @cols + col]
 
   getRow: (offsetTop) ->
-    Math.floor(((offsetTop - @$el.offset().top) / @$el.height()) * @rows)
+    Math.min(Math.floor(((offsetTop - @$el.offset().top) / @$el.height()) * @rows), @rows - 1)
 
   getCol: (offsetLeft) ->
-    Math.floor(((offsetLeft - @$el.offset().left) / @$el.width()) * @cols)
+    Math.min(Math.floor(((offsetLeft - @$el.offset().left) / @$el.width()) * @cols), @cols - 1)
 
   render: (callback) ->
     _.each [0...@rows * @cols], (index) =>
@@ -73,6 +73,9 @@ class SessionManager # TODO: come up with a reasonable name for this
         ctx.strokeStyle = 'rgb(0, 189, 129)'
       else
         ctx.strokeStyle = 'rgb(15, 151, 154)'
+      if clip.nextTime? and clip.nextTime > App.audioContext.currentTime
+        # before next action
+        ctx.strokeStyle = 'rgb(253, 238, 137)'
     else
       ctx.strokeStyle = 'rgb(50, 50, 70)'
     ctx.beginPath()
@@ -84,10 +87,10 @@ class SessionManager # TODO: come up with a reasonable name for this
     if clip?
       if clip.playing()
         @$el.children().eq(row * @cols + col).removeClass 'playing'
-        clip.stop()
+        clip.stop(App.metronome.measure(1))
       else
         @$el.children().eq(row * @cols + col).addClass 'playing'
-        clip.start(0, true)
+        clip.start(App.metronome.measure(1), true)
 
 Template.session.rendered = ->
   App.session ?= new SessionManager
