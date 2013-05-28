@@ -1,0 +1,303 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('/fonts/icon/fonts/icomoon.eot');
+	src:url('/fonts/icon/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/icon/fonts/icomoon.woff') format('woff'),
+		url('/fonts/icon/fonts/icomoon.ttf') format('truetype'),
+		url('/fonts/icon/fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-K, .icon-K-2, .icon-K-3, .icon-K-4, .icon-K-5, .icon-K-6, .icon-K-7, .icon-K-8, .icon-K-9, .icon-K-10, .icon-K-11, .icon-K-12, .icon-K-13, .icon-K-14, .icon-K-15, .icon-K-16, .icon-K-17, .icon-K-18, .icon-K-19, .icon-K-20, .icon-K-21, .icon-K-22, .icon-K-23, .icon-K-24, .icon-drum, .icon-clavius, .icon-metronome, .icon-K-25, .icon-K-26, .icon-K-27, .icon-K-28, .icon-K-29, .icon-K-30, .icon-K-31, .icon-K-32, .icon-K-33, .icon-K-34, .icon-K-35, .icon-K-36, .icon-K-37, .icon-K-38, .icon-K-39, .icon-K-40, .icon-K-41, .icon-K-42, .icon-K-43, .icon-K-44, .icon-K-45, .icon-K-46, .icon-K-47, .icon-K-48, .icon-K-49, .icon-K-50, .icon-K-51, .icon-K-52, .icon-K-53, .icon-K-54, .icon-K-55, .icon-K-56, .icon-K-57, .icon-sampler, .icon-synthesis, .icon-K-58, .icon-K-59, .icon-K-60, .icon-K-61, .icon-K-62, .icon-K-63, .icon-K-64, .icon-K-65, .icon-K-66, .icon-K-67, .icon-K-68, .icon-K-69, .icon-K-70, .icon-K-71, .icon-K-72, .icon-K-73, .icon-K-74, .icon-K-75, .icon-K-76, .icon-K-77, .icon-K-78, .icon-K-79, .icon-K-80, .icon-K-81, .icon-K-82, .icon-K-83 {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-K:before {
+	content: "\e00d";
+}
+.icon-K-2:before {
+	content: "\e00e";
+}
+.icon-K-3:before {
+	content: "\e00f";
+}
+.icon-K-4:before {
+	content: "\e010";
+}
+.icon-K-5:before {
+	content: "\e011";
+}
+.icon-K-6:before {
+	content: "\e001";
+}
+.icon-K-7:before {
+	content: "\e01e";
+}
+.icon-K-8:before {
+	content: "\e01f";
+}
+.icon-K-9:before {
+	content: "\e020";
+}
+.icon-K-10:before {
+	content: "\e021";
+}
+.icon-K-11:before {
+	content: "\e022";
+}
+.icon-K-12:before {
+	content: "\e002";
+}
+.icon-K-13:before {
+	content: "\e02f";
+}
+.icon-K-14:before {
+	content: "\e030";
+}
+.icon-K-15:before {
+	content: "\e031";
+}
+.icon-K-16:before {
+	content: "\e032";
+}
+.icon-K-17:before {
+	content: "\e033";
+}
+.icon-K-18:before {
+	content: "\e003";
+}
+.icon-K-19:before {
+	content: "\e040";
+}
+.icon-K-20:before {
+	content: "\e041";
+}
+.icon-K-21:before {
+	content: "\e042";
+}
+.icon-K-22:before {
+	content: "\e043";
+}
+.icon-K-23:before {
+	content: "\e044";
+}
+.icon-K-24:before {
+	content: "\e004";
+}
+.icon-drum:before {
+	content: "\e051";
+}
+.icon-clavius:before {
+	content: "\e007";
+}
+.icon-metronome:before {
+	content: "\e052";
+}
+.icon-K-25:before {
+	content: "\e006";
+}
+.icon-K-26:before {
+	content: "\e008";
+}
+.icon-K-27:before {
+	content: "\e009";
+}
+.icon-K-28:before {
+	content: "\e00a";
+}
+.icon-K-29:before {
+	content: "\e00b";
+}
+.icon-K-30:before {
+	content: "\e000";
+}
+.icon-K-31:before {
+	content: "\e00c";
+}
+.icon-K-32:before {
+	content: "\e012";
+}
+.icon-K-33:before {
+	content: "\e013";
+}
+.icon-K-34:before {
+	content: "\e014";
+}
+.icon-K-35:before {
+	content: "\e015";
+}
+.icon-K-36:before {
+	content: "\e016";
+}
+.icon-K-37:before {
+	content: "\e017";
+}
+.icon-K-38:before {
+	content: "\e018";
+}
+.icon-K-39:before {
+	content: "\e019";
+}
+.icon-K-40:before {
+	content: "\e01a";
+}
+.icon-K-41:before {
+	content: "\e01b";
+}
+.icon-K-42:before {
+	content: "\e01c";
+}
+.icon-K-43:before {
+	content: "\e01d";
+}
+.icon-K-44:before {
+	content: "\e023";
+}
+.icon-K-45:before {
+	content: "\e024";
+}
+.icon-K-46:before {
+	content: "\e025";
+}
+.icon-K-47:before {
+	content: "\e026";
+}
+.icon-K-48:before {
+	content: "\e027";
+}
+.icon-K-49:before {
+	content: "\e028";
+}
+.icon-K-50:before {
+	content: "\e029";
+}
+.icon-K-51:before {
+	content: "\e02a";
+}
+.icon-K-52:before {
+	content: "\e02b";
+}
+.icon-K-53:before {
+	content: "\e02c";
+}
+.icon-K-54:before {
+	content: "\e02d";
+}
+.icon-K-55:before {
+	content: "\e02e";
+}
+.icon-K-56:before {
+	content: "\e034";
+}
+.icon-K-57:before {
+	content: "\e03f";
+}
+.icon-sampler:before {
+	content: "\e050";
+}
+.icon-synthesis:before {
+	content: "\e035";
+}
+.icon-K-58:before {
+	content: "\e036";
+}
+.icon-K-59:before {
+	content: "\e037";
+}
+.icon-K-60:before {
+	content: "\e038";
+}
+.icon-K-61:before {
+	content: "\e039";
+}
+.icon-K-62:before {
+	content: "\e005";
+}
+.icon-K-63:before {
+	content: "\e03a";
+}
+.icon-K-64:before {
+	content: "\e03b";
+}
+.icon-K-65:before {
+	content: "\e03c";
+}
+.icon-K-66:before {
+	content: "\e03d";
+}
+.icon-K-67:before {
+	content: "\e03e";
+}
+.icon-K-68:before {
+	content: "\e045";
+}
+.icon-K-69:before {
+	content: "\e046";
+}
+.icon-K-70:before {
+	content: "\e047";
+}
+.icon-K-71:before {
+	content: "\e048";
+}
+.icon-K-72:before {
+	content: "\e049";
+}
+.icon-K-73:before {
+	content: "\e04a";
+}
+.icon-K-74:before {
+	content: "\e04b";
+}
+.icon-K-75:before {
+	content: "\e04c";
+}
+.icon-K-76:before {
+	content: "\e04d";
+}
+.icon-K-77:before {
+	content: "\e04e";
+}
+.icon-K-78:before {
+	content: "\e04f";
+}
+.icon-K-79:before {
+	content: "\e053";
+}
+.icon-K-80:before {
+	content: "\e054";
+}
+.icon-K-81:before {
+	content: "\e055";
+}
+.icon-K-82:before {
+	content: "\e056";
+}
+.icon-K-83:before {
+	content: "\e057";
+}
