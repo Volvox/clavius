@@ -44,7 +44,7 @@ canvas {
 
   .padded {
     padding: 20px;
-    clear: both;
+	.clearfix;
   }
 }
 
@@ -249,25 +249,25 @@ canvas {
   padding: 0;
 }
 
-#sequencer_instructions {
-  div {
-    float: left;
-    margin-right: 40px;
+#instructions {
+	div {
+		float: left;
+		margin-right: 40px;
 
-    span {
-      margin: 0;
-      padding: 0;
-      text-transform: uppercase;
-      color: @white;
-    }
+		span {
+			margin: 0;
+			padding: 0;
+			text-transform: uppercase;
+			color: @white;
+		}
 
-    p {
-      margin: 0;
-      padding: 0;
-      text-transform: lowercase;
-      color: @grayLight;
-    }
-  }
+		p {
+			margin: 0;
+			padding: 0;
+			text-transform: lowercase;
+			color: @grayLight;
+		}
+	}
 }
 
 
@@ -503,6 +503,12 @@ canvas {
 		font-size: 22px;
 		background-color: @tealDark;
 		color: @teal;
+
+		i {
+			position: relative;
+			top: 2px;
+			left: 1px;
+		}
 	}
 }
 
@@ -544,6 +550,49 @@ canvas {
 			display: inline-block;
 			font-size: 24px;
 			line-height: 60px;
+		}
+	}
+}
+
+#keyboard {
+	height: 50px;
+	box-sizing: border-box;
+	border: 1px solid @teal;
+	border-radius: @borderRadiusSmall;
+	float: left;
+
+	ul {
+		float: left;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+
+		li {
+			float: left;
+			position: relative;
+			height: 100%;
+			width: 16px;
+			box-sizing: border-box;
+			border-right: 1px solid @teal;
+
+			&.accidental {
+				height: 60%;
+				width: 8px;
+				margin-left: -4px;
+				margin-right: -4px;
+				background: @teal;
+				border-left: 1px solid @teal;
+				border-bottom: 1px solid @teal;
+				z-index: 10;
+			}
+
+			&.active {
+				background: @tealDark;
+			}
+
+			&:last-child {
+				border-right: 0;
+			}
 		}
 	}
 }

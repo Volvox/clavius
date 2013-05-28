@@ -69,12 +69,6 @@ class Sequencer
         Mousetrap.bind "shift+#{letter}", =>
           @state[@cursor][row] = not @state[@cursor][row]
 
-    @keyboard = new VirtualKeyboard
-      noteOn: (note) =>
-        App.instrument.noteOn note, App.audioContext.currentTime
-      noteOff: (note) =>
-        App.instrument.noteOff note, App.audioContext.currentTime
-
   clear: ->
     ctx = @canvas.getContext '2d'
     ctx.clearRect 0, 0, @canvas.width, @canvas.height

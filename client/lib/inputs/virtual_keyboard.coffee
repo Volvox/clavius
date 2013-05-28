@@ -4,7 +4,13 @@ class VirtualKeyboard extends Input
     @lowestNote = params.lowestNote or 60
     @noteOn = params.noteOn or (note) -> console.log "noteOn: #{note}"
     @noteOff = params.noteOff or (note) -> console.log "noteOff: #{note}"
-    @letters = (params.letters or "awsedrfgyhujkolp;['").split ''
+    @octaveUp = params.octaveUp or (newOctave) =>
+      _.each [@lowestNote - 12...@lowestNote], (note) =>
+        @noteOff note
+    @octaveDown = params.octaveDown or (newOctave) =>
+      _.each [@lowestNote + 12...@lowestNote + 24], (note) =>
+        @noteOff note
+    @letters = (params.letters or "awsedftgyhujkolp;'").split ''
     @keysPressed = {}
 
     for letter, i in @letters
@@ -25,8 +31,10 @@ class VirtualKeyboard extends Input
     Mousetrap.bind 'z', =>
       # shift one octave down
       @lowestNote -= 12
+      @octaveDown (noteOctave @lowestNote)
   
     Mousetrap.bind 'x', =>
       # shift one octave up
       @lowestNote += 12
+      @octaveUp (noteOctave @lowestNote)
 

@@ -36,12 +36,6 @@ class Instrument
   setGain: (gain) ->
     @output.gain.value = gain
 
-noteToFrequency = (note) ->
-  Math.pow(2, (note - 69) / 12) * 440.0
-
-frequencyToNote = (frequency) ->
-  12 * (Math.log(frequency / 440.0) / Math.log(2)) + 69
-
 filterFrequencyFromCutoff = (pitch, cutoff) ->
   nyquist = 0.5 * App.audioContext.sampleRate
   filterFrequency = Math.pow(2, (9 * cutoff) - 1) * pitch
