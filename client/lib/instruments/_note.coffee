@@ -1,9 +1,9 @@
 class Voice
   constructor: (@note, @velocity) ->
-    @output = audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
 
-    @oscillator = audioContext.createOscillator()
-    @amplifier = audioContext.createGainNode()
+    @oscillator = App.audioContext.createOscillator()
+    @amplifier = App.audioContext.createGainNode()
 
     @oscillator.frequency.value = noteToFrequency @note
     @amplifier.gain.value = 0.2

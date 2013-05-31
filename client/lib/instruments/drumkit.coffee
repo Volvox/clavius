@@ -1,6 +1,6 @@
 class Drumkit extends Instrument
   constructor: (params) ->
-    @output = audioContext.createGainNode()
+    @output = App.audioContext.createGainNode()
     @rootNote = 60 # middle C
 
     params ?= {}
@@ -12,21 +12,21 @@ class Drumkit extends Instrument
 
   loadSample: (url, index) ->
     @sampleUrls[index] = url
-    loader = new BufferLoader audioContext, [url], (bufferList) =>
+    loader = new BufferLoader App.audioContext, [url], (bufferList) =>
       @samples[index] = bufferList[0]
     loader.load()
 
   loadSamples: (urls) ->
     @sampleUrls = urls
-    loader = new BufferLoader audioContext, urls, (bufferList) =>
+    loader = new BufferLoader App.audioContext, urls, (bufferList) =>
       @samples = bufferList
     loader.load()
 
   noteOn: (note, time) ->
-    time ?= audioContext.currentTime
+    time ?= App.audioContext.currentTime
     note -= @rootNote
     if @samples[note]?
-      source = audioContext.createBufferSource()
+      source = App.audioContext.createBufferSource()
       source.buffer = @samples[note]
       source.connect @output
       source.start time
@@ -41,7 +41,7 @@ class Drumkit extends Instrument
 
 drumkitDemo = ->
   drumkit = new Drumkit()
-  drumkit.connect masterGainNode
+  drumkit.connect App.masterGainNode
 
   freesoundIds = [26885, 26887, 26900, 26902, 26896, 26889, 26879, 26880, 26881, 26883, 26884, 26878]
   for id, i in freesoundIds

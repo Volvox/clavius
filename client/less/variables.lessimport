@@ -1,6 +1,5 @@
 /* Layout */
-@sidebarWidth: 460px;
-@subsidebarWidth: 124px;
+@sidebarWidth: 425px;
 @headerHeight: 50px;
 @tabHeight: 45px;
 @cellWidth: 26.2px;
@@ -8,9 +7,7 @@
 @buttonWidth: 120px;
 
 /* Colors */
-@headerColor: @purpleDarker;
-@sidebarColor: @blueDark;
-@subsidebarColor: @blueDark;
-@contentColor: @purpleDarker;
-@borderColor: @purpleDark;
-@subheaderColor: @purpleDarker;
+@headerColor: @grayDarker;
+@sidebarColor: @purpleDark;
+@contentColor: @grayDarker;
+@borderColor: @blueDark;

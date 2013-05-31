@@ -35,7 +35,7 @@ playDrumNote = (note) ->
 
 Template.drumpads.rendered = ->
   window.drumkit = new Drumkit()
-  drumkit.connect masterGainNode
+  drumkit.connect App.masterGainNode
   keyboard = new VirtualKeyboard
     noteOn: playDrumNote
     noteOff: (note) ->

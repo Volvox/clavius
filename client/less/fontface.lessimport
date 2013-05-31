@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Maison Neue';
+    font-family: 'Maison Mono';
     src: url('/fonts/typeface/maisonneuemono.eot');
     src: url('/fonts/typeface/maisonneuemono.eot?#iefix') format('embedded-opentype'),
          url('/fonts/typeface/maisonneuemono.woff') format('woff'),
@@ -9,7 +9,7 @@
     font-style: monospace;
 }
 @font-face {
-    font-family: 'Maison Neue';
+    font-family: 'Maison Sans';
     src: url('/fonts/typeface/maisonmonoregulartrial.eot');
     src: url('/fonts/typeface/maisonmonoregulartrial.eot?#iefix') format('embedded-opentype'),
          url('/fonts/typeface/maisonmonoregulartrial.woff') format('woff'),
@@ -19,7 +19,7 @@
     font-style: sans-serif;
 }
 @font-face {
-    font-family: 'Maison Neue';
+    font-family: 'Maison Sans';
     src: url('/fonts/typeface/maisonmonoboldtrial.eot');
     src: url('/fonts/typeface/maisonmonoboldtrial.eot?#iefix') format('embedded-opentype'),
          url('/fonts/typeface/maisonmonoboldtrial.woff') format('woff'),

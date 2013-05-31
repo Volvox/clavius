@@ -1,13 +1,13 @@
 Template.freesound_result.rendered = ->
-  loader = new BufferLoader audioContext, [@data['preview-hq-ogg']], (bufferList) =>
+  loader = new BufferLoader App.audioContext, [@data['preview-hq-ogg']], (bufferList) =>
     buffer = bufferList[0]
     canvas = @find('canvas')
     drawWaveform buffer, canvas
 
     $(canvas).click ->
-      source = audioContext.createBufferSource()
+      source = App.audioContext.createBufferSource()
       source.buffer = buffer
-      source.connect masterGainNode
+      source.connect App.masterGainNode
       source.start 0
 
     $(canvas).draggable

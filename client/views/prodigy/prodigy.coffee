@@ -1,3 +1,41 @@
+controls = [
+  'osc1Mix',
+  'osc1Detune',
+  'osc1Octave',
+  'modOsc1',
+  'osc2Mix',
+  'osc2Detune',
+  'osc2Octave',
+  'modOsc2',
+  null,
+  null,
+  'modFrequency',
+  'modOscFrequencyMultiplier',
+  'filterCutoff',
+  'filterQ',
+  'filterMod',
+  'filterEnv',
+]
+
+randomize = ->
+  $('.knob').each (i, knob) ->
+    min = $(knob).data 'min'
+    max = $(knob).data 'max'
+    val = (min + Math.random() * (max - min))
+    $(knob)
+      .val(val)
+      .trigger('change')
+    App.instrument.params[controls[i]] = val
+  return true
+
+Template.prodigy.events
+  'change .presets-dropdown select': () ->
+    randomize()
+    $(this).blur()
+
+  'click .presets button': (e) ->
+    randomize()
+
 Template.prodigy.rendered = ->
   setInstrument(new ProdigySynthesizer())
 
@@ -37,7 +75,7 @@ Template.prodigy.rendered = ->
       when 0 then wave = App.instrument.params.osc1Waveform
       when 1 then wave = App.instrument.params.osc2Waveform
       when 2 then wave = App.instrument.params.modWaveform
-    button = new OscillatorButton(canvas, wave, 'rgb(24, 207, 255)')
+    button = new OscillatorButton(canvas, wave, 'rgb(15, 151, 154)')
     $(canvas).click ->
       button.wave += 1
       button.wave %= 4
@@ -109,3 +147,27 @@ Template.prodigy.rendered = ->
       App.instrument.params.modOscFreqMultiplier = v
   $('.modOsc .knobs .multiplier').val(App.instrument.params.modOscFreqMultiplier).trigger('change')
 
+  # filter #
+  $('.filter .knobs .cutoff').trigger 'configure',
+    min: 0.0
+    max: 1000.0
+    change: (v) ->
+      App.instrument.params.filterCutoff = v
+  $('.filter .knobs .cutoff').val(App.instrument.params.filterCutoff).trigger('change')
+
+  $('.filter .knobs .q').trigger 'configure',
+    min: 0.01
+    max: 20.0
+    change: (v) ->
+      App.instrument.params.filterQ = v
+  $('.filter .knobs .q').val(App.instrument.params.filterQ).trigger('change')
+
+  $('.filter .knobs .mod').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.filterMod = v
+  $('.filter .knobs .mod').val(App.instrument.params.filterMod).trigger('change')
+
+  $('.filter .knobs .env').trigger 'configure',
+    change: (v) ->
+      App.instrument.params.filterEnv = v
+  $('.filter .knobs .env').val(App.instrument.params.filterEnv).trigger('change')
