@@ -7,6 +7,7 @@
 body {
   overflow: hidden;
   font-weight: bold;
+  letter-spacing: 1pt;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -61,10 +62,10 @@ canvas {
 #header {
   box-sizing: border-box;
   height: @headerHeight;
-  border-bottom: 1px solid @borderColor;
   line-height: @headerHeight;
   font-size: 0.45 * @headerHeight;
   color: @white;
+  background-color: @tealDark;
 
   img {
     max-height: 0.60 * @headerHeight;
@@ -85,9 +86,7 @@ canvas {
   }
 }
 
-#header {
-  background-color: @headerColor;
-}
+
 
 #toolbar {
   margin: 0;
@@ -95,7 +94,7 @@ canvas {
 }
 
 #toolbar li {
-  border-right: 1px solid @borderColor;
+  border-right: 2px solid @sidebarColor;
   float: left;
   height: @headerHeight;
   line-height: @headerHeight;
@@ -807,7 +806,14 @@ canvas {
   width: 0.2 * @sidebarWidth;
 
   span {
-    font-weight: normal;
+    font-weight: 100;
     margin-left: 5px;
   }
+}
+
+#keyboard-icon {
+  float: left;
+  margin-right: -1px;
+  font-size: 2 * @fontSizeLarge;
+  color: @green;
 }
