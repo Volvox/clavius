@@ -1,17 +1,17 @@
 @font-face {
-	font-family: 'icomoon';
-	src:url('/fonts/icon/fonts/icomoon.eot');
-	src:url('/fonts/icon/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('/fonts/icon/fonts/icomoon.woff') format('woff'),
-		url('/fonts/icon/fonts/icomoon.ttf') format('truetype'),
-		url('/fonts/icon/fonts/icomoon.svg#icomoon') format('svg');
+	font-family: 'clavius';
+	src:url('/fonts/icon/fonts/clavius.eot');
+	src:url('/fonts/icon/fonts/clavius.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/icon/fonts/clavius.woff') format('woff'),
+		url('/fonts/icon/fonts/clavius.ttf') format('truetype'),
+		url('/fonts/icon/fonts/clavius.svg#clavius') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
-	font-family: 'icomoon';
+	font-family: 'clavius';
 	content: attr(data-icon);
 	speak: none;
 	font-weight: normal;
@@ -28,7 +28,7 @@ you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
 .icon-K, .icon-K-2, .icon-K-3, .icon-K-4, .icon-K-5, .icon-K-6, .icon-K-7, .icon-K-8, .icon-K-9, .icon-K-10, .icon-K-11, .icon-K-12, .icon-K-13, .icon-K-14, .icon-K-15, .icon-K-16, .icon-K-17, .icon-K-18, .icon-K-19, .icon-K-20, .icon-K-21, .icon-K-22, .icon-K-23, .icon-K-24, .icon-drum, .icon-clavius, .icon-metronome, .icon-K-25, .icon-K-26, .icon-K-27, .icon-K-28, .icon-K-29, .icon-K-30, .icon-K-31, .icon-K-32, .icon-K-33, .icon-K-34, .icon-K-35, .icon-K-36, .icon-K-37, .icon-K-38, .icon-K-39, .icon-K-40, .icon-K-41, .icon-K-42, .icon-K-43, .icon-K-44, .icon-K-45, .icon-K-46, .icon-K-47, .icon-K-48, .icon-K-49, .icon-K-50, .icon-K-51, .icon-K-52, .icon-K-53, .icon-K-54, .icon-K-55, .icon-K-56, .icon-K-57, .icon-sampler, .icon-synthesis, .icon-K-58, .icon-K-59, .icon-K-60, .icon-K-61, .icon-K-62, .icon-K-63, .icon-K-64, .icon-K-65, .icon-K-66, .icon-K-67, .icon-K-68, .icon-K-69, .icon-K-70, .icon-K-71, .icon-K-72, .icon-K-73, .icon-K-74, .icon-K-75, .icon-K-76, .icon-K-77, .icon-K-78, .icon-K-79, .icon-K-80, .icon-K-81, .icon-K-82, .icon-K-83 {
-	font-family: 'icomoon';
+	font-family: 'clavius';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
