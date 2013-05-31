@@ -6,3 +6,4 @@ Meteor.Router.add
   '/demo/analyser': 'analyser'
   '/endless': 'endless'
   '/drumkit': 'drumkit'
+  '/demo/icons': 'icons'
