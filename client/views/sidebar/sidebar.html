@@ -3,9 +3,12 @@
 	{{> header}}
 	<div id="tabs">
 		<ul>
-      <li class="{{#if instrumentIs 'synthesis'}}active {{/if}}synthesis">Synthesizer</li>
-      <li class="{{#if instrumentIs 'sampler'}}active {{/if}}sampler">Sampler</li>
-      <!--<li class="{{#if instrumentIs 'drumkit'}}active {{/if}}drumkit">Drumkit</li>-->
+	      <li class="{{#if instrumentIs 'synthesis'}}active {{/if}}synthesis" data-icon="&#xe035;">
+	      	<span>Synthesizer</span>
+	      </li>
+	      <li class="{{#if instrumentIs 'sampler'}}active {{/if}}sampler" data-icon="&#xe050;">
+	      	<span>Sampler</span>
+	      </li>
 		</ul>
 	</div>
 	<div id="tab-content">

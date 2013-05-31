@@ -130,10 +130,20 @@ canvas {
   height: @tabHeight;
   line-height: @tabHeight;
   text-transform: uppercase;
-  font-size: 0.3 * @tabHeight;
+  font-size: 0.4 * @tabHeight;
   margin: 0;
-  padding: 0px 10px;
+  padding: 0px 15px;
+  letter-spacing: 1pt;
   color: @purple;
+
+  &.sampler{
+    font-size: @fontSizeLarge;
+  }
+
+  span {
+    font-size: @fontSizeSmall;
+    margin-left: 10px;
+  }
 
   &.active, &:hover {
     color: @white;
@@ -789,5 +799,15 @@ canvas {
     .play {
       display: none;
     }
+  }
+}
+
+
+.bpm {
+  width: 0.2 * @sidebarWidth;
+
+  span {
+    font-weight: normal;
+    margin-left: 5px;
   }
 }
