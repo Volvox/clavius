@@ -1,30 +1,60 @@
 @font-face {
-    font-family: 'Maison Mono';
-    src: url('/fonts/typeface/maisonneuemono.eot');
-    src: url('/fonts/typeface/maisonneuemono.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/typeface/maisonneuemono.woff') format('woff'),
-         url('/fonts/typeface/maisonneuemono.ttf') format('truetype'),
-         url('/fonts/typeface/maisonneuemono.svg#MaisonNeue-Mono') format('svg');
+    font-family: 'Maison Neue Mono';
+    src: url('/fonts/typeface/Mono/maisonneuemono.eot');
+    src: url('/fonts/typeface/Mono/maisonneuemono.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/typeface/Mono/maisonneuemono.woff') format('woff'),
+         url('/fonts/typeface/Mono/maisonneuemono.ttf') format('truetype'),
+         url('/fonts/typeface/Mono/maisonneuemono.svg#MaisonNeue-Mono') format('svg');
     font-weight: normal;
     font-style: monospace;
 }
 @font-face {
-    font-family: 'Maison Sans';
-    src: url('/fonts/typeface/maisonmonoregulartrial.eot');
-    src: url('/fonts/typeface/maisonmonoregulartrial.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/typeface/maisonmonoregulartrial.woff') format('woff'),
-         url('/fonts/typeface/maisonmonoregulartrial.ttf') format('truetype'),
-         url('/fonts/typeface/maisonmonoregulartrial.svg#MaisonMonoTRIAL-Regular') format('svg');
+    font-family: 'Maison Mono';
+    src: url('/fonts/typeface/Mono/maisonmonoregulartrial.eot');
+    src: url('/fonts/typeface/Mono/maisonmonoregulartrial.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/typeface/Mono/maisonmonoregulartrial.woff') format('woff'),
+         url('/fonts/typeface/Mono/maisonmonoregulartrial.ttf') format('truetype'),
+         url('/fonts/typeface/Mono/maisonmonoregulartrial.svg#MaisonMonoTRIAL-Regular') format('svg');
     font-weight: normal;
     font-style: sans-serif;
 }
 @font-face {
-    font-family: 'Maison Sans';
-    src: url('/fonts/typeface/maisonmonoboldtrial.eot');
-    src: url('/fonts/typeface/maisonmonoboldtrial.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/typeface/maisonmonoboldtrial.woff') format('woff'),
-         url('/fonts/typeface/maisonmonoboldtrial.ttf') format('truetype'),
-         url('/fonts/typeface/maisonmonoboldtrial.svg#MaisonMonoTRIAL-Bold') format('svg');
+    font-family: 'Maison Mono Bold';
+    src: url('/fonts/typeface/Mono/maisonmonoboldtrial.eot');
+    src: url('/fonts/typeface/Mono/maisonmonoboldtrial.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/typeface/Mono/maisonmonoboldtrial.woff') format('woff'),
+         url('/fonts/typeface/Mono/maisonmonoboldtrial.ttf') format('truetype'),
+         url('/fonts/typeface/Mono/maisonmonoboldtrial.svg#MaisonMonoTRIAL-Bold') format('svg');
     font-weight: bold;
     font-style: sans-serif;
+}
+@font-face {
+    font-family: 'MaisonNeue-Bold';
+    src: url('/fonts/typeface/Sans/maisonneuebold.eot');
+    src: url('/fonts/typeface/Sans/maisonneuebold.eot?#iefix') format('embedded-opentype'),
+             url('/fonts/typeface/Sans/maisonneuebold.woff') format('woff'),
+             url('/fonts/typeface/Sans/maisonneuebold.ttf') format('truetype'),
+             url('/fonts/typeface/Sans/maisonneuebold.svg#maisonneuebold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MaisonNeue-Medium';
+    src: url('/fonts/typeface/Sans/maisonneuemedium.eot');
+    src: url('/fonts/typeface/Sans/maisonneuemedium.eot?#iefix') format('embedded-opentype'),
+             url('/fonts/typeface/Sans/maisonneuemedium.woff') format('woff'),
+             url('/fonts/typeface/Sans/maisonneuemedium.ttf') format('truetype'),
+             url('/fonts/typeface/Sans/maisonneuemedium.svg#maisonneuemedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MaisonNeue-Demi';
+    src: url('/fonts/typeface/Sans/maisonneuedemi.eot');
+    src: url('/fonts/typeface/Sans/maisonneuedemi.eot?#iefix') format('embedded-opentype'),
+             url('/fonts/typeface/Sans/maisonneuedemi.woff') format('woff'),
+             url('/fonts/typeface/Sans/maisonneuedemi.ttf') format('truetype'),
+             url('/fonts/typeface/Sans/maisonneuedemi.svg#maisonneuedemi') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
