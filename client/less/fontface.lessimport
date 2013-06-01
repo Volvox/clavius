@@ -58,3 +58,13 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'MaisonNeue-Book';
+    src: url('/fonts/typeface/Sans/maisonneuebook.eot');
+    src: url('/fonts/typeface/Sans/maisonneuebook.eot?#iefix') format('embedded-opentype'),
+             url('/fonts/typeface/Sans/maisonneuebook.woff') format('woff'),
+             url('/fonts/typeface/Sans/maisonneuebook.ttf') format('truetype'),
+             url('/fonts/typeface/Sans/maisonneuebook.svg#maisonneuebook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

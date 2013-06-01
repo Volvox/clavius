@@ -48,7 +48,8 @@
 
 // Typography
 // -------------------------
-@sansFontFamily:        "MaisonNeue-Medium", Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+@sansFontFamily:        "MaisonNeue-Book", Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+@boldFontFamily:        "MaisonNeue-Demi";
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
 

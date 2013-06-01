@@ -133,7 +133,7 @@ canvas {
   margin: 0;
   padding: 0px 15px;
   letter-spacing: 1pt;
-  color: @purple;
+  color: @grayLight;
 
   &.sampler{
     font-size: @fontSizeLarge;
@@ -308,6 +308,7 @@ canvas {
     }
 
     p {
+      letter-spacing: 0;
       margin: 0;
       padding: 0;
       text-transform: lowercase;
@@ -595,7 +596,7 @@ canvas {
       float: right;
       margin-left: 15px;
       display: inline-block;
-      font-size: 24px;
+      font-size: 18px;
       line-height: 60px;
     }
   }
@@ -708,6 +709,8 @@ canvas {
       position: relative;
       z-index: 10;
       height: 20px;
+      letter-spacing: 0;
+      font-family: @boldFontFamily;
       margin-top: -20px;
       overflow: hidden;
     }
@@ -807,13 +810,15 @@ canvas {
 
   span {
     font-weight: 100;
+    font-size: @baseFontSize;
     margin-left: 5px;
   }
 }
 
 #keyboard-icon {
   float: left;
-  margin-right: -1px;
+  margin-right: -2px;
   font-size: 2 * @fontSizeLarge;
   color: @green;
 }
+
