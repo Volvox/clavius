@@ -16,6 +16,12 @@ body {
   user-select: none;
 }
 
+a {
+  &:hover, &:active {
+    text-decoration: none;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 0;
 }
@@ -112,6 +118,7 @@ canvas {
 }
 
 #tabs {
+  position: relative;
   height: @tabHeight;
   box-sizing: border-box;
   border-bottom: 1px solid @borderColor;
@@ -418,6 +425,7 @@ canvas {
 }
 
 #effects {
+  background-color: @sidebarColor;
   margin-top: 20px;
 
   .effect {
@@ -604,7 +612,7 @@ canvas {
 #keyboard {
   height: 50px;
   box-sizing: border-box;
-  border: 1px solid @teal;
+  border: 2px solid @teal;
   border-radius: @borderRadiusSmall;
   float: left;
 
@@ -817,3 +825,29 @@ canvas {
   font-size: 2 * @fontSizeLarge;
   color: @green;
 }
+
+.toggle {
+    margin-left: 20px;
+    border-left: 1px solid @borderColor;
+    border-top: 1px solid @borderColor;
+    border-right: 1px solid @borderColor;
+    display: block;
+    color: @purple;
+    float: left;
+    line-height: 0.75 * @tabHeight;
+    padding: 0 20px;
+    z-index: 90;
+    background-color: @sidebarColor;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    &.active {
+      position: absolute;
+      top:  9px;
+      border-bottom: 3px solid @sidebarColor;
+    }
+  }
