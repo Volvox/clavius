@@ -5,7 +5,7 @@
 @cellWidth: 26.2px;
 @sequencerHeight: 300px;
 @buttonWidth: 120px;
-@panelHeight: 190px;
+@panelHeight: 180px;
 
 /* Colors */
 @headerColor: @grayDarker;

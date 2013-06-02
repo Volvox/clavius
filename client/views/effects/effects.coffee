@@ -10,15 +10,13 @@ addEffect = (e) ->
   for klass, effect of effects
     if e.hasClass klass
       App.effectsPipeline.addEffect effect
-
-Template.effects.rendered = ->
-  $('.amount .tick').addClass('active')
+      $(".#{klass} .knob").trigger "configure",
+        fgColor: "0f979a"
 
 Template.effects.events
-  'click .name': (e) ->
-    $e = $(e.srcElement).parent()
+  'click i': (e) ->
+    window.$e = $(e.srcElement).parent()
     $e.toggleClass('active')
-
     if $e.hasClass 'active'
       addEffect $e
     else
@@ -26,13 +24,3 @@ Template.effects.events
       for e in $e.siblings()
         if $(e).hasClass 'active'
           addEffect $(e)
-
-  'click .tick': (e) ->
-    $(e.srcElement).addClass('active')
-    index = $(e.srcElement).index() - 1
-    $(e.srcElement).siblings().each (i, e) ->
-      if i > index
-        $(e).removeClass('active')
-      else
-        $(e).addClass('active')
-
