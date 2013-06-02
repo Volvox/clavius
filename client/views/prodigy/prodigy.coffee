@@ -171,3 +171,8 @@ Template.prodigy.rendered = ->
     change: (v) ->
       App.instrument.params.filterEnv = v
   $('.filter .knobs .env').val(App.instrument.params.filterEnv).trigger('change')
+
+Template.prodigy.events
+  "click i": (e) ->
+    $e = $(e.srcElement).parent()
+    $e.toggleClass('active')

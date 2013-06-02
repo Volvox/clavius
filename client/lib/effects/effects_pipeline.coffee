@@ -8,6 +8,9 @@ class EffectsPipeline
   reset: ->
     for effect in @effects
       effect.disconnect()
+      klass = effect["name"].toLowerCase()
+      $(".#{klass} .knob").trigger "configure",
+        fgColor: "#085354"
 
     @last = @input
     @last.connect @output

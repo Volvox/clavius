@@ -11,11 +11,11 @@ addEffect = (e) ->
     if e.hasClass klass
       App.effectsPipeline.addEffect effect
       $(".#{klass} .knob").trigger "configure",
-        fgColor: "0f979a"
+        fgColor: "#0f979a"
 
 Template.effects.events
   'click i': (e) ->
-    window.$e = $(e.srcElement).parent()
+    $e = $(e.srcElement).parent()
     $e.toggleClass('active')
     if $e.hasClass 'active'
       addEffect $e

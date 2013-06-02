@@ -587,7 +587,12 @@ canvas {
     height: 60px;
     border-bottom: 1px solid @gray;
     padding: 10px 0;
-
+    color: darken(@teal, 15%);
+    
+    &.active {
+      color: @teal;
+    }
+    
     &:last-child {
       border-bottom: 0;
     }
@@ -609,12 +614,12 @@ canvas {
     }
 
     i {
-      color: @teal;
       float: right;
       margin-left: 15px;
       display: inline-block;
       font-size: 18px;
       line-height: 60px;
+      cursor: pointer;
     }
   }
 }
