@@ -82,11 +82,6 @@ canvas {
   color: @red;
   font-size: 0.5 * @headerHeight;
 
-  li {
-    position: relative;
-    top: 2px;
-  }
-
   &.recording {
     color: @green;
   }
@@ -103,18 +98,19 @@ canvas {
   border-right: 2px solid @sidebarColor;
   float: left;
   height: @headerHeight;
-  line-height: @headerHeight;
+  line-height: @headerHeight * 1.2;
   text-transform: uppercase;
   margin: 0;
   padding: 0 10px;
 }
 
 #logo {
-  line-height: @headerHeight;
-  font-size: 0.25 * @headerHeight;
+  line-height: @headerHeight * 1.2;
+  font-size: 0.5 * @headerHeight;
   font-weight: inherit;
   margin: 0;
   padding: 0;
+  cursor: pointer;
 }
 
 #tabs {
@@ -427,7 +423,47 @@ canvas {
 
 #effects {
   background-color: @sidebarColor;
-  margin-top: 20px;
+  padding: 10px;
+  
+  .module {
+      background-color: darken(@borderColor, 10%);
+      height: @panelHeight * 0.8;
+      .border-radius(2px);
+      display: inline-block;
+      width: 80px;
+      margin: 5px 1px;
+      position: relative;
+      padding: 5px;
+      
+      i {
+        color: @teal;
+        float: right;
+      }
+      span {
+        font-size: @fontSizeMini;
+        text-transform: uppercase;
+      }
+
+       &:nth-child(1) span {
+          color: @green;
+        }
+   
+      .mini {
+        height: @panelHeight * 0.4;
+      }
+
+      .knobs {
+        display: block;
+      }
+
+      .knob {
+        height: 50px;
+      }
+  }
+
+  span {
+    float: left;
+  }
 
   .effect {
     margin-bottom: 6px;
@@ -584,7 +620,6 @@ canvas {
 
     .osc {
       float: left;
-      display: inline-block;
       width: 50px;
       height: 50px;
       margin-top: 5px;
@@ -836,18 +871,15 @@ canvas {
     border-top: 1px solid @borderColor;
     border-right: 1px solid @borderColor;
     display: block;
-    color: @purple;
+    color: darken(@purple, 10%);
     float: left;
+    font-family: @boldFontFamily;
     line-height: 0.75 * @tabHeight;
     padding: 0 20px;
     z-index: 90;
     background-color: @sidebarColor;
-    -webkit-border-top-left-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
-    -moz-border-radius-topleft: 3px;
-    -moz-border-radius-topright: 3px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    .border-top-left-radius(3px);
+    .border-top-right-radius(3px);
 
     &.active {
       position: absolute;
