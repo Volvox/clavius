@@ -1,5 +1,5 @@
 addEffect = (e) ->
-  effects =
+  App.effects =
     wahwah: new App.tuna.WahWah(automode: false)
     delay: new App.tuna.Delay()
     overdrive: new App.tuna.Overdrive()
@@ -7,11 +7,9 @@ addEffect = (e) ->
     reverb: new App.tuna.Convolver(impulse: "/impulses/impulse_rev.wav")
     phaser: new App.tuna.Phaser(rate: 3.5)
 
-  for klass, effect of effects
+  for klass, effect of App.effects
     if e.hasClass klass
-      App.effectsPipeline.addEffect effect
-      $(".#{klass} .knob").trigger "configure",
-        fgColor: "#0f979a"
+      App.effectsPipeline.addEffect effect, klass
 
 Template.effects.events
   'click i': (e) ->

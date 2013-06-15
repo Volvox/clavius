@@ -9,7 +9,8 @@
   z-index: @zindexTooltip;
   display: block;
   visibility: visible;
-  font-size: 11px;
+  font-size: 9px;
+  letter-spacing: 0;
   line-height: 1.4;
   .opacity(0);
   &.in     { .opacity(80); }

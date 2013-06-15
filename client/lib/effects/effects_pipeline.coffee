@@ -2,23 +2,29 @@ class EffectsPipeline
   constructor: ->
     @input = App.audioContext.createGainNode()
     @output = App.audioContext.createGainNode()
-    @effects = []
+    @effects = {}
     @reset()
 
   reset: ->
-    for effect in @effects
+    for klass, effect of @effects
       effect.disconnect()
-      klass = effect["name"].toLowerCase()
-      $(".#{klass} .knob").trigger "configure",
-        fgColor: "#085354"
-
+      @deactivateKnob klass.toString()
     @last = @input
     @last.connect @output
 
-  addEffect: (effect) ->
+  activateKnob: (klass) ->
+    $(".#{klass} .knob").trigger "configure",
+      fgColor: "#0f979a"
+
+  deactivateKnob: (klass) ->
+    $(".#{klass} .knob").trigger "configure",
+      fgColor: "#085354"
+
+  addEffect: (effect, klass) ->
     @last.disconnect @output
     @last.connect effect.input
-    @effects.push effect
+    @activateKnob klass
+    @effects[klass] = effect
     effect.connect @output
     @last = effect
 
