@@ -1,12 +1,18 @@
 <template name="editor">
     <div id="clip-editor">
         <ul>
-            <li class="glyph-btn" id="new-clip" data-icon="&#xe013;"></li>
-            <li class="glyph-btn" id="toggle-fx" data-icon="&#xe026;"></li>
-            <li class="glyph-btn" id="download-clip" data-icon="&#xe016;"></li>
-            <li class="glyph-btn" id="delete-clip" data-icon="&#xe057;"></li>
-            <li class="glyph-btn" id="clip-volume" data-icon="&#xe02a;"></li>
-            <li class="glyph-btn" id="slice-clip" data-icon="&#xe008;"></li>
+            <li class="glyph-btn" data-icon="&#xe013;"
+            rel="tooltip" title="create new clip"></li>
+            <li class="glyph-btn" data-icon="&#xe026;"
+            rel="tooltip" title="toggle effects"></li>
+            <li class="glyph-btn" data-icon="&#xe016;"
+            rel="tooltip" title="download"></li>
+            <li class="glyph-btn" data-icon="&#xe057;"
+            rel="tooltip" title="delete clip"></li>
+            <li class="glyph-btn" data-icon="&#xe02a;"
+            rel="tooltip" title="volume"></li>
+            <li class="glyph-btn" data-icon="&#xe008;"
+            rel="tooltip" title="slice clip"></li>
             <!-- each sibling clip in session... -->
         </ul>
         <div id="editor-canvas">

@@ -20,4 +20,9 @@ Template.editor.rendered = ->
   $(window).resize ->
     App.editor.resize()
 
-# Template.editor.events
+Template.editor.events
+  "mouseenter #clip-editor li": (e) ->
+    $(e.srcElement).tooltip
+      placement: "left"
+      selector: $(e.srcElement)
+      trigger: "hover"
