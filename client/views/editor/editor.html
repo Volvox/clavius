@@ -1,12 +1,12 @@
 <template name="editor">
     <div id="clip-editor">
         <ul>
-            <li id="new-clip" data-icon="&#xe013;"></li>
-            <li id="toggle-fx" data-icon="&#xe026;"></li>
-            <li id="download-clip" data-icon="&#xe016;"></li>
-            <li id="delete-clip" data-icon="&#xe057;"></li>
-            <li id="clip-volume" data-icon="&#xe02a;"></li>
-            <li id="slice-clip" data-icon="&#xe008;"></li>
+            <li class="glyph-btn" id="new-clip" data-icon="&#xe013;"></li>
+            <li class="glyph-btn" id="toggle-fx" data-icon="&#xe026;"></li>
+            <li class="glyph-btn" id="download-clip" data-icon="&#xe016;"></li>
+            <li class="glyph-btn" id="delete-clip" data-icon="&#xe057;"></li>
+            <li class="glyph-btn" id="clip-volume" data-icon="&#xe02a;"></li>
+            <li class="glyph-btn" id="slice-clip" data-icon="&#xe008;"></li>
             <!-- each sibling clip in session... -->
         </ul>
         <div id="editor-canvas">
@@ -15,11 +15,9 @@
             {{/constant}}
         </div>
         <div id="editor-options">
-            <div id="steps">
-            </div>
-            <div class="note-length">
-            </div>
-            <div id="midi-library" data-icon="&#xe002;">
+            <div class="values" id="steps">72</div>
+            <div class="values" id="note-length">1/8</div>
+            <div id="midi-library" class="glyph-btn" data-icon="&#xe002;">
             </div>
         </div>
     </div>

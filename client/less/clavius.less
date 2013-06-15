@@ -868,7 +868,31 @@ canvas {
   }
 }
 
+.glyph-btn {
+  cursor: pointer;
+  text-align: center;
+  font-size: @fontSizeMedium;
+  line-height: 35px;
 
+  &:hover {
+    color: darken(@purple, 10%);
+  }
+  &:active {
+    .transition(all 0.2s ease);
+    .scale(1.4);
+  }
+}
+.values {
+  color: @white;
+  letter-spacing: 1pt;
+  font-family: @baseFontFamily;
+  display: inline;
+  padding: 8px;
+  -webkit-font-smoothing: antialiased;
+  background-color: darken(@borderColor, 10%);
+  border: 1px solid darken(@teal, 10%);
+  border-radius: 3px;
+}
 #clip-editor {
   float: right;
   top: 0;
@@ -885,14 +909,21 @@ canvas {
     min-width: 300px;
     z-index: 1;
     border: 1px solid @borderColor;
-  }
+    }
 
   #editor-options {
-    height: 100px;
+    padding: 15px;
+    padding-bottom: 5px;
     border-bottom: 1px solid @borderColor;
     z-index: 3;
     position: absolute;
-    font-size: @fontSizeLarge;
+    width: 100%;
+
+    #midi-library {
+      font-size: @fontSizeLarge;
+      margin-right: 30px;
+      float: right;
+    }
   }
 
   ul {
@@ -904,21 +935,6 @@ canvas {
     left: -70px;
     padding: 10px;
     .border-bottom-left-radius(3px);
-
-    li {
-      cursor: pointer;
-      text-align: center;
-      font-size: @fontSizeMedium;
-      line-height: 35px;
-
-      &:hover {
-        color: darken(@purple, 10%);
-      }
-      &:active {
-        .transition(all 0.2s ease);
-        .scale(1.4);
-      }
-    }
   }
 
 }
