@@ -1,7 +1,7 @@
 Template.sequencer_canvas.rendered = ->
   unless App.sequencer?
     canvas = @find('canvas')
-    App.sequencer = new Sequencer(canvas)
+    App.sequencer = new PatternSequencer(canvas)
 
 Template.sequencer_canvas.events
   'mousedown': (e) ->

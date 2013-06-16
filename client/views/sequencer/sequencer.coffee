@@ -1,4 +1,4 @@
-class Sequencer
+class PatternSequencer
   constructor: (canvas) ->
     @current = 0
     @cursor = 0
