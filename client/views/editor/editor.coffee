@@ -1,7 +1,17 @@
-class ClipEditor
+class ClipEditor extends Sequencer
   constructor: (params) ->
     @initializeCanvas(params.canvas)
     @initializeTooltip()
+    @colors = [
+        "hsl(351, 96%, 55%)",   #red
+        "hsl(52, 97%, 76%)",    #yellow
+        "hsl(195, 78%, 42%)",   #blue
+        "hsl(38, 98%, 55%)",    #orange
+        "hsl(162, 98%, 34%)",   #green
+        "hsl(328, 95%, 70%)",   #pink
+        "hsl(248, 77%, 58%)",   #purple
+        "hsl(108, 100%, 100%)"  #white
+      ]
     @draw()
 
   initializeCanvas: (canvas) =>
@@ -9,8 +19,8 @@ class ClipEditor
     @canvas = canvas
     @canvas.height = $(canvas).parent().height() -  $("#options").height()
     @canvas.width = $(canvas).parent().width() + 15
-    @cellWidth = 30
-    @numColumns = (@canvas.width/@cellWidth) - 3
+    @cellWidth = 20
+    @numColumns = Math.floor( (@canvas.width/@cellWidth) - 3 )
     @numRows = Math.floor( @canvas.height / (@cellWidth/2) )
 
   initializeTooltip: ->
@@ -28,7 +38,7 @@ class ClipEditor
       for col in [0...@numColumns]
         ctx.beginPath()
         offset = (col + 0.5) * @cellWidth
-        ctx.rect(offset*1.1, row*(@cellWidth/1.7), @cellWidth, @cellWidth/2)
+        ctx.rect(offset*1.1, row*(@cellWidth/1.6), @cellWidth, @cellWidth/2)
         ctx.fillStyle = color
         ctx.fill()
 
@@ -57,7 +67,8 @@ Template.editor.rendered = ->
     App.editor.resize()
 
 Template.editor.events
-  "click #clip-editor li": (e) ->
+  "click #clip-editor .glyph-btn": (e) ->
     action = $(e.srcElement).attr "data-original-title"
     switch action
       when "toggle FX" then App.editor.toggleEffects()
+      when "library" then App.editor.showLibrary()
