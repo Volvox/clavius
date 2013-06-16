@@ -904,6 +904,10 @@ canvas {
   color: @teal;
   min-height: 100%;
 
+  canvas {
+    position: absolute;
+    top: 60px;
+  }
   #editor-canvas {
     background: @sidebarColor;
     position: absolute;
@@ -912,7 +916,7 @@ canvas {
     border: 1px solid @borderColor;
     }
 
-  #editor-options {
+  #options {
     padding: 15px;
     padding-bottom: 5px;
     border-bottom: 1px solid @borderColor;
@@ -922,7 +926,7 @@ canvas {
 
     .values { cursor:pointer; }
 
-    #midi-library {
+    #library {
       font-size: @fontSizeLarge;
       margin-right: 30px;
       float: right;
