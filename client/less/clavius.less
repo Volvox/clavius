@@ -439,12 +439,12 @@ canvas {
     i {
       cursor: pointer;
       float: right;
-      color: darken(@teal, 15%);
+      color: @deactivated;
     }
 
-    &.active i {  
+    &.active i {
       color: @teal;
-    } 
+    }
 
     span {
       font-size: @fontSizeMini;
@@ -588,11 +588,11 @@ canvas {
     border-bottom: 1px solid @gray;
     padding: 10px 0;
     color: darken(@teal, 15%);
-    
+
     &.active {
       color: @teal;
     }
-    
+
     &:last-child {
       border-bottom: 0;
     }
@@ -769,8 +769,9 @@ canvas {
 }
 
 #session {
+  float: left;
   min-height: 600px;
-  width: 100%;
+  width: 75%;
 }
 
 .circle-clip {
@@ -848,24 +849,98 @@ canvas {
 }
 
 .toggle {
-    margin-left: 20px;
-    border-left: 1px solid @borderColor;
-    border-top: 1px solid @borderColor;
-    border-right: 1px solid @borderColor;
-    display: block;
-    color: darken(@purple, 10%);
-    float: left;
-    font-family: @boldFontFamily;
-    line-height: 0.75 * @tabHeight;
-    padding: 0 20px;
-    z-index: 90;
-    background-color: @sidebarColor;
-    .border-top-left-radius(3px);
-    .border-top-right-radius(3px);
+  margin-left: 20px;
+  border-left: 1px solid @borderColor;
+  border-top: 1px solid @borderColor;
+  border-right: 1px solid @borderColor;
+  display: block;
+  color: darken(@purple, 10%);
+  float: left;
+  font-family: @boldFontFamily;
+  line-height: 0.75 * @tabHeight;
+  padding: 0 20px;
+  z-index: 90;
+  background-color: @sidebarColor;
+  .border-top-left-radius(3px);
+  .border-top-right-radius(3px);
 
-    &.active {
-      position: absolute;
-      top:  9px;
-      border-bottom: 3px solid @sidebarColor;
+  &.active {
+    position: absolute;
+    top:  9px;
+    border-bottom: 3px solid @sidebarColor;
+  }
+}
+
+.glyph-btn {
+  cursor: pointer;
+  text-align: center;
+  font-size: @fontSizeMedium;
+  line-height: 35px;
+
+  &:hover {
+    color: darken(@purple, 10%);
+  }
+  &:active {
+    .transition(all 0.2s ease);
+    .scale(1.4);
+  }
+}
+.values {
+  color: @white;
+  letter-spacing: 1pt;
+  font-family: @baseFontFamily;
+  display: inline;
+  z-index:4;
+  padding: 8px;
+  -webkit-font-smoothing: antialiased;
+  background-color: darken(@borderColor, 10%);
+  border: 1px solid darken(@teal, 10%);
+  border-radius: 3px;
+}
+#clip-editor {
+  float: right;
+  top: 0;
+  right: 0;
+  display: inline;
+  width: 300px;
+  position: absolute;
+  color: @teal;
+  min-height: 100%;
+
+  #editor-canvas {
+    background: @sidebarColor;
+    position: absolute;
+    min-width: 300px;
+    z-index: 1;
+    border: 1px solid @borderColor;
+    }
+
+  #editor-options {
+    padding: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid @borderColor;
+    z-index: 3;
+    position: absolute;
+    width: 100%;
+
+    .values { cursor:pointer; }
+
+    #midi-library {
+      font-size: @fontSizeLarge;
+      margin-right: 30px;
+      float: right;
     }
   }
+
+  ul {
+    display: inline;
+    position: absolute;
+    float: left;
+    background-color: darken(@borderColor, 10%);
+    z-index: 2;
+    left: -70px;
+    padding: 10px;
+    .border-bottom-left-radius(3px);
+  }
+
+}

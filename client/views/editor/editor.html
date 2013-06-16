@@ -1,0 +1,30 @@
+<template name="editor">
+    <div id="clip-editor">
+        <ul>
+            <li class="glyph-btn" data-icon="&#xe013;"
+            rel="tooltip" title="new clip"></li>
+            <li class="glyph-btn" data-icon="&#xe026;"
+            rel="tooltip" title="toggle FX"></li>
+            <li class="glyph-btn" data-icon="&#xe016;"
+            rel="tooltip" title="download"></li>
+            <li class="glyph-btn" data-icon="&#xe057;"
+            rel="tooltip" title="delete"></li>
+            <li class="glyph-btn" data-icon="&#xe02a;"
+            rel="tooltip" title="volume"></li>
+            <li class="glyph-btn" data-icon="&#xe008;"
+            rel="tooltip" title="slice"></li>
+            <!-- each sibling clip in session... -->
+        </ul>
+        <div id="editor-canvas">
+            {{#constant}}
+            <canvas></canvas>
+            {{/constant}}
+        </div>
+        <div id="editor-options">
+            <div class="values" id="steps">72</div>
+            <div class="values" id="note-length">1/8</div>
+            <div id="midi-library" class="glyph-btn" data-icon="&#xe002;">
+            </div>
+        </div>
+    </div>
+</template>

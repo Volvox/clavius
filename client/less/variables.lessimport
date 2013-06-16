@@ -12,3 +12,4 @@
 @sidebarColor: @purpleDark;
 @contentColor: @grayDarker;
 @borderColor: @blueDark;
+@deactivated: darken(@teal, 15%);
