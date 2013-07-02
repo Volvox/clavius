@@ -1,4 +1,4 @@
-class OscillatorEnvelope
+class @OscillatorEnvelope
   constructor: (@canvas) ->
     @ctx = @canvas.getContext '2d'
     @colorA = 'rgb(1, 140, 142)'

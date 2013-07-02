@@ -1,4 +1,4 @@
-class FreesoundSampler extends Instrument
+class @FreesoundSampler extends Instrument
   constructor: (params) ->
     params ?= {}
     @output = audioContext.createGainNode()

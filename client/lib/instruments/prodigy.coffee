@@ -1,6 +1,6 @@
 # based on https://github.com/cwilso/midi-synth/blob/master/js/synth.js
 
-class ProdigySynthesizer extends Instrument
+class @ProdigySynthesizer extends Instrument
   constructor: (@params) ->
     @output = App.audioContext.createGainNode()
     @voices = []

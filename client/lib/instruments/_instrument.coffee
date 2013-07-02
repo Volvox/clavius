@@ -1,4 +1,4 @@
-class Instrument
+class @Instrument
   constructor: ->
     @output = App.audioContext.createGainNode()
     @voices = []
@@ -36,14 +36,14 @@ class Instrument
   setGain: (gain) ->
     @output.gain.value = gain
 
-filterFrequencyFromCutoff = (pitch, cutoff) ->
+@filterFrequencyFromCutoff = (pitch, cutoff) ->
   nyquist = 0.5 * App.audioContext.sampleRate
   filterFrequency = Math.pow(2, (9 * cutoff) - 1) * pitch
   if filterFrequency > nyquist
     filterFrequency = nyquist
   filterFrequency
 
-restorePreset = (preset) ->
+@restorePreset = (preset) ->
   instruments =
     'drumkit': Drumkit
     'prodigy': ProdigySynthesizer

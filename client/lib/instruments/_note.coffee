@@ -1,4 +1,4 @@
-class Voice
+class @Voice
   constructor: (@note, @velocity) ->
     @output = App.audioContext.createGainNode()
 

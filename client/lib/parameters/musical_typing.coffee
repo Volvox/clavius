@@ -1,5 +1,5 @@
 #global key bindings
-class Binding
+class @Binding
 
     # Mousetrap.bind "shift+down", =>
     #   if @octave > -2

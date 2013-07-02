@@ -1,4 +1,4 @@
-class OscillatorButton
+class @OscillatorButton
   constructor: (@canvas, @wave, @color) ->
     @ctx = @canvas.getContext '2d'
     @ctx.lineCap = 'round'

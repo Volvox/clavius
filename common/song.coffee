@@ -1,4 +1,4 @@
-Songs = new Meteor.Collection('songs')
+@Songs = new Meteor.Collection('songs')
 
 Meteor.methods
   createSong: (data) ->

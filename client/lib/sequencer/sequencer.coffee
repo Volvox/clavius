@@ -1,4 +1,4 @@
-class Sequencer
+class @Sequencer
   constructor: (canvas) ->
     @current = 0
     @cursor = 0
