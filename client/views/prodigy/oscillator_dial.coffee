@@ -1,4 +1,4 @@
-class OscillatorDial
+class @OscillatorDial
   constructor: (@canvas) ->
     @radius = Math.min(@canvas.height, @canvas.width) * 0.45
     @thickness = 1.5

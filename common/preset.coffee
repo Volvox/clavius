@@ -1,4 +1,4 @@
-Presets = new Meteor.Collection('presets')
+@Presets = new Meteor.Collection('presets')
 
 validInstruments = ['drumkit', 'prodigy']
 

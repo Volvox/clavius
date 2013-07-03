@@ -1,4 +1,4 @@
-class ADSREnvelope
+class @ADSREnvelope
   constructor: (@target, params) ->
     params ?= {}
     @attack = params.attack ? 0.01

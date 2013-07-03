@@ -1,4 +1,4 @@
-class EffectsPipeline
+class @EffectsPipeline
   constructor: ->
     @input = App.audioContext.createGainNode()
     @output = App.audioContext.createGainNode()

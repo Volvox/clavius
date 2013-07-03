@@ -1,4 +1,4 @@
-class SessionManager # TODO: come up with a reasonable name for this
+class @SessionManager # TODO: come up with a reasonable name for this
   constructor: (params) ->
     @$el = params.el
     @gridSize = params.gridSize

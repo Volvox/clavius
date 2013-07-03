@@ -1,4 +1,4 @@
-class AdditiveSynthesizer extends Instrument
+class @AdditiveSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
     @output = audioContext.createGainNode()

@@ -1,4 +1,4 @@
-class EndlessSequencer
+class @EndlessSequencer
   constructor: ->
     #insert mode on/off
     @insert = false

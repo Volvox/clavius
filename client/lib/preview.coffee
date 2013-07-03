@@ -1,4 +1,4 @@
-class ClipPreview
+class @ClipPreview
   constructor: (clip) ->
     @clip = clip
     @instrument = new SubtractiveSynthesizer()
@@ -58,10 +58,10 @@ class ClipPreview
 Meteor.startup ->
   window.previewers = {}
 
-preloadPreview = (clip) ->
+@preloadPreview = (clip) ->
   if clip? and not previewers[clip._id]?
       previewers[clip._id] = new ClipPreview(clip)
 
-getPreview = (clip) ->
+@getPreview = (clip) ->
   if clip?
     previewers[clip._id]

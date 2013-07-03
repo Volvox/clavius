@@ -1,4 +1,4 @@
-class Sampler extends Instrument
+class @Sampler extends Instrument
   constructor: (params) ->
     @output = App.audioContext.createGainNode()
     @amplifier = App.audioContext.createGainNode()
@@ -64,7 +64,7 @@ class Sampler extends Instrument
       @source.disconnect()
       @source.connect @finalNode
 
-samplerDemo = ->
+@samplerDemo = ->
   sampler = new Sampler
     url: "http://www.freesound.org/data/previews/24/24749_7037-hq.ogg"
     loop: on

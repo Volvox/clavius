@@ -1,4 +1,4 @@
-class SubtractiveSynthesizer extends Instrument
+class @SubtractiveSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
     @output = App.audioContext.createGainNode()
@@ -35,7 +35,7 @@ class SubtractiveSynthesizer extends Instrument
     if @filterEnvelopeEnabled
       @filterEnvelope.stop time
 
-subSynthDemo = ->
+@subSynthDemo = ->
   subSynth = new SubtractiveSynthesizer
 
   subSynth.volumeEnvelope.setADSR 0.01, 0.2, 0.7, 0.5

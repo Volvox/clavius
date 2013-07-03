@@ -1,4 +1,4 @@
-class FMSynthesizer extends Instrument
+class @FMSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
     @output = audioContext.createGainNode()

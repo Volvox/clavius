@@ -1,4 +1,4 @@
-class ClipEditor extends Sequencer
+class @ClipEditor extends Sequencer
   constructor: (params) ->
     @initializeCanvas(params.canvas)
     @initializeTooltip()

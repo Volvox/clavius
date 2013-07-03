@@ -1,4 +1,4 @@
-Clips = new Meteor.Collection('clips')
+@Clips = new Meteor.Collection('clips')
 
 Meteor.methods
   createClip: (data) ->
