@@ -1,4 +1,4 @@
-class @ClipEditor extends Sequencer
+class @ClipEditor #extends Sequencer
   constructor: (params) ->
     @initializeCanvas(params.canvas)
     @initializeTooltip()
@@ -33,7 +33,7 @@ class @ClipEditor extends Sequencer
 
   drawGrid: =>
     ctx = @canvas.getContext "2d"
-    color = 'hsl(258, 42%, 13%)'
+    color = 'hsl(258, 42%, 15%)'
     for row in [0...@numRows]
       for col in [0...@numColumns]
         ctx.beginPath()
