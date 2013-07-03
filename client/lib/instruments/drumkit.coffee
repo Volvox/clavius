@@ -1,4 +1,4 @@
-class Drumkit extends Instrument
+class @Drumkit extends Instrument
   constructor: (params) ->
     @output = App.audioContext.createGainNode()
     @rootNote = 60 # middle C
@@ -39,7 +39,7 @@ class Drumkit extends Instrument
     params:
       sampleUrls: @sampleUrls
 
-drumkitDemo = ->
+@drumkitDemo = ->
   drumkit = new Drumkit()
   drumkit.connect App.masterGainNode
 

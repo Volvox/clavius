@@ -1,4 +1,4 @@
-class VirtualKeyboard extends Input
+class @VirtualKeyboard extends Input
   constructor: (params) ->
     params = params or {}
     @lowestNote = params.lowestNote or 60

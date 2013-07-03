@@ -6,6 +6,8 @@ function BufferLoader(context, urlList, callback) {
   this.loadCount = 0;
 }
 
+window.BufferLoader = BufferLoader;
+
 BufferLoader.prototype.loadBuffer = function(url, index) {
   // Load buffer asynchronously
   var request = new XMLHttpRequest();

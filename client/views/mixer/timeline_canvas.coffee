@@ -1,4 +1,4 @@
-class Timeline
+class @Timeline
     render: (canvas) ->
         canvas.height = $(canvas).height()
         canvas.width = $(canvas).width()

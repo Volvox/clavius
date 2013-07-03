@@ -1,4 +1,4 @@
-playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
+@playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
   source = App.audioContext.createBufferSource()
   source.buffer = buffer
   source.playbackRate.value = playbackRate if playbackRate?
@@ -11,7 +11,7 @@ playBuffer = (buffer, start, stop, effectsPipeline, playbackRate) ->
   source.start start
   source.stop stop if stop?
 
-setInstrument = (instrument) ->
+@setInstrument = (instrument) ->
   if App.instrument?
     App.instrument.disconnect()
   App.instrument = instrument

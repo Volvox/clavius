@@ -1,4 +1,4 @@
-class Clip
+class @Clip
   start: (time) ->
     console.log 'override in subclass'
 
@@ -16,7 +16,7 @@ class Clip
   playing: ->
     false
 
-class AudioClip
+class @AudioClip
   constructor: (params) ->
     @buffer = params.buffer
     @bpm = params.bpm ? Session.get 'bpm'
