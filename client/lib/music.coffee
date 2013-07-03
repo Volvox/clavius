@@ -1,7 +1,22 @@
 class Metronome
   constructor: ->
     @beatCount = 0
+    @delay = App.audioContext.createDelayNode()
     @lastBeat = App.audioContext.currentTime
+    @noteLengths = 
+      "1/32":   1/8
+      "1/16T":  (1 / 4) * 2 / 3
+      "1/32.":  (1 / 8) * 3 / 2
+      "1/16":   1/4
+      "1/8T":   (1 / 2) * 2 / 3
+      "1/16.":  (1 / 4) * 3 / 2
+      "1/8":    1 / 2
+      "1/4T":   1 * 2 / 3
+      "1/8.":   (1 / 2) * 3 / 2
+      "1/4":    1
+      "1/2T":   2 * 2 / 3
+      "1/2":    2
+      "1/4.":   1 * 3 / 2
     unless Session.get('bpm')?
       Session.set 'bpm', 120
 
