@@ -45,6 +45,10 @@ class @Metronome
       @beatCount += 1
       @lastBeat += @spb()
 
+  updateNoteLength: (division) ->
+    division ?= @noteLengths[6]
+    @delay = 0.37299 / 44100.0 + 60 * division / @bpm()
+
 @noteToFrequency = (note) ->
   Math.pow(2, (note - 69) / 12) * 440.0
 
