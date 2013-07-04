@@ -832,12 +832,15 @@ canvas {
 
 
 .bpm {
+  position:relative;
   width: 0.2 * @sidebarWidth;
 
-  span {
+  input{
     font-weight: 100;
     font-size: @baseFontSize;
-    margin-left: 5px;
+    width: 30px;
+    top: 12px; left: 30px;
+    padding: 4px 0 0 4px;
   }
 }
 
@@ -947,4 +950,12 @@ canvas {
     .border-bottom-left-radius(3px);
   }
 
+}
+
+.LVTextSliderAnchor {
+  color: aquamarine;
+  .transition(all 0.2s ease);
+  &:active {
+    color: white;
+  }
 }
