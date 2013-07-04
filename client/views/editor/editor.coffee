@@ -2,30 +2,21 @@ class @ClipEditor #extends Sequencer
   constructor: (params) ->
     @initializeCanvas(params.canvas)
     @initializeTooltip()
-    @colors = [
-        "hsl(351, 96%, 55%)",   #red
-        "hsl(52, 97%, 76%)",    #yellow
-        "hsl(195, 78%, 42%)",   #blue
-        "hsl(38, 98%, 55%)",    #orange
-        "hsl(162, 98%, 34%)",   #green
-        "hsl(328, 95%, 70%)",   #pink
-        "hsl(248, 77%, 58%)",   #purple
-        "hsl(108, 100%, 100%)"  #white
-      ]
     @current = 0
     @cursor = 0
+    @lightness = 60
     @hold = false
     @letters = "awsedrfgyhujkolp;['".split ''
     @steps = @numRows
     @noteMin = 60 # B-3
     @noteMax = 81 # B0
+    Session.set("lightness", @lightness)
     Session.set('bpm', 120)
     Session.set('note', 0.25)
     Session.set("steps", @steps)
     @bindKeys()
     @draw()
     @play()
-
 
   bindKeys: ->
     forward = "right"
@@ -49,11 +40,16 @@ class @ClipEditor #extends Sequencer
     Mousetrap.bind "shift+up", =>
       @noteMin += 12
       @noteMax += 12
+      @lightness += 5
       Session.set "display-octave", @noteMin
+      Session.set "lightness", @lightness
+
 
     Mousetrap.bind "shift+down", =>
       @noteMin -= 12
       @noteMax -= 12
+      @lightness -= 5
+      Session.set "lightness", @lightness
       Session.set "display-octave", @noteMin
 
     for letter, i in @letters
@@ -91,7 +87,7 @@ class @ClipEditor #extends Sequencer
     @clear()
     @drawGrid()
     @drawNotes()
-    @highlightStep @cursor, @colors[0]
+    @highlightStep @cursor, @hsl 0
     row = (@current + @numRows - 1) % @numRows
     @highlightStep row
 
@@ -144,7 +140,10 @@ class @ClipEditor #extends Sequencer
   drawNote: (col, row) ->
     ctx = @canvas.getContext '2d'
     if @state[row][col]
-      ctx.fillStyle = '#fa435f'
+      if col % 2 is 0
+        ctx.fillStyle = @hsl col
+      else
+        ctx.fillStyle = @hsl col, "30", "40"
     else
       ctx.fillStyle = 'rgb(255, 255, 255)'
 
@@ -217,6 +216,26 @@ class @ClipEditor #extends Sequencer
       @state[row] = []
       for col in [0...@numColumns]
         @state[row][col] = false
+
+  hsl: (index, s, l, a) ->
+    colors = [
+      "351, 96%, 55%",   #red
+      "52, 97%, 76%",    #yellow
+      "195, 78%, 42%",   #blue
+      "38, 98%, 55%",    #orange
+      "162, 98%, 34%",   #green
+      "328, 95%, 70%",   #pink
+      "248, 77%, 58%",   #purple
+      "108, 100%, 100%"  #white
+      ]
+    index = Math.floor(index / 2)
+    hsl =  colors[index].split ","
+    hue = hsl[0]
+    s ?= hsl[1].replace "%", ""
+    l ?= Session.get("lightness")
+    a ?= "100%"
+    "hsl(#{hue}, #{s}%, #{l}%)"
+
 
 Template.editor.rendered = ->
   App.editor ?= new ClipEditor
