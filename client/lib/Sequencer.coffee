@@ -1,4 +1,4 @@
-class Sequencer
+class @Sequencer
   constructor: (params) ->
     @current = 0
     @cursor = 0
@@ -194,6 +194,7 @@ class Sequencer
                 start: col * @tickLength()
                 stop: col * @tickLength() + @tickLength()
 
+
         notes: notes
         steps: Session.get("steps")
         bpm: Session.get('bpm')
@@ -203,7 +204,7 @@ class Sequencer
 
       import: (clip) ->
         Session.set 'bpm', clip.bpm
-        @numColumns = clip.numColumns
+        @steps = clip.steps
         pitches = (note.sound for note in clip.notes)
         @noteMin = Math.min(pitches...)
         @noteMax = Math.max(pitches...)
