@@ -70,12 +70,12 @@ class @ClipEditor #extends Sequencer
   initializeCanvas: (canvas) =>
     @resize()
     @canvas = canvas
-    @canvas.height = $(canvas).parent().height() -  $("#options").height()
-    @canvas.width = $(canvas).parent().width() + 15
-    @cellWidth = 20
+    @cellWidth = 18
     @cellHeight = @cellWidth/2
-    @numColumns = Math.floor( (@canvas.width/@cellWidth) - 3 )
-    @numRows = Math.floor( @canvas.height / @cellHeight )
+    @canvas.height = $(canvas).parent().height() -  $("#options").height()
+    @numColumns = 12
+    @canvas.width =  @offsetCol(@numColumns)
+    @numRows = Math.floor( @canvas.height / @cellHeight ) - 1
     @state = []
     for row in [0...@numRows]
       @state[row] = []
@@ -101,10 +101,15 @@ class @ClipEditor #extends Sequencer
     for row in [0...@numRows]
       for col in [0...@numColumns]
         ctx.beginPath()
-        offset = (col + 0.5) * @cellWidth
-        ctx.rect(offset*1.1, row*(@cellWidth/1.6), @cellWidth, @cellHeight)
+        ctx.rect(@offsetCol(col), @offsetRow(row), @cellWidth, @cellHeight)
         ctx.fillStyle = color
         ctx.fill()
+
+  offsetCol: (col) ->
+    (col * @cellWidth) * 1.1
+
+  offsetRow: (row) ->
+    row * (@cellWidth/1.6)
 
   resize: ->
     height = $("#effects").position().top
@@ -142,8 +147,9 @@ class @ClipEditor #extends Sequencer
       ctx.fillStyle = '#fa435f'
     else
       ctx.fillStyle = 'rgb(255, 255, 255)'
-    x = (col* @cellWidth+@cellWidth) - 7
-    y = (row * @cellHeight + @cellHeight) - @cellHeight
+
+    x = @offsetCol(col)
+    y = @offsetRow(row)
     ctx.beginPath()
     ctx.fillRect(x, y, @cellWidth, @cellHeight)
     ctx.fill()

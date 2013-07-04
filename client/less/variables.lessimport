@@ -6,6 +6,7 @@
 @sequencerHeight: 300px;
 @buttonWidth: 120px;
 @panelHeight: 180px;
+@editorWidth: 255px;
 
 /* Colors */
 @headerColor: @grayDarker;

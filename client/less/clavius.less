@@ -51,6 +51,7 @@ canvas {
   background-color: @contentColor;
   border-left: 1px solid @borderColor;
   overflow-y: auto;
+  overflow-x: hidden;
 
   hr {
     clear: both;
@@ -903,9 +904,10 @@ canvas {
 #clip-editor {
   float: right;
   top: 0;
+  padding: 0;
   right: 0;
   display: inline;
-  width: 300px;
+  width: @editorWidth;
   position: absolute;
   color: @teal;
   min-height: 100%;
@@ -913,11 +915,12 @@ canvas {
   canvas {
     position: absolute;
     top: 60px;
+    right: 15px;
   }
   #editor-canvas {
     background: @sidebarColor;
     position: absolute;
-    min-width: 300px;
+    min-width: @editorWidth;
     z-index: 1;
     border: 1px solid @borderColor;
     }
