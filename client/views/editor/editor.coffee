@@ -68,7 +68,7 @@ class @ClipEditor #extends Sequencer
     @canvas = canvas
     @cellWidth = 18
     @cellHeight = @cellWidth/2
-    @canvas.height = $(canvas).parent().height() -  $("#options").height()
+    @canvas.height = $(canvas).parent().height()
     @numColumns = 12
     @canvas.width =  @offsetCol(@numColumns)
     @numRows = Math.floor( @canvas.height / @cellHeight ) - 1

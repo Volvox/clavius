@@ -2,14 +2,18 @@
 <div id="sidebar">
 	{{> header}}
 	<div id="tabs">
-		<ul>
-	      <li class="{{#if instrumentIs 'synthesis'}}active {{/if}}synthesis" data-icon="&#xe035;">
+		<ul class="row">
+	      <li class="span2 {{#if instrumentIs 'synthesis'}}active {{/if}}synthesis" data-icon="&#xe035;">
 	      	<span>Synthesizer</span>
 	      </li>
-	      <li class="{{#if instrumentIs 'sampler'}}active {{/if}}sampler" data-icon="&#xe050;">
+	      <li class="span2 {{#if instrumentIs 'sampler'}}active {{/if}}sampler" data-icon="&#xe050;">
 	      	<span>Sampler</span>
 	      </li>
+	      <li class="span2 {{#if instrumentIs 'drumkit'}}active {{/if}}drumkit" data-icon="&#xe051;">
+	      	<span>Drumkit</span>
+	      </li>
 		</ul>
+		<label>{{instrument}}</label>
 	</div>
 	<div id="tab-content">
 		{{#if instrumentIs "sampler"}}

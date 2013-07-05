@@ -114,45 +114,59 @@ canvas {
   cursor: pointer;
 }
 
+
 #tabs {
   position: relative;
   height: @tabHeight;
   box-sizing: border-box;
   border-bottom: 1px solid @borderColor;
-}
+  text-align: center;
 
-#tabs ul {
-  display: table;
-  margin: 0 auto;
-  padding: 0;
-}
-
-#tabs ul li {
-  cursor: pointer;
-  float: left;
-  height: @tabHeight;
-  line-height: @tabHeight;
-  text-transform: uppercase;
-  font-size: 0.4 * @tabHeight;
-  margin: 0;
-  padding: 0px 15px;
-  letter-spacing: 1pt;
-  color: @grayLight;
-
-  &.sampler{
-    font-size: @fontSizeLarge;
-  }
-
-  span {
+  label {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+    line-height: 40px;
     font-size: @fontSizeSmall;
-    margin-left: 10px;
   }
 
-  &.active, &:hover {
-    color: @white;
+  ul {
+    display: table;
+    margin: 0 auto;
+    padding: 0;
+
+    li {
+      cursor: pointer;
+      height: @tabHeight * 0.4;
+      line-height: @tabHeight * 0.5;
+      font-size: @fontSizeLarge;
+      letter-spacing: 1pt;
+      width: @tabHeight * 0.4;
+      margin-top: @tabHeight * 0.16;
+      background: @sidebarColor;
+      color: darken(@teal, 5%);
+      border: 2px solid darken(@teal, 20%);
+      border-radius: @tabHeight;
+
+
+      &.synthesis {
+        line-height: @tabHeight * 0.45;
+        font-size: @fontSizeSmall;
+      }
+
+      span {
+        font-size: @fontSizeSmall;
+        margin-left: 10px;
+        display: none;
+      }
+
+      &.active, &:hover {
+        border: 2px solid aquamarine;
+        color: aquamarine;
+      }
+    }
   }
 }
-
 #tab-content {
   padding: 25px;
   box-sizing: border-box;
@@ -420,6 +434,14 @@ canvas {
     color: @color;
     .tick.active { background-color: @color; }
   }
+}
+
+#effects-tab {
+  height: 20px;
+  position: relative;
+  box-sizing: border-box;
+  border-bottom: 1px solid @borderColor;
+  text-align: center;
 }
 
 #effects {
@@ -861,7 +883,7 @@ canvas {
   color: darken(@purple, 10%);
   float: left;
   font-family: @boldFontFamily;
-  line-height: 0.75 * @tabHeight;
+  line-height: 30px;
   padding: 0 20px;
   z-index: 90;
   background-color: @sidebarColor;
@@ -870,7 +892,7 @@ canvas {
 
   &.active {
     position: absolute;
-    top:  9px;
+    top:  -13px;
     border-bottom: 3px solid @sidebarColor;
   }
 }
@@ -922,6 +944,7 @@ canvas {
     position: absolute;
     min-width: @editorWidth;
     z-index: 1;
+    overflow-y: scroll;
     border: 1px solid @borderColor;
     }
 

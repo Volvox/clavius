@@ -1,7 +1,7 @@
 /* Layout */
 @sidebarWidth: 425px;
 @headerHeight: 50px;
-@tabHeight: 45px;
+@tabHeight: 100px;
 @cellWidth: 26.2px;
 @sequencerHeight: 300px;
 @buttonWidth: 120px;
