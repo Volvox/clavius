@@ -68,5 +68,6 @@ Template.drumkit.events
   'keyup input': (e) ->
     Meteor.clearTimeout typingTimer
 
-Template.drumkit.results = ->
-  Session.get 'search_results'
+Template.drumkit.helpers
+  results: ->
+    Session.get 'search_results'

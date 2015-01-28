@@ -1,2 +1,3 @@
-Template.instructions.recording = ->
-  Session.get 'recording'
+Template.instructions.helpers
+  recording: ->
+    Session.get 'recording'

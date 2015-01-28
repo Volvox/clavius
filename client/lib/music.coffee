@@ -2,7 +2,7 @@ class @Metronome
   constructor: ->
     $('[data-text-slider]').textslider()
     @beatCount = 0
-    @delay = App.audioContext.createDelayNode()
+    @delay = App.audioContext.createDelay()
     @lastBeat = App.audioContext.currentTime
     @noteLengths = 
       "1/32":   1/8

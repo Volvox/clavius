@@ -18,7 +18,7 @@
   App.instrument.connect App.masterGainNode
 
 Meteor.startup ->
-  App.audioContext = new webkitAudioContext()
+  App.audioContext = new (AudioContext ? webkitAudioContext)
   App.tuna = new Tuna(App.audioContext)
   App.effectsPipeline = new EffectsPipeline()
   App.metronome = new Metronome()
@@ -32,7 +32,7 @@ Meteor.startup ->
       prototype.stop = prototype.noteOff
 
   finalMixNode = App.audioContext.destination
-  App.masterGainNode = App.audioContext.createGainNode() # master volume
+  App.masterGainNode = App.audioContext.createGain() # master volume
   App.masterGainNode.gain.value = 0.7 # reduce overall volume to avoid clipping
   App.masterGainNode.connect(App.effectsPipeline.input)
   App.effectsPipeline.connect(finalMixNode)

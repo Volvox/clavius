@@ -1,6 +1,5 @@
 <template name="sampler">
 <div id="sampler">
-  {{#constant}}
   <div class="freesound-search">
     <div>
       <input type="text" placeholder="Search" />
@@ -9,7 +8,6 @@
       <i class="icon-search"></i>
     </button>
   </div>
-  {{/constant}}
   <div class="results">
     {{#each results}}
     {{> sampler_result}}

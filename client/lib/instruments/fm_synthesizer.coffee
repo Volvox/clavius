@@ -1,11 +1,11 @@
 class @FMSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
-    @output = audioContext.createGainNode()
+    @output = audioContext.createGain()
     @carrier = audioContext.createOscillator()
     @modulator = audioContext.createOscillator()
-    @modulatorGain = audioContext.createGainNode()
-    @amplifier = audioContext.createGainNode()
+    @modulatorGain = audioContext.createGain()
+    @amplifier = audioContext.createGain()
 
     @modulator.connect @modulatorGain
     @modulatorGain.connect @carrier.frequency

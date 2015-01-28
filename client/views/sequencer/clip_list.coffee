@@ -1,2 +1,3 @@
-Template.clip_list.clips = ->
-  Clips.find()
+Template.clip_list.helpers
+  clips: ->
+    Clips.find()

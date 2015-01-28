@@ -22,7 +22,7 @@ class @SessionManager # TODO: come up with a reasonable name for this
     @rows = Math.floor(@$el.height() / @gridSize)
     @cols = Math.floor(@$el.width() / @gridSize)
     _.each [0...@rows * @cols], (index) =>
-        @$el.append Template.session_clip(width: @gridSize, height: @gridSize)
+        @$el.append Blaze.toHTMLWithData(Template.session_clip, width: @gridSize, height: @gridSize)
         if (index) == (@rows * @cols) - 1
           @render()
 

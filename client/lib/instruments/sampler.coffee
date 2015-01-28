@@ -1,7 +1,7 @@
 class @Sampler extends Instrument
   constructor: (params) ->
-    @output = App.audioContext.createGainNode()
-    @amplifier = App.audioContext.createGainNode()
+    @output = App.audioContext.createGain()
+    @amplifier = App.audioContext.createGain()
     @filter = App.audioContext.createBiquadFilter()
     @volumeEnvelope = new ADSREnvelope(@amplifier.gain)
 

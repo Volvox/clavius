@@ -13,5 +13,6 @@ Template.header.events
       Session.set('recording', true)
       App.recorder.record()
 
-Template.header.recording = ->
-  Session.get 'recording'
+Template.header.helpers
+  recording: ->
+    Session.get 'recording'

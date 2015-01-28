@@ -1,3 +1,4 @@
-Template.clip_library.clips = ->
-  Clips.find()
+Template.clip_library.helpers
+  clips: ->
+    Clips.find()
 

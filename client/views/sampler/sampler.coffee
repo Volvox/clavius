@@ -80,11 +80,13 @@ Template.sampler_result.rendered = ->
 
   loader.load()
 
-Template.sampler_result.duration = ->
-  msToTime (@duration * 1000)
+Template.sampler_result.helpers
+  duration: ->
+    msToTime (@duration * 1000)
 
-Template.sampler.results = ->
-  Session.get 'sampler_results'
+Template.sampler.helpers
+  results: ->
+    Session.get 'sampler_results'
 
 Template.sampler.events
   'keydown input': _.debounce(fetchResults, 350)

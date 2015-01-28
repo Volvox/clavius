@@ -265,14 +265,15 @@ class @PatternSequencer
       if @state[col]? and @state[col][row]?
         @state[col][row] = true
 
-Template.sequencer.bpm = ->
-  Session.get('bpm')
+Template.sequencer.helpers
+  bpm: ->
+    Session.get('bpm')
 
-Template.sequencer.hidden = ->
-  Session.get('hidden')
+  hidden: ->
+    Session.get('hidden')
 
-Template.sequencer.octave = ->
-  Session.get('display-octave')
+  octave: ->
+    Session.get('display-octave')
 
 Template.sequencer.events
   'change .bpm': (e) ->

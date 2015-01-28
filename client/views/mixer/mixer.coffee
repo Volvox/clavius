@@ -1,2 +1,3 @@
-Template.mixer.song = ->
-  Songs.findOne()
+Template.mixer.helpers
+  song: ->
+    Songs.findOne()

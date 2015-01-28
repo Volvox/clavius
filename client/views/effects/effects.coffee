@@ -13,7 +13,7 @@ addEffect = (e) ->
 
 Template.effects.events
   'click i': (e) ->
-    $e = $(e.srcElement).parent()
+    $e = $(e.target).parent()
     $e.toggleClass('active')
     if $e.hasClass 'active'
       addEffect $e

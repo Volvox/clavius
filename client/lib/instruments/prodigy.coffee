@@ -2,7 +2,7 @@
 
 class @ProdigySynthesizer extends Instrument
   constructor: (@params) ->
-    @output = App.audioContext.createGainNode()
+    @output = App.audioContext.createGain()
     @voices = []
 
     # This is the "initial patch"
@@ -52,14 +52,14 @@ class @ProdigySynthesizer extends Instrument
 
 class ProdigyVoice extends Voice
   constructor: (@note, @params, @velocity) ->
-    @output = App.audioContext.createGainNode()
+    @output = App.audioContext.createGain()
     @originalFrequency = noteToFrequency(note)
 
     # create osc 1
     @osc1 = App.audioContext.createOscillator()
     @updateOsc1Frequency()
     @osc1.type = @params.osc1Waveform
-    @osc1Gain = App.audioContext.createGainNode()
+    @osc1Gain = App.audioContext.createGain()
     @osc1Gain.gain.value = 0.005 * @params.osc1Mix
 
     # this.gain.gain.value = 0.05 + (0.33 * velocity);
@@ -69,7 +69,7 @@ class ProdigyVoice extends Voice
     @osc2 = App.audioContext.createOscillator()
     @updateOsc2Frequency()
     @osc2.type = @params.osc2Waveform
-    @osc2Gain = App.audioContext.createGainNode()
+    @osc2Gain = App.audioContext.createGain()
     @osc2Gain.gain.value = 0.005 * @params.osc2Mix
     @osc2.connect @osc2Gain
 
@@ -77,11 +77,11 @@ class ProdigyVoice extends Voice
     @modOsc = App.audioContext.createOscillator()
     @modOsc.type = @params.modWaveform
     @modOsc.frequency.value = @params.modFrequency / 10 * @params.modOscFreqMultiplier
-    @modOsc1Gain = App.audioContext.createGainNode()
+    @modOsc1Gain = App.audioContext.createGain()
     @modOsc.connect @modOsc1Gain
     @modOsc1Gain.gain.value = @params.modOsc1 / 10
     @modOsc1Gain.connect @osc1.frequency # tremolo
-    @modOsc2Gain = App.audioContext.createGainNode()
+    @modOsc2Gain = App.audioContext.createGain()
     @modOsc.connect @modOsc2Gain
     @modOsc2Gain.gain.value = @params.modOsc2 / 10
     @modOsc2Gain.connect @osc2.frequency # tremolo
@@ -98,14 +98,14 @@ class ProdigyVoice extends Voice
     @filter1.connect @filter2
 
     # connect the modulator to the filters
-    @modFilterGain = App.audioContext.createGainNode()
+    @modFilterGain = App.audioContext.createGain()
     @modOsc.connect @modFilterGain
     @modFilterGain.gain.value = @params.filterMod * 10
     @modFilterGain.connect @filter1.detune # filter tremolo
     @modFilterGain.connect @filter2.detune # filter tremolo
 
     # create the volume envelope
-    @envelope = App.audioContext.createGainNode()
+    @envelope = App.audioContext.createGain()
     @filter2.connect @envelope
     @envelope.connect @output
 
@@ -114,7 +114,7 @@ class ProdigyVoice extends Voice
     @envelope.gain.value = 0.0
     @envelope.gain.setValueAtTime 0.0, time
     @envelope.gain.linearRampToValueAtTime 1.0, envAttackEnd
-    @envelope.gain.setTargetValueAtTime (@params.envS / 100.0), envAttackEnd, (@params.envD / 100.0) + 0.001
+    @envelope.gain.setTargetAtTime (@params.envS / 100.0), envAttackEnd, (@params.envD / 100.0) + 0.001
     pitchFrequency = @originalFrequency
     filterInitLevel = filterFrequencyFromCutoff(pitchFrequency, @params.filterCutoff / 100)
     filterAttackLevel = filterFrequencyFromCutoff(pitchFrequency, @params.filterCutoff / 100 + (@params.filterEnv / 120))
@@ -124,11 +124,11 @@ class ProdigyVoice extends Voice
     @filter1.frequency.value = filterInitLevel
     @filter1.frequency.setValueAtTime filterInitLevel, time
     @filter1.frequency.linearRampToValueAtTime filterAttackLevel, filterAttackEnd
-    @filter1.frequency.setTargetValueAtTime filterSustainLevel, filterAttackEnd, (@params.filterEnvD / 100.0)
+    @filter1.frequency.setTargetAtTime filterSustainLevel, filterAttackEnd, (@params.filterEnvD / 100.0)
     @filter2.frequency.value = filterInitLevel
     @filter2.frequency.setValueAtTime filterInitLevel, time
     @filter2.frequency.linearRampToValueAtTime filterAttackLevel, filterAttackEnd
-    @filter2.frequency.setTargetValueAtTime filterSustainLevel, filterAttackEnd, (@params.filterEnvD / 100.0)
+    @filter2.frequency.setTargetAtTime filterSustainLevel, filterAttackEnd, (@params.filterEnvD / 100.0)
 
     # console.log "pitchFrequency: " + pitchFrequency + " filterInitLevel: " + filterInitLevel + " filterAttackLevel: " + filterAttackLevel + " filterSustainLevel: " + filterSustainLevel
 
@@ -143,13 +143,13 @@ class ProdigyVoice extends Voice
     # console.log "noteoff: time: " + time + " val: " + @filter1.frequency.value + " initF: " + initFilter + " fR: " + @params.filterEnvR / 100
     @envelope.gain.cancelScheduledValues time
     @envelope.gain.setValueAtTime @envelope.gain.value, time # this is necessary because of the linear ramp
-    @envelope.gain.setTargetValueAtTime 0.0, time, (@params.envR / 100)
+    @envelope.gain.setTargetAtTime 0.0, time, (@params.envR / 100)
     @filter1.frequency.cancelScheduledValues time
     @filter1.frequency.setValueAtTime @filter1.frequency.value, time # this is necessary because of the linear ramp
-    @filter1.frequency.setTargetValueAtTime initFilter, time, (@params.filterEnvR / 100.0)
+    @filter1.frequency.setTargetAtTime initFilter, time, (@params.filterEnvR / 100.0)
     @filter2.frequency.cancelScheduledValues time
     @filter2.frequency.setValueAtTime @filter2.frequency.value, time # this is necessary because of the linear ramp
-    @filter2.frequency.setTargetValueAtTime initFilter, time, (@params.filterEnvR / 100.0)
+    @filter2.frequency.setTargetAtTime initFilter, time, (@params.filterEnvR / 100.0)
     @osc1.stop release
     @osc2.stop release
 

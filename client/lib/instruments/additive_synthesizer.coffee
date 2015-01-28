@@ -1,11 +1,11 @@
 class @AdditiveSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
-    @output = audioContext.createGainNode()
+    @output = audioContext.createGain()
     @ratios = params.ratios ? [0.56, 0.92, 1.19, 1.71, 2, 2.74, 3, 3.76, 4.07]
     @oscillators = (audioContext.createOscillator() for r in @ratios)
-    @mixer = audioContext.createGainNode()
-    @amplifier = audioContext.createGainNode()
+    @mixer = audioContext.createGain()
+    @amplifier = audioContext.createGain()
 
     @mixer.gain.value = 1 / @oscillators.length
 

@@ -1,6 +1,6 @@
 class @Drumkit extends Instrument
   constructor: (params) ->
-    @output = App.audioContext.createGainNode()
+    @output = App.audioContext.createGain()
     @rootNote = 60 # middle C
 
     params ?= {}

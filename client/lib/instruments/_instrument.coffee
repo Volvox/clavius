@@ -1,6 +1,6 @@
 class @Instrument
   constructor: ->
-    @output = App.audioContext.createGainNode()
+    @output = App.audioContext.createGain()
     @voices = []
 
   noteOn: (note, time) ->

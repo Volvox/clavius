@@ -8,10 +8,11 @@ Template.sidebar.events
   'click li.drumkit': ->
     Session.set 'currentInstrument', 'drumkit'
 
-Template.sidebar.instrumentIs = (which) ->
-  Session.get('currentInstrument') == which
+Template.sidebar.helpers
+  instrumentIs: (which) ->
+    Session.equals('currentInstrument', which)
 
-Template.sidebar.instrument = ->
+  instrument: ->
     Session.get("currentInstrument")
 
 Template.sidebar.rendered = ->

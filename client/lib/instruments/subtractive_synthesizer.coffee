@@ -1,10 +1,10 @@
 class @SubtractiveSynthesizer extends Instrument
   constructor: (params) ->
     params ?= {}
-    @output = App.audioContext.createGainNode()
+    @output = App.audioContext.createGain()
     @oscillator = App.audioContext.createOscillator()
     @filter = App.audioContext.createBiquadFilter()
-    @amplifier = App.audioContext.createGainNode()
+    @amplifier = App.audioContext.createGain()
 
     @cutoff = params.cutoff ? 300
     @filterEnvelopeEnabled = params.filterEnvelopeEnabled ? false
